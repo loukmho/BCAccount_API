@@ -11,56 +11,56 @@ import (
 )
 
 type ArDeposit struct {
-	RowOrder        int     `json:"row_order" db:"RowOrder"`
-	DocNo           string  `json:"doc_no" db:"DocNo"`
-	DocDate         string  `json:"doc_date" db:"DocDate"`
-	TaxType         int     `json:"tax_type" db:"TaxType"`
+	RowOrder        int                 `json:"row_order" db:"RowOrder"`
+	DocNo           string              `json:"doc_no" db:"DocNo"`
+	DocDate         string              `json:"doc_date" db:"DocDate"`
+	TaxType         int                 `json:"tax_type" db:"TaxType"`
 	OutPutTax
 	Customer
 	SaleMan
-	DepartCode      string  `json:"depart_code" db:"DepartCode"`
-	CreditDay       int     `json:"credit_day" db:"CreditDay"`
-	DueDate         string  `json:"due_date" db:"DueDate"`
-	TaxRate         float64 `json:"tax_rate" db:"TaxRate"`
-	IsConfirm       int     `json:"is_confirm" db:"IsConfirm"`
-	MyDescription   string  `json:"my_description" db:"MyDescription"`
-	BeforeTaxAmount float64 `json:"before_tax_amount" db:"BeforeTaxAmount"`
-	TaxAmount       float64 `json:"tax_amount" db:"TaxAmount"`
-	TotalAmount     float64 `json:"total_amount" db:"TotalAmount"`
-	SumOfWTax       float64 `json:"sum_of_w_tax" db:"SumOfWTax"`
-	NetAmount       float64 `json:"net_amount" db:"NetAmount"`
-	BillBalance     float64 `json:"bill_balance" db:"BillBalance"`
-	OtherIncome     float64 `json:"other_income" db:"OtherIncome"`
-	OtherExpense    float64 `json:"other_expense" db:"OtherExpense"`
-	ExcessAmount1   float64 `json:"excess_amount_1" db:"ExcessAmount1"`
-	ExcessAmount2   float64 `json:"excess_amount_2" db:"ExcessAmount2"`
-	ChargeAmount    float64 `json:"charge_amount" db:"ChargeAmount"`
-	ChangeAmount    float64 `json:"change_amount" db:"ChangeAmount"`
-	RefNo           string  `json:"ref_no" db:"RefNo"`
-	CurrencyCode    string  `json:"currency_code" db:"CurrencyCode"`
-	ExchangeRate    float64 `json:"exchange_rate" db:"ExchangeRate"`
-	SumCashAmount   float64 `json:"sum_cash_amount" db:"SumCashAmount"`
-	SumChqAmount    float64 `json:"sum_chq_amount" db:"SumChqAmount"`
-	SumCreditAmount float64 `json:"sum_credit_amount" db:"SumCreditAmount"`
-	SumBankAmount   float64 `json:"sum_bank_amount" db:"SumBankAmount"`
-	GLFormat        string  `json:"gl_format" db:"GLFormat"`
-	GLStartPosting  int     `json:"gl_start_posting" db:"GLStartPosting"`
-	IsPostGL        int     `json:"is_post_gl" db:"IsPostGL"`
-	IsCancel        int     `json:"is_cancel" db:"IsCancel"`
-	IsReturnMoney   int     `json:"is_return_money" db:"IsReturnMoney"`
-	AllocateCode    string  `json:"allocate_code" db:"AllocateCode"`
-	ProjectCode     string  `json:"project_code" db:"ProjectCode"`
-	BillGroup       string  `json:"bill_group" db:"BillGroup"`
-	RecurName       string  `json:"recur_name" db:"RecurName"`
-	ConfirmCode     string  `json:"confirm_code" db:"ConfirmCode"`
-	ConfirmDateTime string  `json:"confirm_date_time" db:"ConfirmDateTime"`
-	CancelCode      string  `json:"cancel_code" db:"CancelCode"`
-	CancelDateTime  string  `json:"cancel_date_time" db:"CancelCode"`
-	CreatorCode     string  `json:"creator_code" db:"CreatorCode"`
-	CreateDateTime  string  `json:"create_date_time" db:"CreateDateTime"`
-	LastEditorCode  string  `json:"last_editor_code" db:"LastEditorCode"`
-	LastEditDateT   string  `json:"last_edit_date_t" db:"LastEditDateT"`
-	RecMoney        []ListData `json:"rec_money"`
+	DepartCode      string              `json:"depart_code" db:"DepartCode"`
+	CreditDay       int                 `json:"credit_day" db:"CreditDay"`
+	DueDate         string              `json:"due_date" db:"DueDate"`
+	TaxRate         float64             `json:"tax_rate" db:"TaxRate"`
+	IsConfirm       int                 `json:"is_confirm" db:"IsConfirm"`
+	MyDescription   string              `json:"my_description" db:"MyDescription"`
+	BeforeTaxAmount float64             `json:"before_tax_amount" db:"BeforeTaxAmount"`
+	TaxAmount       float64             `json:"tax_amount" db:"TaxAmount"`
+	TotalAmount     float64             `json:"total_amount" db:"TotalAmount"`
+	SumOfWTax       float64             `json:"sum_of_w_tax" db:"SumOfWTax"`
+	NetAmount       float64             `json:"net_amount" db:"NetAmount"`
+	BillBalance     float64             `json:"bill_balance" db:"BillBalance"`
+	OtherIncome     float64             `json:"other_income" db:"OtherIncome"`
+	OtherExpense    float64             `json:"other_expense" db:"OtherExpense"`
+	ExcessAmount1   float64             `json:"excess_amount_1" db:"ExcessAmount1"`
+	ExcessAmount2   float64             `json:"excess_amount_2" db:"ExcessAmount2"`
+	ChargeAmount    float64             `json:"charge_amount" db:"ChargeAmount"`
+	ChangeAmount    float64             `json:"change_amount" db:"ChangeAmount"`
+	RefNo           string              `json:"ref_no" db:"RefNo"`
+	CurrencyCode    string              `json:"currency_code" db:"CurrencyCode"`
+	ExchangeRate    float64             `json:"exchange_rate" db:"ExchangeRate"`
+	SumCashAmount   float64             `json:"sum_cash_amount" db:"SumCashAmount"`
+	SumChqAmount    float64             `json:"sum_chq_amount" db:"SumChqAmount"`
+	SumCreditAmount float64             `json:"sum_credit_amount" db:"SumCreditAmount"`
+	SumBankAmount   float64             `json:"sum_bank_amount" db:"SumBankAmount"`
+	GLFormat        string              `json:"gl_format" db:"GLFormat"`
+	GLStartPosting  int                 `json:"gl_start_posting" db:"GLStartPosting"`
+	IsPostGL        int                 `json:"is_post_gl" db:"IsPostGL"`
+	IsCancel        int                 `json:"is_cancel" db:"IsCancel"`
+	IsReturnMoney   int                 `json:"is_return_money" db:"IsReturnMoney"`
+	AllocateCode    string              `json:"allocate_code" db:"AllocateCode"`
+	ProjectCode     string              `json:"project_code" db:"ProjectCode"`
+	BillGroup       string              `json:"bill_group" db:"BillGroup"`
+	RecurName       string              `json:"recur_name" db:"RecurName"`
+	ConfirmCode     string              `json:"confirm_code" db:"ConfirmCode"`
+	ConfirmDateTime string              `json:"confirm_date_time" db:"ConfirmDateTime"`
+	CancelCode      string              `json:"cancel_code" db:"CancelCode"`
+	CancelDateTime  string              `json:"cancel_date_time" db:"CancelCode"`
+	CreatorCode     string              `json:"creator_code" db:"CreatorCode"`
+	CreateDateTime  string              `json:"create_date_time" db:"CreateDateTime"`
+	LastEditorCode  string              `json:"last_editor_code" db:"LastEditorCode"`
+	LastEditDateT   string              `json:"last_edit_date_t" db:"LastEditDateT"`
+	RecMoney        []ListArDepRecMoney `json:"rec_money"`
 }
 
 type Customer struct {
@@ -79,11 +79,11 @@ type SaleMan struct {
 	SaleName string `json:"sale_name" db:"SaleName"`
 }
 
-type ListData struct {
+type ListArDepRecMoney struct {
 	PayAmount      float64 `json:"pay_amount" db:"PayAmount"`
 	ChqTotalAmount float64 `json:"chq_total_amount" db:"ChqTotalAmount"`
 	PaymentType    int     `json:"payment_type" db:"PaymentType"`
-	CreditType     string     `json:"credit_type" db:"CreditType"`
+	CreditType     string  `json:"credit_type" db:"CreditType"`
 	ConfirmNo      string  `json:"confirm_no" db:"ConfirmNo"`
 	RefNo          string  `json:"ref_no" db:"RefNo"`
 	BankCode       string  `json:"bank_code" db:"BookCode"`
@@ -98,9 +98,15 @@ func (dp *ArDeposit) InsertArDeposit(db *sqlx.DB) error {
 	var sum_pay_amount float64
 
 	for _, sub := range dp.RecMoney {
-		sum_pay_amount = sum_pay_amount+sub.PayAmount
+		sum_pay_amount = sum_pay_amount + sub.PayAmount
 	}
 
+	sqlexist := `select count(docno) as check_exist from dbo.bcardeposit where docno = ? and arcode = ?`
+	err := db.Get(&check_exist, sqlexist, dp.DocNo, dp.ArCode)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
 
 	switch {
 	case dp.DocNo == "":
@@ -116,29 +122,28 @@ func (dp *ArDeposit) InsertArDeposit(db *sqlx.DB) error {
 	case dp.TaxDate == "":
 		return errors.New("taxdate is null")
 	case dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0 && dp.SumBankAmount == 0:
-		return  errors.New("docno not set money to another type payment")
+		return errors.New("docno not set money to another type payment")
 	case sum_pay_amount > dp.TotalAmount:
 		return errors.New("rec money is over totalamount")
+	case check_exist > 0:
+		return errors.New("docno is exist")
 	}
 
-	sqlexist := `select count(docno) as check_exist from dbo.bcardeposit where docno = ? and arcode = ?`
-	err := db.Get(&check_exist, sqlexist, dp.DocNo, dp.ArCode)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil
-	}
+
 
 	fmt.Println("check_exist = ", check_exist)
 	if (check_exist == 0) {
 
 		sql := `Insert into BCArDeposit(DocNo,DocDate,TaxDate,TaxType,TaxNo,ArCode,DepartCode,CreditDay,DueDate,SaleCode, TaxRate,MyDescription,BeforeTaxAmount,TaxAmount,TotalAmount,SumOfWTax,NetAmount,BillBalance,OtherIncome,OtherExpense, ExcessAmount1,ExcessAmount2,ChargeAmount,ChangeAmount,RefNo,CurrencyCode,ExchangeRate,SumCashAmount,SumChqAmount,SumCreditAmount, SumBankAmount,GLFormat,AllocateCode,ProjectCode,BillGroup,RecurName,CreatorCode,CreateDateTime)
 			values(?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,getdate())`
-		_, err = db.Exec(sql, dp.DocNo, dp.DocDate, dp.TaxDate, dp.TaxType, dp.TaxNo, dp.ArCode, dp.DepartCode, dp.CreditDay, dp.DueDate, dp.SaleCode,     dp.TaxRate, dp.MyDescription, dp.BeforeTaxAmount, dp.TaxAmount, dp.TotalAmount, dp.SumOfWTax, dp.NetAmount, dp.BillBalance, dp.OtherIncome, dp.OtherExpense,     dp.ExcessAmount1, dp.ExcessAmount2, dp.ChargeAmount, dp.ChangeAmount, dp.RefNo, dp.CurrencyCode, dp.ExchangeRate, dp.SumCashAmount, dp.SumChqAmount, dp.SumCreditAmount,       dp.SumBankAmount, dp.GLFormat, dp.AllocateCode, dp.ProjectCode, dp.BillGroup, dp.RecurName, dp.CreatorCode)
+		_, err = db.Exec(sql, dp.DocNo, dp.DocDate, dp.TaxDate, dp.TaxType, dp.TaxNo, dp.ArCode, dp.DepartCode, dp.CreditDay, dp.DueDate, dp.SaleCode, dp.TaxRate, dp.MyDescription, dp.BeforeTaxAmount, dp.TaxAmount, dp.TotalAmount, dp.SumOfWTax, dp.NetAmount, dp.BillBalance, dp.OtherIncome, dp.OtherExpense, dp.ExcessAmount1, dp.ExcessAmount2, dp.ChargeAmount, dp.ChangeAmount, dp.RefNo, dp.CurrencyCode, dp.ExchangeRate, dp.SumCashAmount, dp.SumChqAmount, dp.SumCreditAmount, dp.SumBankAmount, dp.GLFormat, dp.AllocateCode, dp.ProjectCode, dp.BillGroup, dp.RecurName, dp.CreatorCode)
 		fmt.Println("sql =", sql, dp.DocNo, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.SaleCode)
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
 		}
+
+		dp.BookCode = "41"
 		sqltax := `insert into BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(0,?,?,6,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())`
 		_, err = db.Exec(sqltax, dp.DocNo, dp.BookCode, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.CreatorCode)
 		fmt.Println("sqltax = ", sqltax)
@@ -196,7 +201,7 @@ func (dp *ArDeposit) UpdateArDeposit(db *sqlx.DB) error {
 	var sum_pay_amount float64
 
 	for _, sub := range dp.RecMoney {
-		sum_pay_amount = sum_pay_amount+sub.PayAmount
+		sum_pay_amount = sum_pay_amount + sub.PayAmount
 	}
 
 	switch {
@@ -213,7 +218,7 @@ func (dp *ArDeposit) UpdateArDeposit(db *sqlx.DB) error {
 	case dp.TaxDate == "":
 		return errors.New("taxdate is null")
 	case dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0 && dp.SumBankAmount == 0:
-		return  errors.New("docno not set money to another type payment")
+		return errors.New("docno not set money to another type payment")
 	case sum_pay_amount > dp.TotalAmount:
 		return errors.New("rec money is over totalamount")
 	}
