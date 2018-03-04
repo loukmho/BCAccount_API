@@ -4,6 +4,7 @@
     <list default="true" id="04fb81d0-cba6-4721-a376-cc3403a2134e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/model/salemodule/ardeposit.go" afterPath="$PROJECT_DIR$/model/salemodule/ardeposit.go" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/arinvoice.go" afterPath="$PROJECT_DIR$/model/salemodule/arinvoice.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,13 +28,14 @@
       <file leaf-file-name="arinvoice.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="167" column="39" lean-forward="true" selection-start-line="167" selection-start-column="39" selection-end-line="167" selection-end-column="39" />
+            <state relative-caret-position="366">
+              <caret line="219" column="40" lean-forward="true" selection-start-line="219" selection-start-column="40" selection-end-line="219" selection-end-column="40" />
               <folding>
                 <element signature="e#15#69#0" expanded="true" />
-                <marker date="1520152593382" expanded="true" signature="8934:9020" ph="select count... bcarinvoice" />
-                <marker date="1520152593382" expanded="true" signature="9885:10750" ph="insert into dbo.bcarinvoice... " />
-                <marker date="1520152593382" expanded="true" signature="11783:12005" ph="insert into BCOutputTax... " />
+                <marker date="1520153850142" expanded="true" signature="8934:9020" ph="select count... bcarinvoice" />
+                <marker date="1520153850142" expanded="true" signature="9885:10750" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1520153850142" expanded="true" signature="11782:12008" ph="insert into BCOutputTax... " />
+                <marker date="1520153850142" expanded="true" signature="12459:13260" ph="insert into dbo.BCArInvoiceSub... " />
               </folding>
             </state>
           </provider>
@@ -42,30 +44,30 @@
       <file leaf-file-name="ardeposit.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/salemodule/ardeposit.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="127" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="128" selection-end-column="43" />
+            <state relative-caret-position="3562">
+              <caret line="300" column="1035" lean-forward="false" selection-start-line="300" selection-start-column="1035" selection-end-line="300" selection-end-column="1035" />
               <folding>
-                <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-                <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-                <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-                <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-                <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-                <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-                <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-                <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-                <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-                <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-                <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-                <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-                <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+                <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+                <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+                <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+                <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+                <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+                <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+                <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+                <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+                <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+                <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+                <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+                <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+                <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
               </folding>
             </state>
           </provider>
@@ -220,7 +222,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1295754" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -305,27 +306,27 @@
         <state relative-caret-position="323">
           <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
@@ -364,27 +365,27 @@
         <state relative-caret-position="153">
           <caret line="12" column="57" lean-forward="true" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
@@ -423,27 +424,27 @@
         <state relative-caret-position="85">
           <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="59" selection-end-column="71" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
@@ -482,27 +483,27 @@
         <state relative-caret-position="1173">
           <caret line="72" column="14" lean-forward="true" selection-start-line="72" selection-start-column="14" selection-end-line="72" selection-end-column="14" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
@@ -541,27 +542,27 @@
         <state relative-caret-position="1292">
           <caret line="79" column="14" lean-forward="true" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
@@ -600,27 +601,27 @@
         <state relative-caret-position="1207">
           <caret line="74" column="18" lean-forward="true" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
@@ -659,27 +660,27 @@
         <state relative-caret-position="1190">
           <caret line="73" column="969" lean-forward="false" selection-start-line="73" selection-start-column="969" selection-end-line="73" selection-end-column="969" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
@@ -782,43 +783,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/salemodule/ardeposit.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="127" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="128" selection-end-column="43" />
+        <state relative-caret-position="3562">
+          <caret line="300" column="1035" lean-forward="false" selection-start-line="300" selection-start-column="1035" selection-end-line="300" selection-end-column="1035" />
           <folding>
-            <marker date="1520152567582" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="6072:6619" ph="Insert into BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7508" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="7395:7617" ph="Insert into BCOutPutTax... " />
-            <marker date="1520152567582" expanded="true" signature="8174:8344" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="8633:8874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9259:9533" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="9959:10147" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="11304:11390" ph="select count... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="11592:12114" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="11592:12130" ph="Update BCArDeposit... " />
-            <marker date="1520152567582" expanded="true" signature="12887:13109" ph="insert into BCOutputTax... " />
-            <marker date="1520152567582" expanded="true" signature="13704:13874" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14163:14404" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="14789:15063" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="15489:15677" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1520152567582" expanded="true" signature="16061:17105" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18371" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18376" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18469" ph="select a.Row... bcardeposit" />
-            <marker date="1520152567582" expanded="true" signature="17329:18486" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="5070:5156" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="6072:6623" ph="Insert into BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7516" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="7399:7625" ph="Insert into BCOutPutTax... " />
+            <marker date="1520153316381" expanded="true" signature="8182:8352" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="8641:8882" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9267:9541" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="9967:10155" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="11312:11398" ph="select count... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="11600:12126" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="11600:12142" ph="Update BCArDeposit... " />
+            <marker date="1520153316381" expanded="true" signature="12903:13129" ph="insert into BCOutputTax... " />
+            <marker date="1520153316381" expanded="true" signature="13728:13898" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14187:14428" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="14813:15087" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="15513:15701" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1520153316381" expanded="true" signature="16085:17171" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18479" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18484" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18577" ph="select a.Row... bcardeposit" />
+            <marker date="1520153316381" expanded="true" signature="17395:18594" ph="select a.Row... bcardeposit" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="167" column="39" lean-forward="true" selection-start-line="167" selection-start-column="39" selection-end-line="167" selection-end-column="39" />
+        <state relative-caret-position="366">
+          <caret line="219" column="40" lean-forward="true" selection-start-line="219" selection-start-column="40" selection-end-line="219" selection-end-column="40" />
           <folding>
             <element signature="e#15#69#0" expanded="true" />
-            <marker date="1520152593382" expanded="true" signature="8934:9020" ph="select count... bcarinvoice" />
-            <marker date="1520152593382" expanded="true" signature="9885:10750" ph="insert into dbo.bcarinvoice... " />
-            <marker date="1520152593382" expanded="true" signature="11783:12005" ph="insert into BCOutputTax... " />
+            <marker date="1520153850142" expanded="true" signature="8934:9020" ph="select count... bcarinvoice" />
+            <marker date="1520153850142" expanded="true" signature="9885:10750" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1520153850142" expanded="true" signature="11782:12008" ph="insert into BCOutputTax... " />
+            <marker date="1520153850142" expanded="true" signature="12459:13260" ph="insert into dbo.BCArInvoiceSub... " />
           </folding>
         </state>
       </provider>

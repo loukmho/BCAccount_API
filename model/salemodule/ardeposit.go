@@ -134,7 +134,7 @@ func (dp *ArDeposit) InsertArDeposit(db *sqlx.DB) error {
 	fmt.Println("check_exist = ", check_exist)
 	if (check_exist == 0) {
 
-		sql := `Insert into BCArDeposit(DocNo,DocDate,TaxDate,TaxType,TaxNo,ArCode,DepartCode,CreditDay,DueDate,SaleCode, TaxRate,MyDescription,BeforeTaxAmount,TaxAmount,TotalAmount,SumOfWTax,NetAmount,BillBalance,OtherIncome,OtherExpense, ExcessAmount1,ExcessAmount2,ChargeAmount,ChangeAmount,RefNo,CurrencyCode,ExchangeRate,SumCashAmount,SumChqAmount,SumCreditAmount, SumBankAmount,GLFormat,AllocateCode,ProjectCode,BillGroup,RecurName,CreatorCode,CreateDateTime)
+		sql := `Insert into dbo.BCArDeposit(DocNo,DocDate,TaxDate,TaxType,TaxNo,ArCode,DepartCode,CreditDay,DueDate,SaleCode, TaxRate,MyDescription,BeforeTaxAmount,TaxAmount,TotalAmount,SumOfWTax,NetAmount,BillBalance,OtherIncome,OtherExpense, ExcessAmount1,ExcessAmount2,ChargeAmount,ChangeAmount,RefNo,CurrencyCode,ExchangeRate,SumCashAmount,SumChqAmount,SumCreditAmount, SumBankAmount,GLFormat,AllocateCode,ProjectCode,BillGroup,RecurName,CreatorCode,CreateDateTime)
 			values(?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,?,?,getdate())`
 		_, err = db.Exec(sql, dp.DocNo, dp.DocDate, dp.TaxDate, dp.TaxType, dp.TaxNo, dp.ArCode, dp.DepartCode, dp.CreditDay, dp.DueDate, dp.SaleCode, dp.TaxRate, dp.MyDescription, dp.BeforeTaxAmount, dp.TaxAmount, dp.TotalAmount, dp.SumOfWTax, dp.NetAmount, dp.BillBalance, dp.OtherIncome, dp.OtherExpense, dp.ExcessAmount1, dp.ExcessAmount2, dp.ChargeAmount, dp.ChangeAmount, dp.RefNo, dp.CurrencyCode, dp.ExchangeRate, dp.SumCashAmount, dp.SumChqAmount, dp.SumCreditAmount, dp.SumBankAmount, dp.GLFormat, dp.AllocateCode, dp.ProjectCode, dp.BillGroup, dp.RecurName, dp.CreatorCode)
 		fmt.Println("sql =", sql, dp.DocNo, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.SaleCode)
@@ -144,7 +144,7 @@ func (dp *ArDeposit) InsertArDeposit(db *sqlx.DB) error {
 		}
 
 		dp.BookCode = "41"
-		sqltax := `insert into BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(0,?,?,6,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())`
+		sqltax := `insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(0,?,?,6,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())`
 		_, err = db.Exec(sqltax, dp.DocNo, dp.BookCode, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.CreatorCode)
 		fmt.Println("sqltax = ", sqltax)
 		if err != nil {
@@ -232,24 +232,24 @@ func (dp *ArDeposit) UpdateArDeposit(db *sqlx.DB) error {
 
 	fmt.Println("check_exist = ", check_exist)
 	if (check_exist != 0) {
-		sql := `Update BCArDeposit set DocDate=?,TaxDate=?,TaxType=?,TaxNo=?,ArCode=?,DepartCode=?,CreditDay=?,DueDate=?,SaleCode=?,TaxRate=?,MyDescription=?,BeforeTaxAmount=?,TaxAmount=?,TotalAmount=?,SumOfWTax=?,NetAmount=?,BillBalance=?,OtherIncome=?,OtherExpense=?,ExcessAmount1=?,ExcessAmount2=?,ChargeAmount=?,ChangeAmount=?,RefNo=?,CurrencyCode=?,ExchangeRate=?,SumCashAmount=?,SumChqAmount=?,SumCreditAmount=?,SumBankAmount=?,GLFormat=?,AllocateCode=?,ProjectCode=?,BillGroup=?,RecurName=?,LastEditorCode=?,LastEditDateT=getdate() where docno = ?`
+		sql := `Update dbo.BCArDeposit set DocDate=?,TaxDate=?,TaxType=?,TaxNo=?,ArCode=?,DepartCode=?,CreditDay=?,DueDate=?,SaleCode=?,TaxRate=?,MyDescription=?,BeforeTaxAmount=?,TaxAmount=?,TotalAmount=?,SumOfWTax=?,NetAmount=?,BillBalance=?,OtherIncome=?,OtherExpense=?,ExcessAmount1=?,ExcessAmount2=?,ChargeAmount=?,ChangeAmount=?,RefNo=?,CurrencyCode=?,ExchangeRate=?,SumCashAmount=?,SumChqAmount=?,SumCreditAmount=?,SumBankAmount=?,GLFormat=?,AllocateCode=?,ProjectCode=?,BillGroup=?,RecurName=?,LastEditorCode=?,LastEditDateT=getdate() where docno = ?`
 		_, err := db.Exec(sql, dp.DocDate, dp.TaxDate, dp.TaxType, dp.TaxNo, dp.ArCode, dp.DepartCode, dp.CreditDay, dp.DueDate, dp.SaleCode, dp.TaxRate, dp.MyDescription, dp.BeforeTaxAmount, dp.TaxAmount, dp.TotalAmount, dp.SumOfWTax, dp.NetAmount, dp.BillBalance, dp.OtherIncome, dp.OtherExpense, dp.ExcessAmount1, dp.ExcessAmount2, dp.ChargeAmount, dp.ChangeAmount, dp.RefNo, dp.CurrencyCode, dp.ExchangeRate, dp.SumCashAmount, dp.SumChqAmount, dp.SumCreditAmount, dp.SumBankAmount, dp.GLFormat, dp.AllocateCode, dp.ProjectCode, dp.BillGroup, dp.RecurName, dp.LastEditorCode, dp.DocNo)
 		if err != nil {
 			return err
 		}
-		sqldel := `delete BCOutputTax where docno = ?`
+		sqldel := `delete dbo.BCOutputTax where docno = ?`
 		_, err = db.Exec(sqldel, dp.DocNo)
 		if err != nil {
 			return err
 		}
 
-		sqltax := "insert into BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(1,?,?,6,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())"
+		sqltax := "insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(1,?,?,6,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())"
 		_, err = db.Exec(sqltax, dp.DocNo, dp.BookCode, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.CreatorCode)
 		if err != nil {
 			return err
 		}
 
-		sqlrecdel := `delete BCRecMoney where docno = ?`
+		sqlrecdel := `delete dbo.BCRecMoney where docno = ?`
 		_, err = db.Exec(sqlrecdel, dp.DocNo)
 		if err != nil {
 			return err
@@ -298,7 +298,7 @@ func (dp *ArDeposit) UpdateArDeposit(db *sqlx.DB) error {
 }
 
 func (dp *ArDeposit) SearchArDepositByDocNo(db *sqlx.DB, docno string) error {
-	sql := `select a.RowOrder,a.DocNo as DocNo,a.DocDate,a.TaxDate,a.TaxType,a.TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,a.SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a left join dbo.bcar b on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d on d.docno = a.docno and d.arcode = a.arcode where a.docno  = ?`
+	sql := `select a.RowOrder,a.DocNo as DocNo,a.DocDate,a.TaxDate,a.TaxType,a.TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,a.SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a WITH (NOLOCK) left join dbo.bcar b WITH (NOLOCK) on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d WITH (NOLOCK) on d.docno = a.docno and d.arcode = a.arcode where a.docno  = ?`
 	err := db.Get(dp, sql, docno)
 	fmt.Println("sql =", sql)
 	if err != nil {
@@ -308,7 +308,7 @@ func (dp *ArDeposit) SearchArDepositByDocNo(db *sqlx.DB, docno string) error {
 }
 
 func (dp *ArDeposit) SearchArDepositByKeyword(db *sqlx.DB, keyword string) (dps []*ArDeposit, err error) {
-	sql := `select a.RowOrder,a.DocNo as DocNo,a.DocDate,a.TaxDate,a.TaxType,a.TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,a.SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a left join dbo.bcar b on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d on d.docno = a.docno and d.arcode = a.arcode where (a.docno  like '%'+?+'%' or a.arcode like '%'+?+'%' or a.salecode like '%'+?+'%' or b.name1 like '%'+?+'%')  order by a.docno`
+	sql := `select a.RowOrder,a.DocNo as DocNo,a.DocDate,a.TaxDate,a.TaxType,a.TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,a.SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a WITH (NOLOCK) left join dbo.bcar b WITH (NOLOCK) on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d WITH (NOLOCK) on d.docno = a.docno and d.arcode = a.arcode where (a.docno  like '%'+?+'%' or a.arcode like '%'+?+'%' or a.salecode like '%'+?+'%' or b.name1 like '%'+?+'%')  order by a.docno`
 	err = db.Select(&dps, sql, keyword, keyword, keyword, keyword)
 	fmt.Println("sql =", sql)
 	if err != nil {
