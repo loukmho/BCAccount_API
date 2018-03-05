@@ -7,6 +7,8 @@ import (
 )
 
 type ArInvoice struct {
+	SaveFrom        int               `json:"save_from" db:"SaveFrom"`
+	Source          int               `json:"source" db:"Source"`
 	DocNo           string            `json:"doc_no" db:"DocNo"`
 	DocDate         string            `json:"doc_date" db:"DocDate"`
 	InvOutPutTax
@@ -72,9 +74,9 @@ type ArInvoice struct {
 	SORefNo         string            `json:"so_ref_no" db:"SORe"`
 	HoldingStatus   int               `json:"holding_status" db:"HoldingStatus"`
 	PosStatus       int               `json:"pos_status" db:"PosStatus"`
-	Pos             Pos               `json:"pos"`
+	Pos
 	RecMoney        []ListInvRecMoney `json:"rec_money"`
-	Item []InvItem `json:"item"`
+	Item            []InvItem         `json:"item"`
 }
 
 type InvOutPutTax struct {
@@ -112,35 +114,35 @@ type Pos struct {
 }
 
 type InvItem struct {
-	MyType int `json:"my_type" db:"MyType"`
-	ItemCode string `json:"item_code" db:"ItemCode"`
-	MyDescription string `json:"my_description" db:"MyDescription"`
-	ItemName string `json:"item_name" db:"ItemName"`
-	WHCode string `json:"wh_code" db:"WHCode"`
-	ShelfCode string `json:"shelf_code" db:"ShelfCode"`
-	CNQty float64 `json:"cn_qty" db:"CNQty"`
-	Qty float64 `json:"qty" db:"Qty"`
-	Price float64 `json:"price" db:"Price"`
-	DiscountWord string `json:"discount_word" db:"DiscountWord"`
-	DiscountAmount float64 `json:"discount_amount" db:"DiscountAmount"`
-	Amount float64 `json:"amount" db:"Amount"`
-	NetAmount float64 `json:"net_amount" db:"NetAmount"`
-	HomeAmount float64 `json:"home_amount" db:"HomeAmount"`
-	SumOfCost float64 `json:"sum_of_cost" db:"SumOfCost"`
-	BalanceAmount float64 `json:"balance_amount" db:"BalanceAmount"`
-	UnitCode string `json:"unit_code" db:"UnitCode"`
-	SORefNo string `json:"so_ref_no" db:"SORefNo"`
-	PORefNo string `json:"po_ref_no" db:"PORefNo"`
-	LineNumber int `json:"line_number" db:"LineNumber"`
-	RefLineNumber int `json:"ref_line_number" db:"RefLineNumber"`
-	IsCancel int `json:"is_cancel" db:"IsCancel"`
-	BarCode string `json:"bar_code" db:"BarCode"`
-	PosStatus int `json:"posstatus" db:"PosStatus"`
-	IsConditionSend int `json:"is_condition_send" db:"IsConditionSend"`
-	AverageCost float64 `json:"averagecost" db:"AverageCost"`
-	LotNumber string `json:"lot_number" db:"LotNumber"`
-	PackingRate1 int `json:"packing_rate_1" db:"PackingRate1"`
-	PackingRate2 int `json:"packing_rate_2" db:"PackingRate2"`
+	MyType          int     `json:"my_type" db:"MyType"`
+	ItemCode        string  `json:"item_code" db:"ItemCode"`
+	MyDescription   string  `json:"my_description" db:"MyDescription"`
+	ItemName        string  `json:"item_name" db:"ItemName"`
+	WHCode          string  `json:"wh_code" db:"WHCode"`
+	ShelfCode       string  `json:"shelf_code" db:"ShelfCode"`
+	CNQty           float64 `json:"cn_qty" db:"CNQty"`
+	Qty             float64 `json:"qty" db:"Qty"`
+	Price           float64 `json:"price" db:"Price"`
+	DiscountWord    string  `json:"discount_word" db:"DiscountWord"`
+	DiscountAmount  float64 `json:"discount_amount" db:"DiscountAmount"`
+	Amount          float64 `json:"amount" db:"Amount"`
+	NetAmount       float64 `json:"net_amount" db:"NetAmount"`
+	HomeAmount      float64 `json:"home_amount" db:"HomeAmount"`
+	SumOfCost       float64 `json:"sum_of_cost" db:"SumOfCost"`
+	BalanceAmount   float64 `json:"balance_amount" db:"BalanceAmount"`
+	UnitCode        string  `json:"unit_code" db:"UnitCode"`
+	SORefNo         string  `json:"so_ref_no" db:"SORefNo"`
+	PORefNo         string  `json:"po_ref_no" db:"PORefNo"`
+	LineNumber      int     `json:"line_number" db:"LineNumber"`
+	RefLineNumber   int     `json:"ref_line_number" db:"RefLineNumber"`
+	IsCancel        int     `json:"is_cancel" db:"IsCancel"`
+	BarCode         string  `json:"bar_code" db:"BarCode"`
+	PosStatus       int     `json:"posstatus" db:"PosStatus"`
+	IsConditionSend int     `json:"is_condition_send" db:"IsConditionSend"`
+	AverageCost     float64 `json:"averagecost" db:"AverageCost"`
+	LotNumber       string  `json:"lot_number" db:"LotNumber"`
+	PackingRate1    int     `json:"packing_rate_1" db:"PackingRate1"`
+	PackingRate2    int     `json:"packing_rate_2" db:"PackingRate2"`
 }
 
 type ListInvRecMoney struct {
@@ -166,8 +168,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		sum_pay_amount = sum_pay_amount + sub_recmoney.PayAmount
 	}
 	for _, sub_item := range inv.Item {
-		if (sub_item.Qty != 0){
-			count_item = count_item+1
+		if (sub_item.Qty != 0) {
+			count_item = count_item + 1
 		}
 	}
 
@@ -189,32 +191,48 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		return errors.New("docdate is null")
 	case count_item == 0:
 		return errors.New("docno is not have item")
-	case inv.TaxDate == "":
-		return errors.New("taxdate is null")
+	case inv.TaxNo == "" && inv.PosStatus == 0:
+		return errors.New("TaxNo is null")
 	case inv.SumCashAmount == 0 && inv.SumCreditAmount == 0 && inv.SumChqAmount == 0 && inv.SumBankAmount == 0:
 		return errors.New("docno not set money to another type payment")
 	case sum_pay_amount > inv.TotalAmount:
 		return errors.New("rec money is over totalamount")
 	case check_exist > 0:
 		return errors.New("docno is exist")
+	case inv.SumCreditAmount != 0 && inv.PosStatus != 0 && (inv.CreditType == "" || inv.CofirmNo==""|| inv.CreditNo==""):
+		return errors.New("credit card data not complete")
+	case inv.PosStatus != 0 && inv.MachineCode == "" && inv.MachineNo=="" && inv.ShiftCode=="" && inv.ShiftCode=="" && inv.CashierCode == "":
+		return errors.New("docno not have pos data")
 	}
 
-	sql := `insert into dbo.bcarinvoice(DocNo,DocDate,TaxNo,ArCode,SaleCode,TaxType,DepartCode,CreditDay,DeliveryDay,DeliveryDate,DueDate,PayBillDate,TaxRate,IsConfirm,MyDescription,BillType,BillGroup,RefDocNo,DeliveryAddr,ContactCode,SumOfItemAmount,DiscountWord,DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,GLFormat,IsCancel,IsCompleteSave,AllocateCode,ProjectCode,RecurName,IsConditionSend,PayBillAmount,SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,1,?,?,?,?,?,?,?,0,?,getdate())`
-	_, err = db.Exec(sql, inv.DocNo, inv.DocDate, inv.TaxNo, inv.ArCode, inv.SaleCode, inv.TaxType, inv.DepartCode, inv.CreditDay, inv.DeliveryDay, inv.DeliveryDate, inv.DueDate, inv.PayBillDate, inv.TaxRate, inv.MyDescription, inv.BillType, inv.BillGroup, inv.RefDocNo, inv.DeliveryAddr, inv.ContactCode, inv.SumOfItemAmount, inv.DiscountWord, inv.DiscountAmount, inv.AfterDiscount, inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount, inv.ZeroTaxAmount, inv.ExceptTaxAmount, inv.SumCashAmount, inv.SumChqAmount, inv.SumCreditAmount, inv.SumBankAmount, inv.DepositIncTax, inv.SumOfDeposit1, inv.SumOfDeposit2, inv.SumOfWTax, inv.NetDebtAmount, inv.HomeAmount, inv.OtherIncome, inv.OtherExpense, inv.ExcessAmount1, inv.ExcessAmount2, inv.BillBalance, inv.CurrencyCode, inv.ExchangeRate, inv.GLFormat, inv.AllocateCode, inv.ProjectCode, inv.RecurName, inv.IsConditionSend, inv.PayBillAmount, inv.SORefNo, inv.HoldingStatus, inv.CreatorCode)
-	if err != nil {
-		fmt.Println(err.Error())
-		return err
+	if (inv.PosStatus == 0) {
+		sql := `insert into dbo.bcarinvoice(DocNo,DocDate,TaxNo,ArCode,SaleCode,TaxType,DepartCode,CreditDay,DeliveryDay,DeliveryDate,DueDate,PayBillDate,TaxRate,IsConfirm,MyDescription,BillType,BillGroup,RefDocNo,DeliveryAddr,ContactCode,SumOfItemAmount,DiscountWord,DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,GLFormat,IsCancel,IsCompleteSave,AllocateCode,ProjectCode,RecurName,IsConditionSend,PayBillAmount,SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,1,?,?,?,?,?,?,?,0,?,getdate())`
+		_, err = db.Exec(sql, inv.DocNo, inv.DocDate, inv.TaxNo, inv.ArCode, inv.SaleCode, inv.TaxType, inv.DepartCode, inv.CreditDay, inv.DeliveryDay, inv.DeliveryDate, inv.DueDate, inv.PayBillDate, inv.TaxRate, inv.MyDescription, inv.BillType, inv.BillGroup, inv.RefDocNo, inv.DeliveryAddr, inv.ContactCode, inv.SumOfItemAmount, inv.DiscountWord, inv.DiscountAmount, inv.AfterDiscount, inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount, inv.ZeroTaxAmount, inv.ExceptTaxAmount, inv.SumCashAmount, inv.SumChqAmount, inv.SumCreditAmount, inv.SumBankAmount, inv.DepositIncTax, inv.SumOfDeposit1, inv.SumOfDeposit2, inv.SumOfWTax, inv.NetDebtAmount, inv.HomeAmount, inv.OtherIncome, inv.OtherExpense, inv.ExcessAmount1, inv.ExcessAmount2, inv.BillBalance, inv.CurrencyCode, inv.ExchangeRate, inv.GLFormat, inv.AllocateCode, inv.ProjectCode, inv.RecurName, inv.IsConditionSend, inv.PayBillAmount, inv.SORefNo, inv.HoldingStatus, inv.CreatorCode)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+	}else{
+		sql := `insert into dbo.bcarinvoice(DocNo,DocDate,TaxNo,ArCode,SaleCode,TaxType,DepartCode,CreditDay,DeliveryDay,DeliveryDate,DueDate,PayBillDate,TaxRate,IsConfirm,MyDescription,BillType,BillGroup,RefDocNo,DeliveryAddr,ContactCode,SumOfItemAmount,DiscountWord,DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,GLFormat,IsCancel,IsCompleteSave,AllocateCode,ProjectCode,RecurName,IsConditionSend,PayBillAmount,SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime,ShiftCode,CashierCode,ShiftNo,MachineNo,MachineCode,BillTime,CreditType,CreditDueDate,CreditNo,CofirmNo,CreditBaseAmount,CoupongAmount,ChangeAmount,ChargeAmount,GrandTotal) values(?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,1,?,?,?,?,?,?,?,0,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sql, inv.DocNo, inv.DocDate, inv.TaxNo, inv.ArCode, inv.SaleCode, inv.TaxType, inv.DepartCode, inv.CreditDay, inv.DeliveryDay, inv.DeliveryDate, inv.DueDate, inv.PayBillDate, inv.TaxRate, inv.MyDescription, inv.BillType, inv.BillGroup, inv.RefDocNo, inv.DeliveryAddr, inv.ContactCode, inv.SumOfItemAmount, inv.DiscountWord, inv.DiscountAmount, inv.AfterDiscount, inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount, inv.ZeroTaxAmount, inv.ExceptTaxAmount, inv.SumCashAmount, inv.SumChqAmount, inv.SumCreditAmount, inv.SumBankAmount, inv.DepositIncTax, inv.SumOfDeposit1, inv.SumOfDeposit2, inv.SumOfWTax, inv.NetDebtAmount, inv.HomeAmount, inv.OtherIncome, inv.OtherExpense, inv.ExcessAmount1, inv.ExcessAmount2, inv.BillBalance, inv.CurrencyCode, inv.ExchangeRate, inv.GLFormat, inv.AllocateCode, inv.ProjectCode, inv.RecurName, inv.IsConditionSend, inv.PayBillAmount, inv.SORefNo, inv.HoldingStatus, inv.CreatorCode,inv.ShiftCode,inv.CashierCode,inv.ShiftNo,inv.MachineNo,inv.MachineCode,inv.BillTime,inv.CreditType,inv.CreditDueDate,inv.CreditNo,inv.CofirmNo,inv.CreditBaseAmount,inv.CoupongAmount,inv.ChangeAmount,inv.ChargeAmount,inv.GrandTotal)
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
 	}
+	inv.SaveFrom = 0
+	inv.Source = 6
 	inv.BookCode = "20"
-	sqltax := `insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(0,?,?,6,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())`
-	_, err = db.Exec(sqltax, inv.DocNo, inv.BookCode, inv.DocDate, inv.TaxDate, inv.TaxNo, inv.ArCode, inv.TaxRate, inv.BeforeTaxAmount, inv.TaxAmount, inv.CreatorCode)
+
+	sqltax := `insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())`
+	_, err = db.Exec(sqltax, inv.SaveFrom, inv.DocNo, inv.BookCode, inv.Source, inv.DocDate, inv.TaxDate, inv.TaxNo, inv.ArCode, inv.TaxRate, inv.BeforeTaxAmount, inv.TaxAmount, inv.CreatorCode)
 	fmt.Println("sqltax = ", sqltax)
 	if err != nil {
 		fmt.Println(err.Error())
 		return err
 	}
 
-	for _, item := range inv.Item{
+	for _, item := range inv.Item {
 		item.MyType = 4
 		item.CNQty = item.Qty
 		item.HomeAmount = item.NetAmount
@@ -223,13 +241,29 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		item.PosStatus = 0
 
 		sqlsub := `insert into dbo.BCArInvoiceSub(MyType,DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode, SORefNo, PORefNo, LineNumber, RefLineNumber, IsCancel, BarCode, POSSTATUS,IsConditionSend, AVERAGECOST, LotNumber, PackingRate1, PackingRate2) values(MyType,DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode, SORefNo, PORefNo, LineNumber, RefLineNumber, IsCancel, BarCode, POSSTATUS,IsConditionSend, AVERAGECOST, LotNumber, PackingRate1, PackingRate2)`
-		db.Exec(sqlsub, item.MyType, inv.DocNo, inv.TaxNo, inv.TaxType, item.ItemCode, inv.DocDate, inv.ArCode, inv.DepartCode, inv.SaleCode, item.MyDescription, item.ItemName, item.WHCode, item.ShelfCode, item.CNQty, item.Qty, item.Price, item.DiscountWord, item.DiscountAmount, item.Amount, item.NetAmount, item.HomeAmount, item.SumOfCost, item.BalanceAmount, item.UnitCode, item.SORefNo, item.PORefNo, item.LineNumber, item.RefLineNumber, item.IsCancel, item.BarCode, item.PosStatus,item.IsConditionSend, item.AverageCost, item.LotNumber, item.PackingRate1, item.PackingRate2)
+		db.Exec(sqlsub, item.MyType, inv.DocNo, inv.TaxNo, inv.TaxType, item.ItemCode, inv.DocDate, inv.ArCode, inv.DepartCode, inv.SaleCode, item.MyDescription, item.ItemName, item.WHCode, item.ShelfCode, item.CNQty, item.Qty, item.Price, item.DiscountWord, item.DiscountAmount, item.Amount, item.NetAmount, item.HomeAmount, item.SumOfCost, item.BalanceAmount, item.UnitCode, item.SORefNo, item.PORefNo, item.LineNumber, item.RefLineNumber, item.IsCancel, item.BarCode, item.PosStatus, item.IsConditionSend, item.AverageCost, item.LotNumber, item.PackingRate1, item.PackingRate2)
 		fmt.Println("sqltax = ", sqltax)
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
 		}
-		}
+	}
 
+	return nil
+}
+
+func (inv *ArInvoice)SearchArInvoiceByDocNo(db *sqlx.DB, docno string)error {
+	sql := `select DocNo,DocDate,isnull(TaxNo,'') as TaxNo,ArCode,SaleCode,TaxType,isnull(DepartCode,'') as DepartCode,CreditDay,DeliveryDay,isnull(DeliveryDate,'') as DeliveryDate,isnull(DueDate,'') as DueDate,isnull(PayBillDate,'') as PayBillDate,TaxRate,IsConfirm,isnull(MyDescription,'') as MyDescription,BillType,isnull(BillGroup,'') as BillGroup,isnull(RefDocNo,'') as RefDocNo,isnull(DeliveryAddr,'') as DeliveryAddr,isnull(ContactCode,'') as ContactCode,SumOfItemAmount,DiscountWord,isnull(DiscountAmount,'') as DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,IsCancel,IsCompleteSave,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(RecurName,'') as RecurName,IsConditionSend,PayBillAmount,isnull(SORefNo,'') as SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime,isnull(ShiftCode,'') as ShiftCode,isnull(CashierCode,'') as CashierCode,isnull(ShiftNo,'') as ShiftNo,isnull(MachineNo,'') as MachineNo,isnull(MachineCode,'') as MachineCode,isnull(BillTime,'') as BillTime,isnull(CreditType,'') as CreditType,isnull(CreditDueDate,'') as CreditDueDate,isnull(CreditNo,'') as CreditNo,isnull(CofirmNo,'') as CofirmNo,CreditBaseAmount,CoupongAmount,ChangeAmount,ChargeAmount,GrandTotal from dbo.bcarinvoice where docno = ? `
+	err := db.Get(inv, sql, docno)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+	sqlsub := `select select MyType, ItemCode, isnull(MyDescription,'') as MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode, isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AVERAGECOST, isnull(LotNumber,'') as LotNumber, PackingRate1, PackingRate2 from dbo.bcarinvoicesub from dbo.bcarinvoicesub where docno = ? order by linenumber`
+	err = db.Select(&inv.Item, sqlsub, docno)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
 	return nil
 }

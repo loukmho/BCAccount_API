@@ -6,17 +6,15 @@ import (
 	ct "github.com/loukmho/bcaccount_api/ctrl"
 	"net/http"
 	"fmt"
-	"github.com/jmoiron/sqlx"
 )
 
-var dbc *sqlx.DB
 func SearchArDepositByDocNo(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
-	dbc = ct.Dbc
+
 	docno := c.Request.URL.Query().Get("docno")
 	dp := new(model.ArDeposit)
-	err := dp.SearchArDepositByDocNo(dbc, docno)
+	err := dp.SearchArDepositByDocNo(ct.Dbc, docno)
 
 	rs := ct.Response{}
 	if err != nil {

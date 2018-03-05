@@ -13,6 +13,7 @@ func main(){
 
 	r.GET("/apinvoice", b.SearchApInvoiceByDocNo)
 
+	r.GET("/arinvoice", s.SearchArInvoiceByDocNo)
 	r.GET("/ardeposit", s.SearchArDepositByDocNo)
 	r.GET("/ardeposits", s.SearchArDepositByKeyword)
 	r.POST("/ardeposit", s.InsertArDespoit)
