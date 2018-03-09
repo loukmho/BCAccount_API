@@ -33,9 +33,8 @@ func SearchArDepositByKeyword(c *gin.Context) {
 
 	keyword := c.Request.URL.Query().Get("keyword")
 
-	dbc = ct.Dbc
 	dp := new(model.ArDeposit)
-	dps, err := dp.SearchArDepositByKeyword(dbc, keyword)
+	dps, err := dp.SearchArDepositByKeyword(ct.Dbc, keyword)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -53,13 +52,12 @@ func SearchArDepositByKeyword(c *gin.Context) {
 func InsertArDespoit(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
-	dbc = ct.Dbc
 	dp := &model.ArDeposit{}
 	err := c.BindJSON(dp)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = dp.InsertArDeposit(dbc)
+	err = dp.InsertArDeposit(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -77,13 +75,12 @@ func InsertArDespoit(c *gin.Context) {
 func UpdateArDespoit(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
-	dbc = ct.Dbc
 	dp := &model.ArDeposit{}
 	err := c.BindJSON(dp)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = dp.UpdateArDeposit(dbc)
+	err = dp.UpdateArDeposit(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {

@@ -1,8 +1,6 @@
 package model
 
 import (
-	//"github.com/jmoiron/sqlx"
-	//"fmt"
 	"github.com/jmoiron/sqlx"
 )
 

@@ -1,11 +1,13 @@
 package model
 
+import (
+)
 
 type RecMoney struct {
 	Data []ListData
 }
 
-type ListData1 struct {
+type ListData struct {
 	DocNo string `json:"doc_no" db:"DocNo"`
 	DocDate string `json:"doc_date" db:"DocDate"`
 	ArCode string `json:"ar_code" db:"ArCode"`
@@ -24,3 +26,4 @@ type ListData1 struct {
 	TransBankDate string `json:"trans_bank_date" db:"TransBankDate"`
 	RefDate string `json:"ref_date" db:"RefDate"`
 }
+

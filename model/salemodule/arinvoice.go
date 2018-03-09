@@ -25,14 +25,14 @@ type ArInvoice struct {
 	DeliveryDate    string            `json:"delivery_date" db:"DeliveryDate"`
 	DueDate         string            `json:"due_date" db:"DueDate"`
 	PayBillDate     string            `json:"pay_bill_date" db:"PayBillDate"`
-	TaxRate         int               `json:"tax_rate" db:"TaxRate"`
+	TaxRate         float64           `json:"tax_rate" db:"TaxRate"`
 	IsConfirm       int               `json:"is_confirm" db:"IsConfirm"`
 	MyDescription   string            `json:"my_description" db:"MyDescription"`
 	BillType        int               `json:"bill_type" db:"BillType"`
 	BillGroup       string            `json:"bill_group" db:"BillGroup"`
 	RefDocNo        string            `json:"ref_doc_no" db:"RefDocNo"`
 	DeliveryAddr    string            `json:"delivery_addr" db:"DeliveryAddr"`
-	ContactCode     string            `json:"contact_code" db:""ContactCode`
+	ContactCode     string            `json:"contact_code" db:"ContactCode"`
 	SumOfItemAmount float64           `json:"sum_of_item_amount" db:"SumOfItemAmount"`
 	DiscountWord    string            `json:"discount_word" db:"DiscountWord"`
 	DiscountAmount  float64           `json:"discount_amount" db:"DiscountAmount"`
@@ -41,12 +41,12 @@ type ArInvoice struct {
 	TaxAmount       float64           `json:"tax_amount" db:"TaxAmount"`
 	TotalAmount     float64           `json:"total_amount" db:"TotalAmount"`
 	ZeroTaxAmount   float64           `json:"zero_tax_amount" db:"ZeroTaxAmount"`
-	ExceptTaxAmount float64           `json:"except_tax_amount" db:"ExceptTax"`
-	SumCashAmount   float64           `json:"sum_cash_amount" db:""SumCashAmount`
+	ExceptTaxAmount float64           `json:"except_tax_amount" db:"ExceptTaxAmount"`
+	SumCashAmount   float64           `json:"sum_cash_amount" db:"SumCashAmount"`
 	SumChqAmount    float64           `json:"sum_chq_amount" db:"SumChqAmount"`
 	SumCreditAmount float64           `json:"sum_credit_amount" db:"SumCreditAmount"`
 	SumBankAmount   float64           `json:"sum_bank_amount" db:"SumBankAmount"`
-	DepositIncTax   float64           `json:"deposit_inc_tax" db:"DepositIncTax"`
+	DepositIncTax   int               `json:"deposit_inc_tax" db:"DepositIncTax"`
 	SumOfDeposit1   float64           `json:"sum_of_deposit_1" db:"SumOfDeposit1"`
 	SumOfDeposit2   float64           `json:"sum_of_deposit_2" db:"SumOfDeposit2"`
 	SumOfWTax       float64           `json:"sum_of_w_tax" db:"SumOfWTax"`
@@ -71,7 +71,7 @@ type ArInvoice struct {
 	CancelDateTime  string            `json:"cancel_date_time" db:"CancelDateTime"`
 	IsConditionSend int               `json:"is_condition_send" db:"IsConditionSend"`
 	PayBillAmount   float64           `json:"pay_bill_amount" db:"PayBillAmount"`
-	SORefNo         string            `json:"so_ref_no" db:"SORe"`
+	SORefNo         string            `json:"so_ref_no" db:"SORefNo"`
 	HoldingStatus   int               `json:"holding_status" db:"HoldingStatus"`
 	PosStatus       int               `json:"pos_status" db:"PosStatus"`
 	Pos
@@ -141,8 +141,8 @@ type InvItem struct {
 	IsConditionSend int     `json:"is_condition_send" db:"IsConditionSend"`
 	AverageCost     float64 `json:"averagecost" db:"AverageCost"`
 	LotNumber       string  `json:"lot_number" db:"LotNumber"`
-	PackingRate1    int     `json:"packing_rate_1" db:"PackingRate1"`
-	PackingRate2    int     `json:"packing_rate_2" db:"PackingRate2"`
+	PackingRate1    float64     `json:"packing_rate_1" db:"PackingRate1"`
+	PackingRate2    float64     `json:"packing_rate_2" db:"PackingRate2"`
 }
 
 type ListInvRecMoney struct {
@@ -159,13 +159,18 @@ type ListInvRecMoney struct {
 	LineNumber     int     `json:"line_number" db:"LineNumber"`
 }
 
+
 func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 	var check_exist int
 	var count_item int
 	var sum_pay_amount float64
 
-	for _, sub_recmoney := range inv.RecMoney {
-		sum_pay_amount = sum_pay_amount + sub_recmoney.PayAmount
+	fmt.Println("DocNo =",inv.DocNo)
+
+	if len(inv.RecMoney)>0 {
+		for _, sub_recmoney := range inv.RecMoney {
+			sum_pay_amount = sum_pay_amount + sub_recmoney.PayAmount
+		}
 	}
 	for _, sub_item := range inv.Item {
 		if (sub_item.Qty != 0) {
@@ -179,6 +184,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		fmt.Println(err.Error())
 		return nil
 	}
+
 
 	switch {
 	case inv.DocNo == "":
@@ -252,18 +258,40 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 	return nil
 }
 
-func (inv *ArInvoice)SearchArInvoiceByDocNo(db *sqlx.DB, docno string)error {
-	sql := `select DocNo,DocDate,isnull(TaxNo,'') as TaxNo,ArCode,SaleCode,TaxType,isnull(DepartCode,'') as DepartCode,CreditDay,DeliveryDay,isnull(DeliveryDate,'') as DeliveryDate,isnull(DueDate,'') as DueDate,isnull(PayBillDate,'') as PayBillDate,TaxRate,IsConfirm,isnull(MyDescription,'') as MyDescription,BillType,isnull(BillGroup,'') as BillGroup,isnull(RefDocNo,'') as RefDocNo,isnull(DeliveryAddr,'') as DeliveryAddr,isnull(ContactCode,'') as ContactCode,SumOfItemAmount,DiscountWord,isnull(DiscountAmount,'') as DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,IsCancel,IsCompleteSave,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(RecurName,'') as RecurName,IsConditionSend,PayBillAmount,isnull(SORefNo,'') as SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime,isnull(ShiftCode,'') as ShiftCode,isnull(CashierCode,'') as CashierCode,isnull(ShiftNo,'') as ShiftNo,isnull(MachineNo,'') as MachineNo,isnull(MachineCode,'') as MachineCode,isnull(BillTime,'') as BillTime,isnull(CreditType,'') as CreditType,isnull(CreditDueDate,'') as CreditDueDate,isnull(CreditNo,'') as CreditNo,isnull(CofirmNo,'') as CofirmNo,CreditBaseAmount,CoupongAmount,ChangeAmount,ChargeAmount,GrandTotal from dbo.bcarinvoice where docno = ? `
+func (inv *ArInvoice) SearchArInvoiceByDocNo(db *sqlx.DB, docno string) error {
+	sql := `set dateformat dmy     select DocNo,DocDate,isnull(TaxNo,'') as TaxNo,ArCode,SaleCode,TaxType,isnull(DepartCode,'') as DepartCode,CreditDay,DeliveryDay,isnull(DeliveryDate,'') as DeliveryDate,isnull(DueDate,'') as DueDate,isnull(PayBillDate,'') as PayBillDate,TaxRate,IsConfirm,isnull(MyDescription,'') as MyDescription,BillType,isnull(BillGroup,'') as BillGroup,isnull(RefDocNo,'') as RefDocNo,isnull(DeliveryAddr,'') as DeliveryAddr,isnull(ContactCode,'') as ContactCode,SumOfItemAmount,isnull(DiscountWord,'') as DiscountWord,isnull(DiscountAmount,'') as DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,IsCancel,IsCompleteSave,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(RecurName,'') as RecurName,IsConditionSend,PayBillAmount,isnull(SORefNo,'') as SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime,isnull(ShiftCode,'') as ShiftCode,isnull(CashierCode,'') as CashierCode,'' as ShiftNo,isnull(MachineNo,'') as MachineNo,isnull(MachineCode,'') as MachineCode,isnull(BillTime,'') as BillTime,isnull(CreditType,'') as CreditType,isnull(CreditDueDate,'') as CreditDueDate,isnull(CreditNo,'') as CreditNo,isnull(CofirmNo,'') as CofirmNo,CreditBaseAmount,CoupongAmount,ChangeAmount,ChargeAmount,GrandTotal from dbo.bcarinvoice where docno = ? `
+	fmt.Println("sql=", sql)
 	err := db.Get(inv, sql, docno)
 	if err != nil {
 		fmt.Println(err.Error())
 		return err
 	}
-	sqlsub := `select select MyType, ItemCode, isnull(MyDescription,'') as MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode, isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AVERAGECOST, isnull(LotNumber,'') as LotNumber, PackingRate1, PackingRate2 from dbo.bcarinvoicesub from dbo.bcarinvoicesub where docno = ? order by linenumber`
+	sqlsub := `set dateformat dmy    select MyType, ItemCode, isnull(MyDescription,'') as MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode , isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AverageCost , isnull(LotNumber,'') as LotNumber, isnull(PackingRate1,1) as PackingRate1, isnull(PackingRate2,1) as PackingRate2 from dbo.bcarinvoicesub  where docno = ? order by LineNumber`
+	fmt.Println("sqlsub=", sqlsub)
 	err = db.Select(&inv.Item, sqlsub, docno)
 	if err != nil {
 		fmt.Println(err.Error())
 		return err
 	}
 	return nil
+}
+
+func (inv *ArInvoice) SearchArInvoiceByKeyword (db *sqlx.DB, keyword string) (ins []*ArInvoice,err error){
+	sql := `set dateformat dmy     select DocNo,DocDate,isnull(TaxNo,'') as TaxNo,ArCode,SaleCode,TaxType,isnull(DepartCode,'') as DepartCode,CreditDay,DeliveryDay,isnull(DeliveryDate,'') as DeliveryDate,isnull(DueDate,'') as DueDate,isnull(PayBillDate,'') as PayBillDate,TaxRate,IsConfirm,isnull(MyDescription,'') as MyDescription,BillType,isnull(BillGroup,'') as BillGroup,isnull(RefDocNo,'') as RefDocNo,isnull(DeliveryAddr,'') as DeliveryAddr,isnull(ContactCode,'') as ContactCode,SumOfItemAmount,isnull(DiscountWord,'') as DiscountWord,isnull(DiscountAmount,'') as DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,IsCancel,IsCompleteSave,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(RecurName,'') as RecurName,IsConditionSend,PayBillAmount,isnull(SORefNo,'') as SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime,isnull(ShiftCode,'') as ShiftCode,isnull(CashierCode,'') as CashierCode,'' as ShiftNo,isnull(MachineNo,'') as MachineNo,isnull(MachineCode,'') as MachineCode,isnull(BillTime,'') as BillTime,isnull(CreditType,'') as CreditType,isnull(CreditDueDate,'') as CreditDueDate,isnull(CreditNo,'') as CreditNo,isnull(CofirmNo,'') as CofirmNo,CreditBaseAmount,CoupongAmount,ChangeAmount,ChargeAmount,GrandTotal from dbo.bcarinvoice where (docno  like '%'+?+'%' or arcode like '%'+?+'%' ) order by docno`
+	fmt.Println("sql=", sql)
+	err = db.Select(&ins, sql, keyword, keyword)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil, err
+	}
+	for _, sub := range ins {
+		sqlsub := `set dateformat dmy    select MyType, ItemCode, isnull(MyDescription,'') as MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode , isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AverageCost , isnull(LotNumber,'') as LotNumber, isnull(PackingRate1,1) as PackingRate1, isnull(PackingRate2,1) as PackingRate2 from dbo.bcarinvoicesub  where docno = ? order by LineNumber`
+		fmt.Println("sqlsub=", sqlsub)
+		err = db.Select(&inv.Item, sqlsub, sub.DocNo)
+		if err != nil {
+			fmt.Println(err.Error())
+			return nil, err
+		}
+	}
+	return nil, nil
 }

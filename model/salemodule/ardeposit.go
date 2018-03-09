@@ -1,11 +1,7 @@
 package model
 
 import (
-	//"github.com/jmoiron/sqlx"
-	//"fmt"
 	"errors"
-	//"encoding/json"
-	//"os/user"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 )
