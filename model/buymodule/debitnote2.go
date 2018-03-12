@@ -1,6 +1,6 @@
 package model
 
-type DebitNote struct {
+type DebitNote2 struct {
 	DocNo             string  `json:"doc_no" db:""`
 	TaxNo             string  `json:"tax_no" db:""`
 	DocDate           string  `json:"doc_date" db:""`
@@ -11,9 +11,8 @@ type DebitNote struct {
 	CreditDay         int     `json:"credit_day" db:""`
 	DueDate           string  `json:"due_date" db:""`
 	TaxType           int     `json:"tax_type" db:""`
-	ArCode            string  `json:"ar_code" db:""`
+	ApCode            string  `json:"ap_code" db:""`
 	DepartCode        string  `json:"depart_code" db:""`
-	SaleCode          string  `json:"sale_code" db:""`
 	TaxRate           float64 `json:"tax_rate" db:""`
 	IsConfirm         int     `json:"is_confirm" db:""`
 	MyDescription     string  `json:"my_description" db:""`
@@ -40,7 +39,6 @@ type DebitNote struct {
 	ReturnStatus      int     `json:"return_status" db:""`
 	CauseType         int     `json:"cause_type" db:""`
 	CauseCode         string  `json:"cause_code" db:""`
-	PayBillStatus     int     `json:"pay_bill_status" db:""`
 	AllocateCode      string  `json:"allocate_code" db:""`
 	ProjectCode       string  `json:"project_code" db:""`
 	BillGroup         string  `json:"bill_group" db:""`
@@ -50,10 +48,9 @@ type DebitNote struct {
 	CancelCode        string  `json:"cancel_code" db:""`
 	CancelDateTime    string  `json:"cancel_date_time" db:""`
 	PayBillAmount     float64 `json:"pay_bill_amount" db:""`
-	BillTemporary     float64 `json:"bill_temporary" db:""`
 }
 
-type DbtItem struct {
+type Dbt2Item struct {
 	MyType         int     `json:"my_type" db:""`
 	ItemCode       string  `json:"item_code" db:""`
 	MyDescription  string  `json:"my_description" db:""`
@@ -83,9 +80,12 @@ type DbtItem struct {
 	PackingRate2   float64 `json:"packing_rate_2" db:""`
 }
 
-func (dbn *DebitNote) SearchDebitNoteByDocNo() error {
-	//sql := ` DocNo, TaxNo, DocDate, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, CreditDay, DueDate, TaxType, ArCode, DepartCode, SaleCode, TaxRate, IsConfirm, MyDescription, SumOfItemAmount, SumOldAmount, SumTrueAmount, SumofDiffAmount, SumofBeforeTax, SumOfTaxAmount, SumOfTotalTax, SumOfExceptTax, SumOfZeroTax, SumOfWTax, DiscountWord, DiscountAmount, NetDebtAmount, SumExchangeProfit, BillBalance, CurrencyCode, ExchangeRate, GLFormat, GLStartPosting, IsPostGL, IsCancel,  IsCompleteSave, ReturnStatus, CauseType, CauseCode, PayBillStatus, AllocateCode, ProjectCode, BillGroup, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime, PayBillAmount, BillTemporary`
 
-	//sqlsub := `MyType, DocNo, TaxNo,  TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost,UnitCode,  InvoiceNo, ExceptTax,IsCancel, LineNumber, RefLineNumber,BarCode,AVERAGECOST, LotNumber, PackingRate1, PackingRate2`
+func (dbn *DebitNote2) SearchDebitNote2ByDocNo() error {
+	//sql := ` DocNo, TaxNo, DocDate, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, CreditDay, DueDate, TaxType, ApCode, DepartCode, TaxRate, IsConfirm, MyDescription, SumOfItemAmount, SumOldAmount, SumTrueAmount, SumofDiffAmount, SumofBeforeTax, SumOfTaxAmount, SumOfTotalTax, SumOfExceptTax, SumOfZeroTax, SumOfWTax, DiscountWord, DiscountAmount, NetDebtAmount, SumExchangeProfit, BillBalance, CurrencyCode, ExchangeRate, GLFormat, GLStartPosting, IsPostGL, IsCancel,  IsCompleteSave, ReturnStatus, CauseType, CauseCode, AllocateCode, ProjectCode, BillGroup, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime, PayBillAmount`
+
+	//sqlsub := `MyType, DocNo, TaxNo,  TaxType, ItemCode, DocDate, ApCode, DepartCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost,UnitCode,  InvoiceNo, ExceptTax,IsCancel, LineNumber, RefLineNumber,BarCode,AVERAGECOST, LotNumber, PackingRate1, PackingRate2`
 	return nil
 }
+
+

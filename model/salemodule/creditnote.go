@@ -35,11 +35,8 @@ type CreditNote struct {
 	CurrencyCode    string  `json:"currency_code" db:""`
 	ExchangeRate    float64 `json:"exchange_rate" db:""`
 	GLFormat        string  `json:"gl_format" db:""`
-	GLStartPosting  int     `json:"gl_start_posting" db:""`
-	IsPostGL        int     `json:"is_post_gl" db:""`
 	IsCancel        int     `json:"is_cancel" db:""`
 	IsCompleteSave  int     `json:"is_complete_save"`
-	GLTransData     int     `json:"gl_trans_data" db:""`
 	ReturnMoney     int     `json:"return_money" db:""`
 	ReturnStatus    int     `json:"return_status" db:""`
 	ReturnCash      int     `json:"return_cash" db:""`
@@ -104,6 +101,6 @@ var CrdItem struct {
 
 func (crd *CreditNote) SearchCreditNoteByDocNo() error {
 	//sql := `DocNo,TaxNo,TaxDate ,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,DocDate,DueDate,TaxType,ArCode,DepartCode,SaleCode,CashierCode,TaxRate,IsConfirm,MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfZeroTax,SumOfExceptTax,SumOfWTax,NetDebtAmount,BillBalance,CurrencyCode,ExchangeRate,GLFormat,GLStartPosting,IsPostGL,IsCancel,IsCompleteSave,GLTransData,ReturnMoney,ReturnStatus,ReturnCash,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,ChargeAmount,ChangeAmount,CauseType,PayBillStatus,IsCNDeposit,IsPos,PosDocNo,CauseCode,AllocateCode,ProjectCode,BillGroup,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,PayBillAmount,BillTemporary`
-	//sqlsub := `MyType, DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, CashierCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, UnitCode, InvoiceNo, ItemType, ExceptTax, IsPos, ExchangeRate, IsCancel, LineNumber, RefLineNumber, BarCode,AVERAGECOST, LotNumber,  TaxRate, PackingRate1, PackingRate2`
+	//sqlsub := `MyType, DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, CashierCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, UnitCode, InvoiceNo, ItemType, ExceptTax, IsPos, IsCancel, LineNumber, RefLineNumber, BarCode,AVERAGECOST, LotNumber, PackingRate1, PackingRate2`
 	return nil
 }
