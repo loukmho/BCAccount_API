@@ -1,7 +1,7 @@
 package model
 
 type StkIssueRet struct {
-	DocNo           string
+	DocNo           string `json:"doc_no" db:""`
 	DocDate         string
 	CreatorCode     string
 	CreateDateTime  string
