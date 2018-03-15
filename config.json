@@ -1,5 +1,5 @@
 {
-  "_comment": "Actual deploy use db_host: nopadol.net:3306",
+  "_comment": "",
   "db_host": "it11n",
   "db_name": "pc2017",
   "db_user": "sa",

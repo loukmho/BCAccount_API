@@ -1,0 +1,9 @@
+{
+  "_comment": "",
+  "ardeposit_gl_format": "D01",
+  "ardepositspecial_gl_format": "D03",
+  "arinvoice_cash_gl_format": "B01",
+  "arinvoice_credit_gl_format": "B02",
+  "creditnote_gl_format": "D01",
+  "debitnote_gl_format": "D01"
+}
