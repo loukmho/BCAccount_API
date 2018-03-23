@@ -36,18 +36,18 @@ func CalcTaxDoc(taxtype int, taxrate float64, totalamount float64)(beforetaxamou
 	return beforetaxamount,taxamount
 }
 
-func CalcTaxItem(taxtype int, taxrate float64, totalamount float64)(beforetaxamount float64,taxamount float64){
-	fmt.Println("taxtype,taxrate,total",taxtype,taxrate,totalamount)
+func CalcTaxItem(taxtype int, taxrate float64, afterdiscountamount float64)(beforetaxamount float64,taxamount float64){
+	fmt.Println("taxtype,taxrate,total",taxtype,taxrate,afterdiscountamount)
 
 	switch taxtype {
 	case 0:
-		beforetaxamount = ToFixed(totalamount, 2)
-		taxamount = ToFixed(((totalamount*(100+float64(taxrate)))/(100))-totalamount, 2)
+		beforetaxamount = ToFixed(afterdiscountamount, 2)
+		taxamount = ToFixed(((afterdiscountamount*(100+float64(taxrate)))/(100))-afterdiscountamount, 2)
 	case 1:
-		taxamount = ToFixed(totalamount-((totalamount*100)/(100+float64(taxrate))), 2)
-		beforetaxamount = ToFixed(totalamount-taxamount, 2)
+		taxamount = ToFixed(afterdiscountamount-((afterdiscountamount*100)/(100+float64(taxrate))), 2)
+		beforetaxamount = ToFixed(afterdiscountamount-taxamount, 2)
 	case 2:
-		beforetaxamount = ToFixed(totalamount, 2)
+		beforetaxamount = ToFixed(afterdiscountamount, 2)
 		taxamount = 0
 	}
 
@@ -58,6 +58,7 @@ func CalcTaxItem(taxtype int, taxrate float64, totalamount float64)(beforetaxamo
 
 type Default struct {
 	TaxRateDefault float64 `json:"tax_rate_default"`
+	ExchangeRateDefault float64 `json:"exchange_rate_default"`
 
 	ArDepositGLFormat string `json:"ar_deposit_gl_format"`
 	ArDepositBookCode string `json:"ar_deposit_book_code"`

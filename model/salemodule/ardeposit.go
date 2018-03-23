@@ -107,23 +107,14 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 	var sum_pay_amount float64
 	var source int
 
-	sqlexist := `select count(docno) as check_exist from dbo.bcardeposit where docno = ? and arcode = ?`
+	now := time.Now()
+
+	sqlexist := `select count(docno) as check_exist from dbo.bcardeposit where docno = ? and arcode = ?`//เช็คว่ามีเอกสารหรือยัง
 	err := db.Get(&check_exist, sqlexist, dp.DocNo, dp.ArCode)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil
 	}
-	time.Now()
-	//start :=time.Now().Date()
-	year, month, day := time.Now().Date()
-
-	start := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-	oneDayLater := start.AddDate(0, 0, dp.CreditDay)
-
-
-	fmt.Printf("oneDayLater: start.AddDate(0, 0, 1) = %v\n", oneDayLater)
-	fmt.Printf("oneMonthLater: start.AddDate(0, 1, 0) = %v\n", oneMonthLater)
-	fmt.Printf("oneYearLater: start.AddDate(1, 0, 0) = %v\n", oneYearLater)
 
 	switch {
 	case dp.DocNo == "":
@@ -152,39 +143,40 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 	if (dp.TaxDate == "") {
 		dp.TaxDate = dp.DocDate
 	}
-	if (dp.DueDate == "") {
+	if (dp.DueDate == "" && dp.CreditDay == 0) {
 		dp.DueDate = dp.DocDate
-	}
-	if (dp.CreditDay == 0) {
-		dp.DueDate = dp.DocDate
+	}else{
+		dp.DueDate = now.AddDate(0, 0, dp.CreditDay).Format("2006-01-02")
 	}
 	if (dp.ExchangeRate == 0) {
 		dp.ExchangeRate = 1
 	}
 
-	fmt.Println("TaxDate =", dp.TaxDate)
-	fmt.Println("TAxDate =", dp.TaxDate)
-	fmt.Println("DocDate=", dp.DocDate)
 	fmt.Println("UserCode = ",dp.UserCode)
 
 	def := m.Default{}
 	def = m.LoadDefaultData("bcdata.json")
 
-	fmt.Println("TaxRate = ", def.TaxRateDefault)
+	//fmt.Println("TaxRate = ", def.TaxRateDefault)
 
 	if dp.TaxRate == 0 {
 		dp.TaxRate = def.TaxRateDefault
 	}
+	if dp.ExchangeRate == 0 {
+		dp.ExchangeRate = def.ExchangeRateDefault
+	}
 
-	dp.BookCode = def.ArDepositBookCode
+	if (dp.BookCode==""){
+		dp.BookCode = def.ArDepositBookCode
+	}
 	source = def.ArDepositSource
-	dp.GLFormat = def.ArDepositGLFormat
-
-	fmt.Println("BookCode = ", def.ArDepositBookCode)
+	if (dp.GLFormat==""){
+		dp.GLFormat = def.ArDepositGLFormat
+	}
 
 	dp.BeforeTaxAmount, dp.TaxAmount = m.CalcTaxDoc(dp.TaxType, dp.TaxRate, dp.TotalAmount)
 
-	fmt.Println("BeforeTax,TaxAmount", dp.BeforeTaxAmount, dp.TaxAmount)
+	//fmt.Println("BeforeTax,TaxAmount", dp.BeforeTaxAmount, dp.TaxAmount)
 
 	fmt.Println("check_exist = ", check_exist)
 
@@ -197,7 +189,7 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 		sql := `Insert into dbo.BCArDeposit(DocNo,DocDate,TaxDate,TaxType,TaxNo,ArCode,DepartCode,CreditDay,DueDate,SaleCode,TaxRate,MyDescription,BeforeTaxAmount,TaxAmount,TotalAmount,SumOfWTax,NetAmount,BillBalance,OtherIncome,OtherExpense, ExcessAmount1,ExcessAmount2,ChargeAmount,ChangeAmount,RefNo,CurrencyCode,ExchangeRate,SumCashAmount,SumChqAmount,SumCreditAmount, SumBankAmount,GLFormat,AllocateCode,ProjectCode,BillGroup,RecurName,CreatorCode,CreateDateTime)
 			values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate())`
 		_, err = db.Exec(sql, dp.DocNo, dp.DocDate, dp.TaxDate, dp.TaxType, dp.TaxNo, dp.ArCode, dp.DepartCode, dp.CreditDay, dp.DueDate, dp.SaleCode, dp.TaxRate, dp.MyDescription, dp.BeforeTaxAmount, dp.TaxAmount, dp.TotalAmount, dp.SumOfWTax, dp.NetAmount, dp.BillBalance, dp.OtherIncome, dp.OtherExpense, dp.ExcessAmount1, dp.ExcessAmount2, dp.ChargeAmount, dp.ChangeAmount, dp.RefNo, dp.CurrencyCode, dp.ExchangeRate, dp.SumCashAmount, dp.SumChqAmount, dp.SumCreditAmount, dp.SumBankAmount, dp.GLFormat, dp.AllocateCode, dp.ProjectCode, dp.BillGroup, dp.RecurName, dp.CreatorCode)
-		fmt.Println("sql =", sql, dp.DocNo, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.SaleCode)
+		fmt.Println("sql =", sql, dp.DocNo, dp.DocDate, dp.DueDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.SaleCode)
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
