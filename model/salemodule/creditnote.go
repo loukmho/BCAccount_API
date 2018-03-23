@@ -114,7 +114,6 @@ type CrdItem struct {
 	PackingRate2   float64 `json:"packing_rate_2" db:"PackingRate2"`
 }
 
-
 func (crd *CreditNote) SearchCreditNoteByDocNo(db *sqlx.DB, docno string) error {
 	sql := `set dateformat dmy     select a.DocNo,isnull(a.TaxNo,'') as TaxNo,isnull(a.TaxDate,'') as TaxDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,a.DocDate,isnull(a.DueDate,'') as DueDate,a.TaxType,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,isnull(a.SaleCode,'') as SaleCode,isnull(c.name,'') as SaleName,isnull(a.CashierCode,'') as CashierCode,a.TaxRate,a.IsConfirm,isnull(a.MyDescription,'') as MyDescription,a.SumOfItemAmount,a.SumOldAmount,a.SumTrueAmount,a.SumofDiffAmount,isnull(a.DiscountWord,'') as DiscountWord,a.DiscountAmount,a.SumofBeforeTax,a.SumOfTaxAmount,a.SumOfTotalTax,a.SumOfZeroTax,a.SumOfExceptTax,a.SumOfWTax,a.NetDebtAmount,a.BillBalance,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,isnull(a.GLFormat,'') as GLFormat,a.IsCancel,a.IsCompleteSave,a.ReturnMoney,a.ReturnStatus,a.ReturnCash,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,a.ChargeAmount,a.ChangeAmount,a.CauseType,a.PayBillStatus,a.IsCNDeposit,a.IsPos,isnull(a.PosDocNo,'') as PosDocNo,isnull(a.CauseCode,'') as CauseCode,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime,a.PayBillAmount,a.BillTemporary from dbo.BCCreditNote a With (Nolock) left join dbo.bcar b with (nolock) on a.arcode = b.code left join dbo.bcsale c with (nolock) on a.salecode = c.code where a.docno = ?`
 	err := db.Get(crd, sql, docno)
@@ -123,11 +122,32 @@ func (crd *CreditNote) SearchCreditNoteByDocNo(db *sqlx.DB, docno string) error 
 		return err
 	}
 	//sqlsub := `MyType, DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, CashierCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, UnitCode, InvoiceNo, ItemType, ExceptTax, IsPos, IsCancel, LineNumber, RefLineNumber, BarCode,AVERAGECOST, LotNumber, PackingRate1, PackingRate2`
-	sqlsub := `set dateformat dmy     select a.MyType,a.ItemCode,isnull(a.MyDescription,'') as MyDescription,isnull(a.ItemName,'') as ItemName,isnull(a.WHCode,'') as WHCode,isnull(a.ShelfCode,'') as ShelfCode,a.DiscQty,a.TempQty,a.BillQty,a.Price,isnull(a.DiscountWord,'') as DiscountWord,a.DiscountAmount,a.Amount,a.NetAmount,a.HomeAmount,a.SumOfCost,isnull(a.UnitCode,'') as UnitCode,isnull(a.InvoiceNo,'') as InvoiceNo,a.IsPos,a.IsCancel,a.LineNumber,a.RefLineNumber,isnull(a.BarCode,'') as BarCode,a.AVERAGECOST,isnull(a.LotNumber,'') as LotNumber,a.PackingRate1,a.PackingRate2 from dbo.BCCreditNoteSub a with (nolock) where a.docno = ?`
+	sqlsub := `set dateformat dmy     select a.MyType,a.ItemCode,isnull(a.MyDescription,'') as MyDescription,isnull(a.ItemName,'') as ItemName,isnull(a.WHCode,'') as WHCode,isnull(a.ShelfCode,'') as ShelfCode,a.DiscQty,a.TempQty,a.BillQty,a.Price,isnull(a.DiscountWord,'') as DiscountWord,a.DiscountAmount,a.Amount,a.NetAmount,a.HomeAmount,a.SumOfCost,isnull(a.UnitCode,'') as UnitCode,isnull(a.InvoiceNo,'') as InvoiceNo,a.IsPos,a.IsCancel,a.LineNumber,a.RefLineNumber,isnull(a.BarCode,'') as BarCode,a.AVERAGECOST,isnull(a.LotNumber,'') as LotNumber,isnull(a.PackingRate1,1) as PackingRate1,isnull(a.PackingRate2,1) as PackingRate2 from dbo.BCCreditNoteSub a with (nolock) where a.docno = ?`
 	err = db.Select(&crd.Item, sqlsub, docno)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		return err
 	}
 	return nil
+}
+
+func (crd *CreditNote) SearchCreditNoteByKeyword(db *sqlx.DB, keyword string) (crdList []*CreditNote, err error) {
+	sql := `set dateformat dmy     select a.DocNo,isnull(a.TaxNo,'') as TaxNo,isnull(a.TaxDate,'') as TaxDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,a.DocDate,isnull(a.DueDate,'') as DueDate,a.TaxType,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,isnull(a.SaleCode,'') as SaleCode,isnull(c.name,'') as SaleName,isnull(a.CashierCode,'') as CashierCode,a.TaxRate,a.IsConfirm,isnull(a.MyDescription,'') as MyDescription,a.SumOfItemAmount,a.SumOldAmount,a.SumTrueAmount,a.SumofDiffAmount,isnull(a.DiscountWord,'') as DiscountWord,a.DiscountAmount,a.SumofBeforeTax,a.SumOfTaxAmount,a.SumOfTotalTax,a.SumOfZeroTax,a.SumOfExceptTax,a.SumOfWTax,a.NetDebtAmount,a.BillBalance,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,isnull(a.GLFormat,'') as GLFormat,a.IsCancel,a.IsCompleteSave,a.ReturnMoney,a.ReturnStatus,a.ReturnCash,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,a.ChargeAmount,a.ChangeAmount,a.CauseType,a.PayBillStatus,a.IsCNDeposit,a.IsPos,isnull(a.PosDocNo,'') as PosDocNo,isnull(a.CauseCode,'') as CauseCode,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime,a.PayBillAmount,a.BillTemporary from dbo.BCCreditNote a With (Nolock) left join dbo.bcar b with (nolock) on a.arcode = b.code left join dbo.bcsale c with (nolock) on a.salecode = c.code where (a.docno  like '%'+?+'%' or a.arcode like '%'+?+'%' or a.salecode like '%'+?+'%' or b.name1 like '%'+?+'%' or c.name like '%'+?+'%' )`
+	err = db.Select(&crdList, sql, keyword, keyword, keyword, keyword, keyword)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	for _, sub := range crdList {
+		//sqlsub := `MyType, DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, CashierCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, UnitCode, InvoiceNo, ItemType, ExceptTax, IsPos, IsCancel, LineNumber, RefLineNumber, BarCode,AVERAGECOST, LotNumber, PackingRate1, PackingRate2`
+		sqlsub := `set dateformat dmy     select a.MyType,a.ItemCode,isnull(a.MyDescription,'') as MyDescription,isnull(a.ItemName,'') as ItemName,isnull(a.WHCode,'') as WHCode,isnull(a.ShelfCode,'') as ShelfCode,a.DiscQty,a.TempQty,a.BillQty,a.Price,isnull(a.DiscountWord,'') as DiscountWord,a.DiscountAmount,a.Amount,a.NetAmount,a.HomeAmount,a.SumOfCost,isnull(a.UnitCode,'') as UnitCode,isnull(a.InvoiceNo,'') as InvoiceNo,a.IsPos,a.IsCancel,a.LineNumber,a.RefLineNumber,isnull(a.BarCode,'') as BarCode,a.AVERAGECOST,isnull(a.LotNumber,'') as LotNumber,isnull(a.PackingRate1,1) as PackingRate1,isnull(a.PackingRate2,1) as PackingRate2 from dbo.BCCreditNoteSub a with (nolock) where a.docno = ?`
+		err = db.Select(&sub.Item, sqlsub, sub.DocNo)
+		fmt.Println("Docno =",sqlsub, sub.DocNo)
+		if err != nil {
+			fmt.Println(err)
+			return nil, err
+		}
+	}
+	return crdList, nil
 }

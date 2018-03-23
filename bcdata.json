@@ -1,9 +1,18 @@
 {
   "_comment": "",
-  "ardeposit_gl_format": "D01",
-  "ardepositspecial_gl_format": "D03",
-  "arinvoice_cash_gl_format": "B01",
-  "arinvoice_credit_gl_format": "B02",
+  "tax_rate_default": 7,
+  "ar_deposit_gl_format": "D01",
+  "ar_deposit_book_code": "41",
+  "ar_deposit_source": 6,
+
+  "ar_invoice_cash_gl_format": "",
+  "ar_invoice_credit_gl_format": "",
+  "ar_invoice_book_code": "",
+  "ar_invoice_source": 6
+
+  "ar_deposit_special_gl_format": "D03",
+  "ar_invoice_cash_gl_format": "B01",
+  "ar_invoice_credit_gl_format": "B02",
   "creditnote_gl_format": "D01",
   "debitnote_gl_format": "D01"
 }

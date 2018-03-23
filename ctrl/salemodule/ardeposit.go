@@ -57,7 +57,7 @@ func InsertArDespoit(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = dp.InsertArDeposit(ct.Dbc)
+	err = dp.SaveArDeposit(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -72,25 +72,25 @@ func InsertArDespoit(c *gin.Context) {
 
 }
 
-func UpdateArDespoit(c *gin.Context) {
-	c.Keys = ct.HeaderKeys
-
-	dp := &model.ArDeposit{}
-	err := c.BindJSON(dp)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	err = dp.UpdateArDeposit(ct.Dbc)
-
-	rs := ct.Response{}
-	if err != nil {
-		rs.Status = "error"
-		rs.Message = "No Content and Error : " + err.Error()
-		c.JSON(http.StatusNotFound, rs)
-	} else {
-		rs.Status = "success"
-		rs.Data = dp
-		c.JSON(http.StatusOK, rs)
-	}
-
-}
+//func UpdateArDespoit(c *gin.Context) {
+//	c.Keys = ct.HeaderKeys
+//
+//	dp := &model.ArDeposit{}
+//	err := c.BindJSON(dp)
+//	if err != nil {
+//		fmt.Println(err.Error())
+//	}
+//	err = dp.UpdateArDeposit(ct.Dbc)
+//
+//	rs := ct.Response{}
+//	if err != nil {
+//		rs.Status = "error"
+//		rs.Message = "No Content and Error : " + err.Error()
+//		c.JSON(http.StatusNotFound, rs)
+//	} else {
+//		rs.Status = "success"
+//		rs.Data = dp
+//		c.JSON(http.StatusOK, rs)
+//	}
+//
+//}
