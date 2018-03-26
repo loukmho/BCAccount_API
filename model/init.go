@@ -36,24 +36,26 @@ func CalcTaxDoc(taxtype int, taxrate float64, totalamount float64)(beforetaxamou
 	return beforetaxamount,taxamount
 }
 
-func CalcTaxItem(taxtype int, taxrate float64, afterdiscountamount float64)(beforetaxamount float64,taxamount float64){
-	fmt.Println("taxtype,taxrate,total",taxtype,taxrate,afterdiscountamount)
-
+func CalcTaxItem(taxtype int, taxrate float64, afterdiscountamount float64)(beforetaxamount float64,taxamount float64,totalamount float64){
 	switch taxtype {
 	case 0:
 		beforetaxamount = ToFixed(afterdiscountamount, 2)
 		taxamount = ToFixed(((afterdiscountamount*(100+float64(taxrate)))/(100))-afterdiscountamount, 2)
+		totalamount = ToFixed(beforetaxamount+taxamount,2)
 	case 1:
 		taxamount = ToFixed(afterdiscountamount-((afterdiscountamount*100)/(100+float64(taxrate))), 2)
 		beforetaxamount = ToFixed(afterdiscountamount-taxamount, 2)
+		totalamount = ToFixed(afterdiscountamount,2)
 	case 2:
 		beforetaxamount = ToFixed(afterdiscountamount, 2)
 		taxamount = 0
+		totalamount = ToFixed(afterdiscountamount,2)
 	}
 
-	fmt.Println("Before,Tax",beforetaxamount,taxamount)
+	fmt.Println("taxtype,taxrate,beforetaxamount,taxamount,totalamount",taxtype,taxrate,beforetaxamount,taxamount,totalamount)
 
-	return beforetaxamount,taxamount
+
+	return beforetaxamount,taxamount,totalamount
 }
 
 type Default struct {

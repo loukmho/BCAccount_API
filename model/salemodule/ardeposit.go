@@ -195,99 +195,6 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 			return err
 		}
 
-		//dp.BookCode = "41"
-		sqltax := `insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(0,?,?,?,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())`
-		_, err = db.Exec(sqltax, dp.DocNo, dp.BookCode, source, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.CreatorCode)
-		fmt.Println("sqltax = ", sqltax)
-		if err != nil {
-			fmt.Println(err.Error())
-			return err
-		}
-
-		var my_description_recmoney string
-
-		if (dp.MyDescription == "") {
-			my_description_recmoney = "รับเงินมัดจำ"
-		} else {
-			my_description_recmoney = dp.MyDescription
-		}
-
-		fmt.Println("RecMoney")
-		var linenumber int
-
-		if (dp.SumCashAmount != 0) { //subs.PaymentType == 0:
-			fmt.Println("SumCashAmount")
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCashAmount, 0, linenumber, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney)
-			if err != nil {
-				return err
-			}
-		}
-		//case dp.SumCreditAmount != 0: //subs.PaymentType == 1:
-		if (dp.SumCreditAmount != 0) {
-			fmt.Println("SumCreditAmount")
-			if (dp.SumCashAmount != 0) {
-				linenumber = 1
-			} else {
-				linenumber = 0
-			}
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCreditAmount, dp.SumCreditAmount, 1, dp.CreditType, dp.ConfirmNo, linenumber, dp.RefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
-			if err != nil {
-				return err
-			}
-		}
-
-		//case dp.SumChqAmount != 0: //subs.PaymentType == 2:
-		if (dp.SumChqAmount != 0) {
-			fmt.Println("SumChqAmount")
-			if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0) {
-				linenumber = 2
-			} else if ((dp.SumCashAmount != 0 && dp.SumCreditAmount == 0)) {
-				linenumber = 1
-			} else if ((dp.SumCashAmount == 0 && dp.SumCreditAmount != 0)) {
-				linenumber = 1
-			} else if ((dp.SumCashAmount == 0 && dp.SumCreditAmount == 0)) {
-				linenumber = 0
-			}
-
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,TransBankDate,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumChqAmount, 2, linenumber, dp.CreditRefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, dp.BankBranchCode, dp.TransBankDate, my_description_recmoney, dp.RefDate)
-			if err != nil {
-				return err
-			}
-		}
-
-		//case dp.SumBankAmount != 0: //subs.PaymentType == 3:
-		if (dp.SumBankAmount != 0) {
-			fmt.Println("SumBankAmount")
-			if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount != 0) {
-				linenumber = 3
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount != 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount != 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0) {
-				linenumber = 1
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
-				linenumber = 1
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount != 0) {
-				linenumber = 1
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0) {
-				linenumber = 0
-			}
-
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumBankAmount, 3, linenumber, dp.CreditRefNo, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
-			if err != nil {
-				return err
-			}
-		}
-
 	} else {
 
 		//Update/////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -300,112 +207,110 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 		if err != nil {
 			return err
 		}
-
-		sqldel := `delete dbo.BCOutputTax where docno = ?`
-		_, err = db.Exec(sqldel, dp.DocNo)
-		if err != nil {
-			return err
-		}
-
-		sqltax := "insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(1,?,?,?,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())"
-		_, err = db.Exec(sqltax, dp.DocNo, dp.BookCode, source, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.CreatorCode)
-		if err != nil {
-			return err
-		}
-
-		sqlrecdel := `delete dbo.BCRecMoney where docno = ?`
-		_, err = db.Exec(sqlrecdel, dp.DocNo)
-		if err != nil {
-			return err
-		}
-
-		var my_description_recmoney string
-
-		if (dp.MyDescription == "") {
-			my_description_recmoney = "รับเงินมัดจำ"
-		} else {
-			my_description_recmoney = dp.MyDescription
-		}
-
-		fmt.Println("RecMoney")
-		var linenumber int
-
-		if (dp.SumCashAmount != 0) { //subs.PaymentType == 0:
-			fmt.Println("SumCashAmount")
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCashAmount, 0, linenumber, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney)
-			if err != nil {
-				return err
-			}
-		}
-		//case dp.SumCreditAmount != 0: //subs.PaymentType == 1:
-		if (dp.SumCreditAmount != 0) {
-			fmt.Println("SumCreditAmount")
-			if (dp.SumCashAmount != 0) {
-				linenumber = 1
-			} else {
-				linenumber = 0
-			}
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCreditAmount, dp.SumCreditAmount, 1, dp.CreditType, dp.ConfirmNo, linenumber, dp.CreditRefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
-			if err != nil {
-				return err
-			}
-		}
-
-		//case dp.SumChqAmount != 0: //subs.PaymentType == 2:
-		if (dp.SumChqAmount != 0) {
-			fmt.Println("SumChqAmount")
-			if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0) {
-				linenumber = 2
-			} else if ((dp.SumCashAmount != 0 && dp.SumCreditAmount == 0)) {
-				linenumber = 1
-			} else if ((dp.SumCashAmount == 0 && dp.SumCreditAmount != 0)) {
-				linenumber = 1
-			} else if ((dp.SumCashAmount == 0 && dp.SumCreditAmount == 0)) {
-				linenumber = 0
-			}
-
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,TransBankDate,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumChqAmount, 2, linenumber, dp.CreditRefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, dp.BankBranchCode, dp.TransBankDate, my_description_recmoney, dp.RefDate)
-			if err != nil {
-				return err
-			}
-		}
-
-		//case dp.SumBankAmount != 0: //subs.PaymentType == 3:
-		if (dp.SumBankAmount != 0) {
-			fmt.Println("SumBankAmount")
-			if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount != 0) {
-				linenumber = 3
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount != 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount != 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
-				linenumber = 2
-			} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0) {
-				linenumber = 1
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
-				linenumber = 1
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount != 0) {
-				linenumber = 1
-			} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0) {
-				linenumber = 0
-			}
-
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumBankAmount, 3, linenumber, dp.RefNo, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
-			if err != nil {
-				return err
-			}
-		}
-
-		//}
-
 	}
+
+	sqldel := `delete dbo.BCOutputTax where docno = ?`
+	_, err = db.Exec(sqldel, dp.DocNo)
+	if err != nil {
+		return err
+	}
+
+	sqltax := "insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(1,?,?,?,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())"
+	_, err = db.Exec(sqltax, dp.DocNo, dp.BookCode, source, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.CreatorCode)
+	if err != nil {
+		return err
+	}
+
+	sqlrecdel := `delete dbo.BCRecMoney where docno = ?`
+	_, err = db.Exec(sqlrecdel, dp.DocNo)
+	if err != nil {
+		return err
+	}
+
+	var my_description_recmoney string
+
+	if (dp.MyDescription == "") {
+		my_description_recmoney = "รับเงินมัดจำ"
+	} else {
+		my_description_recmoney = dp.MyDescription
+	}
+
+	fmt.Println("RecMoney")
+	var linenumber int
+
+	if (dp.SumCashAmount != 0) { //subs.PaymentType == 0:
+		fmt.Println("SumCashAmount")
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCashAmount, 0, linenumber, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney)
+		if err != nil {
+			return err
+		}
+	}
+	//case dp.SumCreditAmount != 0: //subs.PaymentType == 1:
+	if (dp.SumCreditAmount != 0) {
+		fmt.Println("SumCreditAmount")
+		if (dp.SumCashAmount != 0) {
+			linenumber = 1
+		} else {
+			linenumber = 0
+		}
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCreditAmount, dp.SumCreditAmount, 1, dp.CreditType, dp.ConfirmNo, linenumber, dp.CreditRefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
+		if err != nil {
+			return err
+		}
+	}
+
+	//case dp.SumChqAmount != 0: //subs.PaymentType == 2:
+	if (dp.SumChqAmount != 0) {
+		fmt.Println("SumChqAmount")
+		if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0) {
+			linenumber = 2
+		} else if ((dp.SumCashAmount != 0 && dp.SumCreditAmount == 0)) {
+			linenumber = 1
+		} else if ((dp.SumCashAmount == 0 && dp.SumCreditAmount != 0)) {
+			linenumber = 1
+		} else if ((dp.SumCashAmount == 0 && dp.SumCreditAmount == 0)) {
+			linenumber = 0
+		}
+
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,TransBankDate,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumChqAmount, 2, linenumber, dp.CreditRefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, dp.BankBranchCode, dp.TransBankDate, my_description_recmoney, dp.RefDate)
+		if err != nil {
+			return err
+		}
+	}
+
+	//case dp.SumBankAmount != 0: //subs.PaymentType == 3:
+	if (dp.SumBankAmount != 0) {
+		fmt.Println("SumBankAmount")
+		if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount != 0) {
+			linenumber = 3
+		} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount != 0) {
+			linenumber = 2
+		} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount != 0) {
+			linenumber = 2
+		} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
+			linenumber = 2
+		} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
+			linenumber = 2
+		} else if (dp.SumCashAmount != 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0) {
+			linenumber = 1
+		} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount != 0 && dp.SumChqAmount == 0) {
+			linenumber = 1
+		} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount != 0) {
+			linenumber = 1
+		} else if (dp.SumCashAmount == 0 && dp.SumCreditAmount == 0 && dp.SumChqAmount == 0) {
+			linenumber = 0
+		}
+
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumBankAmount, 3, linenumber, dp.CreditRefNo, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 

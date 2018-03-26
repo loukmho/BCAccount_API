@@ -3,6 +3,8 @@ package model
 import (
 	"github.com/jmoiron/sqlx"
 	"fmt"
+	"time"
+	"errors"
 )
 
 type CreditNote struct {
@@ -71,6 +73,7 @@ type CreditNote struct {
 	CancelDateTime  string    `json:"cancel_date_time" db:"CancelDateTime"`
 	PayBillAmount   float64   `json:"pay_bill_amount" db:"PayBillAmount"`
 	BillTemporary   float64   `json:"bill_temporary" db:"BillTemporary"`
+	ListCrdRecMoney
 	Item            []CrdItem `json:"item"`
 }
 
@@ -112,6 +115,48 @@ type CrdItem struct {
 	LotNumber      string  `json:"lot_number" db:"LotNumber"`
 	PackingRate1   float64 `json:"packing_rate_1" db:"PackingRate1"`
 	PackingRate2   float64 `json:"packing_rate_2" db:"PackingRate2"`
+}
+
+type ListCrdRecMoney struct {
+	CreditTypeSub  string `json:"credit_type_sub" db:"CreditTypeSub"`
+	ConfirmNo      string `json:"confirm_no" db:"ConfirmNo"`
+	CreditRefNo    string `json:"credit_ref_no" db:"CreditRefNo"`
+	BankCode       string `json:"bank_code" db:"BookCode"`
+	BankBranchCode string `json:"bank_branch_code" db:"BankBranchCode"`
+	TransBankDate  string `json:"trans_bank_date" db:"TransBankDate"`
+	RefDate        string `json:"ref_date" db:"RefDate"`
+}
+
+
+func (crd *CreditNote) SaveAndUpdateCreditNote(db *sqlx.DB)error {
+	var check_exist int
+
+	now := time.Now()
+
+	sqlexist := `select count(docno) as check_exist from dbo.bccreditnote where docno = ? and arcode = ?`
+	err := db.Get(&check_exist, sqlexist, crd.DocNo, crd.ArCode)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
+
+	switch {
+	case crd.DocNo == "":
+		return errors.New("docno is null")
+	case crd.ArCode == "":
+		return errors.New("arcode is null")
+	case crd.DocDate == "":
+		return errors.New("docdate is null")
+	case crd.IsCancel == 1:
+		return errors.New("docno is cancel")
+	case crd.IsConfirm == 1:
+		return errors.New("docno is confirm")
+	case crd.SumCreditAmount != 0 && (crd.CreditTypeSub == "" || crd.ConfirmNo == "" || crd.CreditRefNo == ""):
+		return errors.New("credit card data not complete")
+	case crd.PosStatus != 0 && inv.MachineCode == "" && inv.MachineNo == "" && inv.ShiftCode == "" && inv.ShiftCode == "" && inv.CashierCode == "":
+		return errors.New("docno not have pos data")
+	}
+	return nil
 }
 
 func (crd *CreditNote) SearchCreditNoteByDocNo(db *sqlx.DB, docno string) error {
