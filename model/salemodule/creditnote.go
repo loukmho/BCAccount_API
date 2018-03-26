@@ -3,7 +3,7 @@ package model
 import (
 	"github.com/jmoiron/sqlx"
 	"fmt"
-	"time"
+	//"time"
 	"errors"
 )
 
@@ -131,7 +131,7 @@ type ListCrdRecMoney struct {
 func (crd *CreditNote) SaveAndUpdateCreditNote(db *sqlx.DB)error {
 	var check_exist int
 
-	now := time.Now()
+	//now := time.Now()
 
 	sqlexist := `select count(docno) as check_exist from dbo.bccreditnote where docno = ? and arcode = ?`
 	err := db.Get(&check_exist, sqlexist, crd.DocNo, crd.ArCode)
@@ -153,8 +153,8 @@ func (crd *CreditNote) SaveAndUpdateCreditNote(db *sqlx.DB)error {
 		return errors.New("docno is confirm")
 	case crd.SumCreditAmount != 0 && (crd.CreditTypeSub == "" || crd.ConfirmNo == "" || crd.CreditRefNo == ""):
 		return errors.New("credit card data not complete")
-	case crd.PosStatus != 0 && inv.MachineCode == "" && inv.MachineNo == "" && inv.ShiftCode == "" && inv.ShiftCode == "" && inv.CashierCode == "":
-		return errors.New("docno not have pos data")
+	//case crd.PosStatus != 0 && inv.MachineCode == "" && inv.MachineNo == "" && inv.ShiftCode == "" && inv.ShiftCode == "" && inv.CashierCode == "":
+	//	return errors.New("docno not have pos data")
 	}
 	return nil
 }

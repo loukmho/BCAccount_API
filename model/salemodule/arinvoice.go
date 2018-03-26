@@ -9,82 +9,85 @@ import (
 )
 
 type ArInvoice struct {
-	SaveFrom         int        `json:"save_from" db:"SaveFrom"`
-	Source           int        `json:"source" db:"Source"`
-	DocNo            string     `json:"doc_no" db:"DocNo"`
-	DocDate          string     `json:"doc_date" db:"DocDate"`
+	SaveFrom         int                  `json:"save_from" db:"SaveFrom"`
+	Source           int                  `json:"source" db:"Source"`
+	DocNo            string               `json:"doc_no" db:"DocNo"`
+	DocDate          string               `json:"doc_date" db:"DocDate"`
 	InvOutPutTax
 	InvCustomer
 	InvSaleMan
-	CreatorCode      string     `json:"creator_code" db:"CreatorCode"`
-	CreateDateTime   string     `json:"create_date_time" db:"CreateDateTime"`
-	LastEditorCode   string     `json:"last_editor_code" db:"LastEditorCode"`
-	LastEditDateT    string     `json:"last_edit_date_t" db:"LastEditDateT"`
-	TaxType          int        `json:"tax_type" db:"TaxType"`
-	DepartCode       string     `json:"depart_code" db:"DepartCode"`
-	CreditDay        int        `json:"credit_day" db:"CreditDay"`
-	DeliveryDay      int        `json:"delivery_day" db:"DeliveryDay"`
-	DeliveryDate     string     `json:"delivery_date" db:"DeliveryDate"`
-	DueDate          string     `json:"due_date" db:"DueDate"`
-	PayBillDate      string     `json:"pay_bill_date" db:"PayBillDate"`
-	TaxRate          float64    `json:"tax_rate" db:"TaxRate"`
-	IsConfirm        int        `json:"is_confirm" db:"IsConfirm"`
-	MyDescription    string     `json:"my_description" db:"MyDescription"`
-	BillType         int        `json:"bill_type" db:"BillType"`
-	BillGroup        string     `json:"bill_group" db:"BillGroup"`
-	RefDocNo         string     `json:"ref_doc_no" db:"RefDocNo"`
-	DeliveryAddr     string     `json:"delivery_addr" db:"DeliveryAddr"`
-	ContactCode      string     `json:"contact_code" db:"ContactCode"`
-	SumOfItemAmount  float64    `json:"sum_of_item_amount" db:"SumOfItemAmount"`
-	DiscountWord     string     `json:"discount_word" db:"DiscountWord"`
-	DiscountAmount   float64    `json:"discount_amount" db:"DiscountAmount"`
-	AfterDiscount    float64    `json:"after_discount" db:"AfterDiscount"`
-	BeforeTaxAmount  float64    `json:"before_tax_amount" db:"BeforeTaxAmount"`
-	TaxAmount        float64    `json:"tax_amount" db:"TaxAmount"`
-	TotalAmount      float64    `json:"total_amount" db:"TotalAmount"`
-	ZeroTaxAmount    float64    `json:"zero_tax_amount" db:"ZeroTaxAmount"`
-	ExceptTaxAmount  float64    `json:"except_tax_amount" db:"ExceptTaxAmount"`
-	SumCashAmount    float64    `json:"sum_cash_amount" db:"SumCashAmount"`
-	SumChqAmount     float64    `json:"sum_chq_amount" db:"SumChqAmount"`
-	SumCreditAmount  float64    `json:"sum_credit_amount" db:"SumCreditAmount"`
-	SumBankAmount    float64    `json:"sum_bank_amount" db:"SumBankAmount"`
-	DepositIncTax    int        `json:"deposit_inc_tax" db:"DepositIncTax"`
-	SumOfDeposit1    float64    `json:"sum_of_deposit_1" db:"SumOfDeposit1"`
-	SumOfDeposit2    float64    `json:"sum_of_deposit_2" db:"SumOfDeposit2"`
-	SumOfWTax        float64    `json:"sum_of_w_tax" db:"SumOfWTax"`
-	NetDebtAmount    float64    `json:"net_debt_amount" db:"NetDebtAmount"`
-	HomeAmount       float64    `json:"home_amount" db:"HomeAmount"`
-	OtherIncome      float64    `json:"other_income" db:"OtherIncome"`
-	OtherExpense     float64    `json:"other_expense" db:"OtherExpense"`
-	ExcessAmount1    float64    `json:"excess_amount_1" db:"ExcessAmount1"`
-	ExcessAmount2    float64    `json:"excess_amount_2" db:"ExcessAmount2"`
-	BillBalance      float64    `json:"bill_balance" db:"BillBalance"`
-	CurrencyCode     string     `json:"currency_code" db:"CurrencyCode"`
-	ExchangeRate     float64    `json:"exchange_rate" db:"ExchangeRate"`
-	GLFormat         string     `json:"gl_format" db:"GLFormat"`
-	IsCancel         int        `json:"is_cancel" db:"IsCancel"`
-	IsCompleteSave   int        `json:"is_complete_save" db:"IsCompleteSave"`
-	AllocateCode     string     `json:"allocate_code" db:"AllocateCode"`
-	ProjectCode      string     `json:"project_code" db:"ProjectCode"`
-	RecurName        string     `json:"recur_name" db:"RecurName"`
-	ConfirmCode      string     `json:"confirm_code" db:"ConfirmCode"`
-	ConfirmDateTime  string     `json:"confirm_date_time" db:"ConfirmDateTime"`
-	CancelCode       string     `json:"cancel_code" db:"CancelCode"`
-	CancelDateTime   string     `json:"cancel_date_time" db:"CancelDateTime"`
-	IsConditionSend  int        `json:"is_condition_send" db:"IsConditionSend"`
-	PayBillAmount    float64    `json:"pay_bill_amount" db:"PayBillAmount"`
-	SORefNo          string     `json:"so_ref_no" db:"SORefNo"`
-	HoldingStatus    int        `json:"holding_status" db:"HoldingStatus"`
-	PosStatus        int        `json:"pos_status" db:"PosStatus"`
-	CreditType       string     `json:"credit_type" db:"CreditType"`
-	CreditDueDate    string     `json:"credit_due_date"  db:"CreditDueDate"`
-	CreditNo         string     `json:"credit_no" db:"CreditNo"`
-	CofirmNo         string     `json:"cofirm_no" db:"CofirmNo"`
-	CreditBaseAmount float64    `json:"credit_base_amount" db:"CreditBaseAmount"`
-	UserCode         string     `json:"user_code" db:"UserCode"`
+	CreatorCode      string               `json:"creator_code" db:"CreatorCode"`
+	CreateDateTime   string               `json:"create_date_time" db:"CreateDateTime"`
+	LastEditorCode   string               `json:"last_editor_code" db:"LastEditorCode"`
+	LastEditDateT    string               `json:"last_edit_date_t" db:"LastEditDateT"`
+	TaxType          int                  `json:"tax_type" db:"TaxType"`
+	DepartCode       string               `json:"depart_code" db:"DepartCode"`
+	CreditDay        int                  `json:"credit_day" db:"CreditDay"`
+	DeliveryDay      int                  `json:"delivery_day" db:"DeliveryDay"`
+	DeliveryDate     string               `json:"delivery_date" db:"DeliveryDate"`
+	DueDate          string               `json:"due_date" db:"DueDate"`
+	PayBillDate      string               `json:"pay_bill_date" db:"PayBillDate"`
+	TaxRate          float64              `json:"tax_rate" db:"TaxRate"`
+	IsConfirm        int                  `json:"is_confirm" db:"IsConfirm"`
+	MyDescription    string               `json:"my_description" db:"MyDescription"`
+	BillType         int                  `json:"bill_type" db:"BillType"`
+	BillGroup        string               `json:"bill_group" db:"BillGroup"`
+	RefDocNo         string               `json:"ref_doc_no" db:"RefDocNo"`
+	DeliveryAddr     string               `json:"delivery_addr" db:"DeliveryAddr"`
+	ContactCode      string               `json:"contact_code" db:"ContactCode"`
+	SumOfItemAmount  float64              `json:"sum_of_item_amount" db:"SumOfItemAmount"`
+	DiscountWord     string               `json:"discount_word" db:"DiscountWord"`
+	DiscountAmount   float64              `json:"discount_amount" db:"DiscountAmount"`
+	AfterDiscount    float64              `json:"after_discount" db:"AfterDiscount"`
+	BeforeTaxAmount  float64              `json:"before_tax_amount" db:"BeforeTaxAmount"`
+	TaxAmount        float64              `json:"tax_amount" db:"TaxAmount"`
+	TotalAmount      float64              `json:"total_amount" db:"TotalAmount"`
+	ZeroTaxAmount    float64              `json:"zero_tax_amount" db:"ZeroTaxAmount"`
+	ExceptTaxAmount  float64              `json:"except_tax_amount" db:"ExceptTaxAmount"`
+	SumCashAmount    float64              `json:"sum_cash_amount" db:"SumCashAmount"`
+	SumChqAmount     float64              `json:"sum_chq_amount" db:"SumChqAmount"`
+	SumCreditAmount  float64              `json:"sum_credit_amount" db:"SumCreditAmount"`
+	SumBankAmount    float64              `json:"sum_bank_amount" db:"SumBankAmount"`
+	DepositIncTax    int                  `json:"deposit_inc_tax" db:"DepositIncTax"`
+	SumOfDeposit1    float64              `json:"sum_of_deposit_1" db:"SumOfDeposit1"`
+	SumOfDeposit2    float64              `json:"sum_of_deposit_2" db:"SumOfDeposit2"`
+	SumOfWTax        float64              `json:"sum_of_w_tax" db:"SumOfWTax"`
+	NetDebtAmount    float64              `json:"net_debt_amount" db:"NetDebtAmount"`
+	HomeAmount       float64              `json:"home_amount" db:"HomeAmount"`
+	OtherIncome      float64              `json:"other_income" db:"OtherIncome"`
+	OtherExpense     float64              `json:"other_expense" db:"OtherExpense"`
+	ExcessAmount1    float64              `json:"excess_amount_1" db:"ExcessAmount1"`
+	ExcessAmount2    float64              `json:"excess_amount_2" db:"ExcessAmount2"`
+	BillBalance      float64              `json:"bill_balance" db:"BillBalance"`
+	CurrencyCode     string               `json:"currency_code" db:"CurrencyCode"`
+	ExchangeRate     float64              `json:"exchange_rate" db:"ExchangeRate"`
+	GLFormat         string               `json:"gl_format" db:"GLFormat"`
+	IsCancel         int                  `json:"is_cancel" db:"IsCancel"`
+	IsCompleteSave   int                  `json:"is_complete_save" db:"IsCompleteSave"`
+	AllocateCode     string               `json:"allocate_code" db:"AllocateCode"`
+	ProjectCode      string               `json:"project_code" db:"ProjectCode"`
+	RecurName        string               `json:"recur_name" db:"RecurName"`
+	ConfirmCode      string               `json:"confirm_code" db:"ConfirmCode"`
+	ConfirmDateTime  string               `json:"confirm_date_time" db:"ConfirmDateTime"`
+	CancelCode       string               `json:"cancel_code" db:"CancelCode"`
+	CancelDateTime   string               `json:"cancel_date_time" db:"CancelDateTime"`
+	IsConditionSend  int                  `json:"is_condition_send" db:"IsConditionSend"`
+	PayBillAmount    float64              `json:"pay_bill_amount" db:"PayBillAmount"`
+	SORefNo          string               `json:"so_ref_no" db:"SORefNo"`
+	HoldingStatus    int                  `json:"holding_status" db:"HoldingStatus"`
+	PosStatus        int                  `json:"pos_status" db:"PosStatus"`
+	CreditType       string               `json:"credit_type" db:"CreditType"`
+	CreditDueDate    string               `json:"credit_due_date"  db:"CreditDueDate"`
+	CreditNo         string               `json:"credit_no" db:"CreditNo"`
+	CofirmNo         string               `json:"cofirm_no" db:"CofirmNo"`
+	CreditBaseAmount float64              `json:"credit_base_amount" db:"CreditBaseAmount"`
+	UserCode         string               `json:"user_code" db:"UserCode"`
 	Pos
 	ListInvRecMoney
-	Subs             []*InvItem `json:"subs"`
+	Subs             []*InvItem           `json:"subs"`
+	Deps             []*ListArDepositUsed `json:"deps"`
+	Cdcs             []*ListCreditCard    `json:"cdcs"`
+	Chqs             []*ListChqIn         `json:"chqs"`
 }
 
 type InvOutPutTax struct {
@@ -156,6 +159,31 @@ type ListInvRecMoney struct {
 	BankBranchCode string `json:"bank_branch_code" db:"BankBranchCode"`
 	TransBankDate  string `json:"trans_bank_date" db:"TransBankDate"`
 	RefDate        string `json:"ref_date" db:"RefDate"`
+}
+
+type ListArDepositUsed struct {
+	DepositNo      string
+	Balance        float64
+	Amount         float64
+	NetAmount      float64
+	DepositTaxType int
+	LineNumber     int
+}
+
+type ListChqIn struct {
+	ChqNumber      string
+	BankCode       string
+	BankBranchCode string
+	BookNo         string
+	ReceiveDate    string
+	DueDate        string
+	Status         int
+	Amount         float64
+	Balance        float64
+	RefChqRowOrder int
+}
+
+type ListCreditCard struct {
 }
 
 //type ListInvRecMoney struct {
@@ -326,11 +354,14 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		return err
 	}
 
+	var vLineNumber int
+
 	for _, item := range inv.Subs {
 		fmt.Println("ItemSub")
 		item.MyType = 4
 		item.CNQty = item.Qty
 		item.BalanceAmount = item.Amount
+		item.LineNumber = vLineNumber
 
 		item.IsCancel = 0
 		if (item.PackingRate1 == 0) {
@@ -363,6 +394,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 			fmt.Println(err.Error())
 			return err
 		}
+		vLineNumber = vLineNumber + 1
 	}
 
 	sqldel := `delete dbo.BCOutputTax where docno = ?`
@@ -469,6 +501,32 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 				return err
 			}
 		}
+	}
+
+
+	sqldepdel := `delete dbo.BCDepositUse where docno = ?`
+	_, err = db.Exec(sqldepdel, inv.DocNo)
+	if err != nil {
+		return err
+	}
+
+	var depLineNumber int
+
+	if (inv.SumOfDeposit1 > 0) {
+		for _, d := range inv.Deps {
+			d.LineNumber = depLineNumber
+			sqldep := `set dateformat dmy     insert into dbo.bcardeposituse(DocNo,DepositNo,DocDate,MyDescription,Balance,Amount,DeposTaxType,NetAmount,LineNumber) values(?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqldep, inv.DocNo, d.DepositNo, inv.DocDate, my_description_recmoney, d.Balance, d.Amount, inv.TaxType, d.NetAmount, d.LineNumber)
+			if err != nil {
+				return err
+			}
+			depLineNumber = depLineNumber + 1
+		}
+
+	}
+
+	if (inv.SumCreditAmount > 0) {
+
 	}
 
 	return nil

@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="04fb81d0-cba6-4721-a376-cc3403a2134e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/model/init.go" afterPath="$PROJECT_DIR$/model/init.go" />
-      <change beforePath="$PROJECT_DIR$/model/salemodule/ardeposit.go" afterPath="$PROJECT_DIR$/model/salemodule/ardeposit.go" />
       <change beforePath="$PROJECT_DIR$/model/salemodule/arinvoice.go" afterPath="$PROJECT_DIR$/model/salemodule/arinvoice.go" />
       <change beforePath="$PROJECT_DIR$/model/salemodule/creditnote.go" afterPath="$PROJECT_DIR$/model/salemodule/creditnote.go" />
     </list>
@@ -30,8 +28,8 @@
       <file leaf-file-name="ardeposit.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/salemodule/ardeposit.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="135" column="9" lean-forward="true" selection-start-line="135" selection-start-column="9" selection-end-line="135" selection-end-column="9" />
+            <state relative-caret-position="2193">
+              <caret line="135" column="9" lean-forward="false" selection-start-line="135" selection-start-column="9" selection-end-line="135" selection-end-column="9" />
               <folding>
                 <marker date="1521948658528" expanded="true" signature="4954:5040" ph="select count... bcardeposit" />
                 <marker date="1521948658528" expanded="true" signature="7282:7829" ph="Insert into dbo.BCArDeposit... " />
@@ -48,40 +46,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="arinvoice.go" pinned="false" current-in-tab="false">
+      <file leaf-file-name="arinvoice.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2669">
-              <caret line="149" column="0" lean-forward="true" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
+            <state relative-caret-position="221">
+              <caret line="511" column="0" lean-forward="true" selection-start-line="511" selection-start-column="0" selection-end-line="511" selection-end-column="0" />
               <folding>
-                <marker date="1521949106284" expanded="true" signature="9345:9431" ph="select count... bcarinvoice" />
-                <marker date="1521949106284" expanded="true" signature="12397:13262" ph="insert into dbo.bcarinvoice... " />
-                <marker date="1521949106284" expanded="true" signature="14293:15360" ph="insert into dbo.bcarinvoice... " />
-                <marker date="1521949106284" expanded="true" signature="16634:16860" ph="insert into dbo.BCOutputTax... " />
-                <marker date="1521949106284" expanded="true" signature="17356:18204" ph="update dbo.bcarinvoice... " />
-                <marker date="1521949106284" expanded="true" signature="19282:20349" ph="insert into dbo.bcarinvoice... " />
-                <marker date="1521949106284" expanded="true" signature="22517:23044" ph="insert into dbo.BCArInvoiceSub... " />
-                <marker date="1521949106284" expanded="true" signature="23868:24094" ph="insert into dbo.BCOutputTax... " />
-                <marker date="1521949106284" expanded="true" signature="24855:25025" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1521949106284" expanded="true" signature="25487:25728" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1521949106284" expanded="true" signature="26545:26777" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1521949106284" expanded="true" signature="28235:28423" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1522089697833" expanded="true" signature="10669:10755" ph="select count... bcarinvoice" />
+                <marker date="1522089697833" expanded="true" signature="13721:14586" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1522089697833" expanded="true" signature="15617:16684" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1522089697833" expanded="true" signature="17958:18184" ph="insert into dbo.BCOutputTax... " />
+                <marker date="1522089697833" expanded="true" signature="18680:19528" ph="update dbo.bcarinvoice... " />
+                <marker date="1522089697833" expanded="true" signature="20606:21673" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1522089697833" expanded="true" signature="23895:24422" ph="insert into dbo.BCArInvoiceSub... " />
+                <marker date="1522089697833" expanded="true" signature="25278:25504" ph="insert into dbo.BCOutputTax... " />
+                <marker date="1522089697833" expanded="true" signature="26265:26435" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1522089697833" expanded="true" signature="26897:27138" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1522089697833" expanded="true" signature="27955:28187" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1522089697833" expanded="true" signature="29645:29833" ph="insert into dbo.BCRecMoney... " />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="creditnote.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="creditnote.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/salemodule/creditnote.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="158" column="14" lean-forward="true" selection-start-line="158" selection-start-column="14" selection-end-line="158" selection-end-column="14" />
+            <state relative-caret-position="153">
+              <caret line="14" column="75" lean-forward="false" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="75" />
               <folding>
-                <marker date="1521948839138" expanded="true" signature="6857:6944" ph="select count... bcarinvoice" />
-                <marker date="1521948839138" expanded="true" signature="7881:9646" ph="select a.Doc... BCCreditNote" />
-                <marker date="1521948839138" expanded="true" signature="10170:10824" ph="select a.MyT... BCCreditNoteSub" />
-                <marker date="1521948839138" expanded="true" signature="11083:12970" ph="select a.Doc... BCCreditNote" />
-                <marker date="1521948839138" expanded="true" signature="13578:14232" ph="select a.MyT... BCCreditNoteSub" />
+                <element signature="e#15#79#0" expanded="true" />
+                <marker date="1522087884255" expanded="true" signature="6861:6948" ph="select count... bcarinvoice" />
+                <marker date="1522087884255" expanded="true" signature="7889:9654" ph="select a.Doc... BCCreditNote" />
+                <marker date="1522087884255" expanded="true" signature="10178:10832" ph="select a.MyT... BCCreditNoteSub" />
+                <marker date="1522087884255" expanded="true" signature="11091:12978" ph="select a.Doc... BCCreditNote" />
+                <marker date="1522087884255" expanded="true" signature="13586:14240" ph="select a.MyT... BCCreditNoteSub" />
               </folding>
             </state>
           </provider>
@@ -232,6 +231,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -254,8 +255,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -308,13 +307,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18887262" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32755905" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -682,8 +682,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/salemodule/ardeposit.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="135" column="9" lean-forward="true" selection-start-line="135" selection-start-column="9" selection-end-line="135" selection-end-column="9" />
+        <state relative-caret-position="2193">
+          <caret line="135" column="9" lean-forward="false" selection-start-line="135" selection-start-column="9" selection-end-line="135" selection-end-column="9" />
           <folding>
             <marker date="1521948658528" expanded="true" signature="4954:5040" ph="select count... bcardeposit" />
             <marker date="1521948658528" expanded="true" signature="7282:7829" ph="Insert into dbo.BCArDeposit... " />
@@ -699,37 +699,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
+    <entry file="file://$PROJECT_DIR$/model/salemodule/creditnote.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2669">
-          <caret line="149" column="0" lean-forward="true" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
+        <state relative-caret-position="153">
+          <caret line="14" column="75" lean-forward="false" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="75" />
           <folding>
-            <marker date="1521949106284" expanded="true" signature="9345:9431" ph="select count... bcarinvoice" />
-            <marker date="1521949106284" expanded="true" signature="12397:13262" ph="insert into dbo.bcarinvoice... " />
-            <marker date="1521949106284" expanded="true" signature="14293:15360" ph="insert into dbo.bcarinvoice... " />
-            <marker date="1521949106284" expanded="true" signature="16634:16860" ph="insert into dbo.BCOutputTax... " />
-            <marker date="1521949106284" expanded="true" signature="17356:18204" ph="update dbo.bcarinvoice... " />
-            <marker date="1521949106284" expanded="true" signature="19282:20349" ph="insert into dbo.bcarinvoice... " />
-            <marker date="1521949106284" expanded="true" signature="22517:23044" ph="insert into dbo.BCArInvoiceSub... " />
-            <marker date="1521949106284" expanded="true" signature="23868:24094" ph="insert into dbo.BCOutputTax... " />
-            <marker date="1521949106284" expanded="true" signature="24855:25025" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1521949106284" expanded="true" signature="25487:25728" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1521949106284" expanded="true" signature="26545:26777" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1521949106284" expanded="true" signature="28235:28423" ph="insert into dbo.BCRecMoney... " />
+            <element signature="e#15#79#0" expanded="true" />
+            <marker date="1522087884255" expanded="true" signature="6861:6948" ph="select count... bcarinvoice" />
+            <marker date="1522087884255" expanded="true" signature="7889:9654" ph="select a.Doc... BCCreditNote" />
+            <marker date="1522087884255" expanded="true" signature="10178:10832" ph="select a.MyT... BCCreditNoteSub" />
+            <marker date="1522087884255" expanded="true" signature="11091:12978" ph="select a.Doc... BCCreditNote" />
+            <marker date="1522087884255" expanded="true" signature="13586:14240" ph="select a.MyT... BCCreditNoteSub" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/creditnote.go">
+    <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="158" column="14" lean-forward="true" selection-start-line="158" selection-start-column="14" selection-end-line="158" selection-end-column="14" />
+        <state relative-caret-position="221">
+          <caret line="511" column="0" lean-forward="true" selection-start-line="511" selection-start-column="0" selection-end-line="511" selection-end-column="0" />
           <folding>
-            <marker date="1521948839138" expanded="true" signature="6857:6944" ph="select count... bcarinvoice" />
-            <marker date="1521948839138" expanded="true" signature="7881:9646" ph="select a.Doc... BCCreditNote" />
-            <marker date="1521948839138" expanded="true" signature="10170:10824" ph="select a.MyT... BCCreditNoteSub" />
-            <marker date="1521948839138" expanded="true" signature="11083:12970" ph="select a.Doc... BCCreditNote" />
-            <marker date="1521948839138" expanded="true" signature="13578:14232" ph="select a.MyT... BCCreditNoteSub" />
+            <marker date="1522089697833" expanded="true" signature="10669:10755" ph="select count... bcarinvoice" />
+            <marker date="1522089697833" expanded="true" signature="13721:14586" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1522089697833" expanded="true" signature="15617:16684" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1522089697833" expanded="true" signature="17958:18184" ph="insert into dbo.BCOutputTax... " />
+            <marker date="1522089697833" expanded="true" signature="18680:19528" ph="update dbo.bcarinvoice... " />
+            <marker date="1522089697833" expanded="true" signature="20606:21673" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1522089697833" expanded="true" signature="23895:24422" ph="insert into dbo.BCArInvoiceSub... " />
+            <marker date="1522089697833" expanded="true" signature="25278:25504" ph="insert into dbo.BCOutputTax... " />
+            <marker date="1522089697833" expanded="true" signature="26265:26435" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1522089697833" expanded="true" signature="26897:27138" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1522089697833" expanded="true" signature="27955:28187" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1522089697833" expanded="true" signature="29645:29833" ph="insert into dbo.BCRecMoney... " />
           </folding>
         </state>
       </provider>
