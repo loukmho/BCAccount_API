@@ -162,12 +162,11 @@ type ListInvRecMoney struct {
 }
 
 type ListArDepositUsed struct {
-	DepositNo      string
-	Balance        float64
-	Amount         float64
-	NetAmount      float64
-	DepositTaxType int
-	LineNumber     int
+	DepositNo      string `json:"deposit_no" db:"DepositNo"`
+	Balance        float64 `json:"balance" db:"Balance"`
+	Amount         float64 `json:"amount" db:"Amount"`
+	NetAmount      float64 `json:"net_amount" db:"NetAmount"`
+	LineNumber     int `json:"line_number" db:"LineNumber"`
 }
 
 type ListChqIn struct {
@@ -181,6 +180,9 @@ type ListChqIn struct {
 	Amount         float64
 	Balance        float64
 	RefChqRowOrder int
+	SaveFrom       int
+	StatusDate     string
+	StatusDocNo    string
 }
 
 type ListCreditCard struct {
@@ -243,6 +245,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		return errors.New("credit card data not complete")
 	case inv.PosStatus != 0 && inv.MachineCode == "" && inv.MachineNo == "" && inv.ShiftCode == "" && inv.ShiftCode == "" && inv.CashierCode == "":
 		return errors.New("docno not have pos data")
+	case inv.SumOfDeposit1 != 0 && len(inv.Deps) == 0:
+		return errors.New("docno not have deposit use data")
 	}
 
 	inv.SaveFrom = 0
@@ -503,8 +507,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		}
 	}
 
-
-	sqldepdel := `delete dbo.BCDepositUse where docno = ?`
+	sqldepdel := `delete dbo.BCArDepositUse where docno = ?`
 	_, err = db.Exec(sqldepdel, inv.DocNo)
 	if err != nil {
 		return err
@@ -515,14 +518,29 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 	if (inv.SumOfDeposit1 > 0) {
 		for _, d := range inv.Deps {
 			d.LineNumber = depLineNumber
-			sqldep := `set dateformat dmy     insert into dbo.bcardeposituse(DocNo,DepositNo,DocDate,MyDescription,Balance,Amount,DeposTaxType,NetAmount,LineNumber) values(?,?,?,?,?,?,?,?,?)`
+			sqldep := `insert into dbo.bcardeposituse(DocNo,DepositNo,DocDate,MyDescription,Balance,Amount,DeposTaxType,NetAmount,LineNumber) values(?,?,?,?,?,?,?,?,?)`
 			_, err = db.Exec(sqldep, inv.DocNo, d.DepositNo, inv.DocDate, my_description_recmoney, d.Balance, d.Amount, inv.TaxType, d.NetAmount, d.LineNumber)
 			if err != nil {
 				return err
 			}
 			depLineNumber = depLineNumber + 1
 		}
+	}
 
+	sqlchqdel := `delete dbo.BCChqIn where docno = ?`
+	_, err = db.Exec(sqlchqdel, inv.DocNo)
+	if err != nil {
+		return err
+	}
+
+	if (inv.SumChqAmount > 0) {
+		for _, c := range inv.Chqs {
+			sqldep := `set dateformat dmy     insert into dbo.bcchqin(BankCode,ChqNumber,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,Balance,MyDescription,ExchangeRate,RefChqRowOrder) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqldep, c.BankCode, c.ChqNumber, inv.DocNo, inv.ArCode, inv.SaleCode, c.ReceiveDate, c.DueDate, c.BookNo, c.Status, c.SaveFrom, c.StatusDate, c.StatusDocNo, inv.DepartCode, c.BankBranchCode, c.Amount, c.Balance, my_description_recmoney, inv.ExchangeRate, c.RefChqRowOrder)
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	if (inv.SumCreditAmount > 0) {
