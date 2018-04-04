@@ -65,11 +65,18 @@ type Default struct {
 	ArDepositGLFormat string `json:"ar_deposit_gl_format"`
 	ArDepositBookCode string `json:"ar_deposit_book_code"`
 	ArDepositSource int `json:"ar_deposit_source"`
+	ArDepositSaveFrom int `json:"ar_deposit_save_from"`
 
 	ArInvoiceCashGLFormat string `json:"ar_invoice_cash_gl_format"`
 	ArInvoiceCreditGLFormat string `json:"ar_invoice_credit_gl_format"`
 	ArInvoiceBookCode string `json:"ar_invoice_book_code"`
 	ArInvoiceSource int `json:"ar_invoice_source"`
+	ArInvoiceSaveFrom int `json:"ar_invoice_save_from"`
+
+	CreditGLFormat string `json:"credit_gl_format"`
+	CreditBookCode string `json:"credit_book_code"`
+	CreditSource int `json:"credit_source"`
+	CreditSaveFrom int `json:"credit_save_from"`
 
 	ArDepositSpecialGLFormat string `json:"ar_deposit_special_gl_format"`
 	CreditnoteGLFormat string `json:"creditnote_gl_format"`

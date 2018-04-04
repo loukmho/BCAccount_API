@@ -3,8 +3,8 @@ package model
 import (
 	"github.com/jmoiron/sqlx"
 	"fmt"
-	//"time"
 	"errors"
+	m "github.com/loukmho/bcaccount_api/model"
 )
 
 type CreditNote struct {
@@ -18,6 +18,7 @@ type CreditNote struct {
 	DocDate         string    `json:"doc_date" db:"DocDate"`
 	DueDate         string    `json:"due_date" db:"DueDate"`
 	TaxType         int       `json:"tax_type" db:"TaxType"`
+	Source          int       `json:"source" db:"Source"`
 	CrdCustomer
 	CrdSaleMan
 	DepartCode      string    `json:"depart_code" db:"DepartCode"`
@@ -73,6 +74,8 @@ type CreditNote struct {
 	CancelDateTime  string    `json:"cancel_date_time" db:"CancelDateTime"`
 	PayBillAmount   float64   `json:"pay_bill_amount" db:"PayBillAmount"`
 	BillTemporary   float64   `json:"bill_temporary" db:"BillTemporary"`
+	SaveFrom        int       `json:"save_from" db"SaveFrom"`
+	UserCode        string    `json:"user_code" db:"UserCode"`
 	ListCrdRecMoney
 	Item            []CrdItem `json:"item"`
 }
@@ -127,11 +130,9 @@ type ListCrdRecMoney struct {
 	RefDate        string `json:"ref_date" db:"RefDate"`
 }
 
-
-func (crd *CreditNote) SaveAndUpdateCreditNote(db *sqlx.DB)error {
+func (crd *CreditNote) SaveAndUpdateCreditNote(db *sqlx.DB) error {
 	var check_exist int
 
-	//now := time.Now()
 
 	sqlexist := `select count(docno) as check_exist from dbo.bccreditnote where docno = ? and arcode = ?`
 	err := db.Get(&check_exist, sqlexist, crd.DocNo, crd.ArCode)
@@ -151,11 +152,48 @@ func (crd *CreditNote) SaveAndUpdateCreditNote(db *sqlx.DB)error {
 		return errors.New("docno is cancel")
 	case crd.IsConfirm == 1:
 		return errors.New("docno is confirm")
-	case crd.SumCreditAmount != 0 && (crd.CreditTypeSub == "" || crd.ConfirmNo == "" || crd.CreditRefNo == ""):
-		return errors.New("credit card data not complete")
-	//case crd.PosStatus != 0 && inv.MachineCode == "" && inv.MachineNo == "" && inv.ShiftCode == "" && inv.ShiftCode == "" && inv.CashierCode == "":
-	//	return errors.New("docno not have pos data")
 	}
+
+	def := m.Default{}
+	def = m.LoadDefaultData("bcdata.json")
+
+	if crd.TaxRate == 0 {
+		crd.TaxRate = def.TaxRateDefault
+	}
+	if crd.ExchangeRate == 0 {
+		crd.ExchangeRate = def.ExchangeRateDefault
+	}
+
+	crd.Source = def.ArDepositSource
+	if (crd.GLFormat == "") {
+		crd.GLFormat = def.ArDepositGLFormat
+	}
+
+	if crd.SaveFrom == 0 {
+		crd.SaveFrom = def.CreditSaveFrom
+	}
+
+	if crd.DueDate == "" {
+		crd.DueDate = crd.DocDate
+	}
+
+	diffAmount := crd.SumOldAmount - crd.SumTrueAmount
+
+	crd.SumofBeforeTax, crd.SumOfTaxAmount, crd.SumOfTotalTax = m.CalcTaxItem(crd.TaxType, crd.TaxRate, diffAmount)
+
+	fmt.Println("check_exist = ", check_exist)
+
+	if check_exist == 0 {
+		sql := `insert into dbo.bccreditnote(DocNo,TaxNo,TaxDate,CreatorCode,CreateDateTime,DocDate,DueDate,TaxType,ArCode,DepartCode,SaleCode,CashierCode,TaxRate,IsConfirm,MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfZeroTax,SumOfExceptTax,SumOfWTax,NetDebtAmount,BillBalance,CurrencyCode,ExchangeRate,GLFormat,IsCancel,IsCompleteSave,ReturnMoney,ReturnStatus,ReturnCash,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,ChargeAmount,ChangeAmount,CauseType,PayBillStatus,IsCNDeposit,IsPos,PosDocNo,CauseCode,AllocateCode,ProjectCode,BillGroup,RecurName,PayBillAmount,BillTemporary) values(?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sql, crd.DocNo, crd.TaxNo, crd.TaxDate, crd.UserCode, crd.DocDate, crd.DueDate, crd.TaxType, crd.ArCode, crd.DepartCode, crd.SaleCode, crd.CashierCode, crd.TaxRate, crd.IsConfirm, crd.MyDescription, crd.SumOfItemAmount, crd.SumOldAmount, crd.SumTrueAmount, crd.SumofDiffAmount, crd.DiscountWord, crd.DiscountAmount, crd.SumofBeforeTax, crd.SumOfTaxAmount, crd.SumOfTotalTax, crd.SumOfZeroTax, crd.SumOfExceptTax, crd.SumOfWTax, crd.NetDebtAmount, crd.BillBalance, crd.CurrencyCode, crd.ExchangeRate, crd.GLFormat, crd.IsCancel, crd.IsCompleteSave, crd.ReturnMoney, crd.ReturnStatus, crd.ReturnCash, crd.OtherIncome, crd.OtherExpense, crd.ExcessAmount1, crd.ExcessAmount2, crd.SumCashAmount, crd.SumChqAmount, crd.SumCreditAmount, crd.SumBankAmount, crd.ChargeAmount, crd.ChangeAmount, crd.CauseType, crd.PayBillStatus, crd.IsCNDeposit, crd.IsPos, crd.PosDocNo, crd.CauseCode, crd.AllocateCode, crd.ProjectCode, crd.BillGroup, crd.RecurName, crd.PayBillAmount, crd.BillTemporary)
+		if err != nil {
+			fmt.Println("Insert Credit =", err.Error())
+			return err
+		}
+	} else {
+
+	}
+
 	return nil
 }
 
@@ -188,7 +226,7 @@ func (crd *CreditNote) SearchCreditNoteByKeyword(db *sqlx.DB, keyword string) (c
 		//sqlsub := `MyType, DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, CashierCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, UnitCode, InvoiceNo, ItemType, ExceptTax, IsPos, IsCancel, LineNumber, RefLineNumber, BarCode,AVERAGECOST, LotNumber, PackingRate1, PackingRate2`
 		sqlsub := `set dateformat dmy     select a.MyType,a.ItemCode,isnull(a.MyDescription,'') as MyDescription,isnull(a.ItemName,'') as ItemName,isnull(a.WHCode,'') as WHCode,isnull(a.ShelfCode,'') as ShelfCode,a.DiscQty,a.TempQty,a.BillQty,a.Price,isnull(a.DiscountWord,'') as DiscountWord,a.DiscountAmount,a.Amount,a.NetAmount,a.HomeAmount,a.SumOfCost,isnull(a.UnitCode,'') as UnitCode,isnull(a.InvoiceNo,'') as InvoiceNo,a.IsPos,a.IsCancel,a.LineNumber,a.RefLineNumber,isnull(a.BarCode,'') as BarCode,a.AVERAGECOST,isnull(a.LotNumber,'') as LotNumber,isnull(a.PackingRate1,1) as PackingRate1,isnull(a.PackingRate2,1) as PackingRate2 from dbo.BCCreditNoteSub a with (nolock) where a.docno = ?`
 		err = db.Select(&sub.Item, sqlsub, sub.DocNo)
-		fmt.Println("Docno =",sqlsub, sub.DocNo)
+		fmt.Println("Docno =", sqlsub, sub.DocNo)
 		if err != nil {
 			fmt.Println(err)
 			return nil, err

@@ -9,85 +9,81 @@ import (
 )
 
 type ArInvoice struct {
-	SaveFrom         int                  `json:"save_from" db:"SaveFrom"`
-	Source           int                  `json:"source" db:"Source"`
-	DocNo            string               `json:"doc_no" db:"DocNo"`
-	DocDate          string               `json:"doc_date" db:"DocDate"`
+	SaveFrom         int                     `json:"save_from" db:"SaveFrom"`
+	Source           int                     `json:"source" db:"Source"`
+	DocNo            string                  `json:"doc_no" db:"DocNo"`
+	DocDate          string                  `json:"doc_date" db:"DocDate"`
 	InvOutPutTax
 	InvCustomer
 	InvSaleMan
-	CreatorCode      string               `json:"creator_code" db:"CreatorCode"`
-	CreateDateTime   string               `json:"create_date_time" db:"CreateDateTime"`
-	LastEditorCode   string               `json:"last_editor_code" db:"LastEditorCode"`
-	LastEditDateT    string               `json:"last_edit_date_t" db:"LastEditDateT"`
-	TaxType          int                  `json:"tax_type" db:"TaxType"`
-	DepartCode       string               `json:"depart_code" db:"DepartCode"`
-	CreditDay        int                  `json:"credit_day" db:"CreditDay"`
-	DeliveryDay      int                  `json:"delivery_day" db:"DeliveryDay"`
-	DeliveryDate     string               `json:"delivery_date" db:"DeliveryDate"`
-	DueDate          string               `json:"due_date" db:"DueDate"`
-	PayBillDate      string               `json:"pay_bill_date" db:"PayBillDate"`
-	TaxRate          float64              `json:"tax_rate" db:"TaxRate"`
-	IsConfirm        int                  `json:"is_confirm" db:"IsConfirm"`
-	MyDescription    string               `json:"my_description" db:"MyDescription"`
-	BillType         int                  `json:"bill_type" db:"BillType"`
-	BillGroup        string               `json:"bill_group" db:"BillGroup"`
-	RefDocNo         string               `json:"ref_doc_no" db:"RefDocNo"`
-	DeliveryAddr     string               `json:"delivery_addr" db:"DeliveryAddr"`
-	ContactCode      string               `json:"contact_code" db:"ContactCode"`
-	SumOfItemAmount  float64              `json:"sum_of_item_amount" db:"SumOfItemAmount"`
-	DiscountWord     string               `json:"discount_word" db:"DiscountWord"`
-	DiscountAmount   float64              `json:"discount_amount" db:"DiscountAmount"`
-	AfterDiscount    float64              `json:"after_discount" db:"AfterDiscount"`
-	BeforeTaxAmount  float64              `json:"before_tax_amount" db:"BeforeTaxAmount"`
-	TaxAmount        float64              `json:"tax_amount" db:"TaxAmount"`
-	TotalAmount      float64              `json:"total_amount" db:"TotalAmount"`
-	ZeroTaxAmount    float64              `json:"zero_tax_amount" db:"ZeroTaxAmount"`
-	ExceptTaxAmount  float64              `json:"except_tax_amount" db:"ExceptTaxAmount"`
-	SumCashAmount    float64              `json:"sum_cash_amount" db:"SumCashAmount"`
-	SumChqAmount     float64              `json:"sum_chq_amount" db:"SumChqAmount"`
-	SumCreditAmount  float64              `json:"sum_credit_amount" db:"SumCreditAmount"`
-	SumBankAmount    float64              `json:"sum_bank_amount" db:"SumBankAmount"`
-	DepositIncTax    int                  `json:"deposit_inc_tax" db:"DepositIncTax"`
-	SumOfDeposit1    float64              `json:"sum_of_deposit_1" db:"SumOfDeposit1"`
-	SumOfDeposit2    float64              `json:"sum_of_deposit_2" db:"SumOfDeposit2"`
-	SumOfWTax        float64              `json:"sum_of_w_tax" db:"SumOfWTax"`
-	NetDebtAmount    float64              `json:"net_debt_amount" db:"NetDebtAmount"`
-	HomeAmount       float64              `json:"home_amount" db:"HomeAmount"`
-	OtherIncome      float64              `json:"other_income" db:"OtherIncome"`
-	OtherExpense     float64              `json:"other_expense" db:"OtherExpense"`
-	ExcessAmount1    float64              `json:"excess_amount_1" db:"ExcessAmount1"`
-	ExcessAmount2    float64              `json:"excess_amount_2" db:"ExcessAmount2"`
-	BillBalance      float64              `json:"bill_balance" db:"BillBalance"`
-	CurrencyCode     string               `json:"currency_code" db:"CurrencyCode"`
-	ExchangeRate     float64              `json:"exchange_rate" db:"ExchangeRate"`
-	GLFormat         string               `json:"gl_format" db:"GLFormat"`
-	IsCancel         int                  `json:"is_cancel" db:"IsCancel"`
-	IsCompleteSave   int                  `json:"is_complete_save" db:"IsCompleteSave"`
-	AllocateCode     string               `json:"allocate_code" db:"AllocateCode"`
-	ProjectCode      string               `json:"project_code" db:"ProjectCode"`
-	RecurName        string               `json:"recur_name" db:"RecurName"`
-	ConfirmCode      string               `json:"confirm_code" db:"ConfirmCode"`
-	ConfirmDateTime  string               `json:"confirm_date_time" db:"ConfirmDateTime"`
-	CancelCode       string               `json:"cancel_code" db:"CancelCode"`
-	CancelDateTime   string               `json:"cancel_date_time" db:"CancelDateTime"`
-	IsConditionSend  int                  `json:"is_condition_send" db:"IsConditionSend"`
-	PayBillAmount    float64              `json:"pay_bill_amount" db:"PayBillAmount"`
-	SORefNo          string               `json:"so_ref_no" db:"SORefNo"`
-	HoldingStatus    int                  `json:"holding_status" db:"HoldingStatus"`
-	PosStatus        int                  `json:"pos_status" db:"PosStatus"`
-	CreditType       string               `json:"credit_type" db:"CreditType"`
-	CreditDueDate    string               `json:"credit_due_date"  db:"CreditDueDate"`
-	CreditNo         string               `json:"credit_no" db:"CreditNo"`
-	CofirmNo         string               `json:"cofirm_no" db:"CofirmNo"`
-	CreditBaseAmount float64              `json:"credit_base_amount" db:"CreditBaseAmount"`
-	UserCode         string               `json:"user_code" db:"UserCode"`
+	CreatorCode      string                  `json:"creator_code" db:"CreatorCode"`
+	CreateDateTime   string                  `json:"create_date_time" db:"CreateDateTime"`
+	LastEditorCode   string                  `json:"last_editor_code" db:"LastEditorCode"`
+	LastEditDateT    string                  `json:"last_edit_date_t" db:"LastEditDateT"`
+	TaxType          int                     `json:"tax_type" db:"TaxType"`
+	DepartCode       string                  `json:"depart_code" db:"DepartCode"`
+	CreditDay        int                     `json:"credit_day" db:"CreditDay"`
+	DeliveryDay      int                     `json:"delivery_day" db:"DeliveryDay"`
+	DeliveryDate     string                  `json:"delivery_date" db:"DeliveryDate"`
+	DueDate          string                  `json:"due_date" db:"DueDate"`
+	PayBillDate      string                  `json:"pay_bill_date" db:"PayBillDate"`
+	TaxRate          float64                 `json:"tax_rate" db:"TaxRate"`
+	IsConfirm        int                     `json:"is_confirm" db:"IsConfirm"`
+	MyDescription    string                  `json:"my_description" db:"MyDescription"`
+	BillType         int                     `json:"bill_type" db:"BillType"`
+	BillGroup        string                  `json:"bill_group" db:"BillGroup"`
+	RefDocNo         string                  `json:"ref_doc_no" db:"RefDocNo"`
+	DeliveryAddr     string                  `json:"delivery_addr" db:"DeliveryAddr"`
+	ContactCode      string                  `json:"contact_code" db:"ContactCode"`
+	SumOfItemAmount  float64                 `json:"sum_of_item_amount" db:"SumOfItemAmount"`
+	DiscountWord     string                  `json:"discount_word" db:"DiscountWord"`
+	DiscountAmount   float64                 `json:"discount_amount" db:"DiscountAmount"`
+	AfterDiscount    float64                 `json:"after_discount" db:"AfterDiscount"`
+	BeforeTaxAmount  float64                 `json:"before_tax_amount" db:"BeforeTaxAmount"`
+	TaxAmount        float64                 `json:"tax_amount" db:"TaxAmount"`
+	TotalAmount      float64                 `json:"total_amount" db:"TotalAmount"`
+	ZeroTaxAmount    float64                 `json:"zero_tax_amount" db:"ZeroTaxAmount"`
+	ExceptTaxAmount  float64                 `json:"except_tax_amount" db:"ExceptTaxAmount"`
+	SumCashAmount    float64                 `json:"sum_cash_amount" db:"SumCashAmount"`
+	SumChqAmount     float64                 `json:"sum_chq_amount" db:"SumChqAmount"`
+	SumCreditAmount  float64                 `json:"sum_credit_amount" db:"SumCreditAmount"`
+	SumBankAmount    float64                 `json:"sum_bank_amount" db:"SumBankAmount"`
+	DepositIncTax    int                     `json:"deposit_inc_tax" db:"DepositIncTax"`
+	SumOfDeposit1    float64                 `json:"sum_of_deposit_1" db:"SumOfDeposit1"`
+	SumOfDeposit2    float64                 `json:"sum_of_deposit_2" db:"SumOfDeposit2"`
+	SumOfWTax        float64                 `json:"sum_of_w_tax" db:"SumOfWTax"`
+	NetDebtAmount    float64                 `json:"net_debt_amount" db:"NetDebtAmount"`
+	HomeAmount       float64                 `json:"home_amount" db:"HomeAmount"`
+	OtherIncome      float64                 `json:"other_income" db:"OtherIncome"`
+	OtherExpense     float64                 `json:"other_expense" db:"OtherExpense"`
+	ExcessAmount1    float64                 `json:"excess_amount_1" db:"ExcessAmount1"`
+	ExcessAmount2    float64                 `json:"excess_amount_2" db:"ExcessAmount2"`
+	BillBalance      float64                 `json:"bill_balance" db:"BillBalance"`
+	CurrencyCode     string                  `json:"currency_code" db:"CurrencyCode"`
+	ExchangeRate     float64                 `json:"exchange_rate" db:"ExchangeRate"`
+	GLFormat         string                  `json:"gl_format" db:"GLFormat"`
+	IsCancel         int                     `json:"is_cancel" db:"IsCancel"`
+	IsCompleteSave   int                     `json:"is_complete_save" db:"IsCompleteSave"`
+	AllocateCode     string                  `json:"allocate_code" db:"AllocateCode"`
+	ProjectCode      string                  `json:"project_code" db:"ProjectCode"`
+	RecurName        string                  `json:"recur_name" db:"RecurName"`
+	ConfirmCode      string                  `json:"confirm_code" db:"ConfirmCode"`
+	ConfirmDateTime  string                  `json:"confirm_date_time" db:"ConfirmDateTime"`
+	CancelCode       string                  `json:"cancel_code" db:"CancelCode"`
+	CancelDateTime   string                  `json:"cancel_date_time" db:"CancelDateTime"`
+	IsConditionSend  int                     `json:"is_condition_send" db:"IsConditionSend"`
+	PayBillAmount    float64                 `json:"pay_bill_amount" db:"PayBillAmount"`
+	SORefNo          string                  `json:"so_ref_no" db:"SORefNo"`
+	HoldingStatus    int                     `json:"holding_status" db:"HoldingStatus"`
+	PosStatus        int                     `json:"pos_status" db:"PosStatus"`
+	CreditBaseAmount float64                 `json:"credit_base_amount" db:"CreditBaseAmount"`
+	UserCode         string                  `json:"user_code" db:"UserCode"`
 	Pos
 	ListInvRecMoney
-	Subs             []*InvItem           `json:"subs"`
-	Deps             []*ListArDepositUsed `json:"deps"`
-	Cdcs             []*ListCreditCard    `json:"cdcs"`
-	Chqs             []*ListChqIn         `json:"chqs"`
+	Subs             []*InvItem              `json:"subs"`
+	Deps             []*ListInvArDepositUsed `json:"deps"`
+	Cdcs             []*ListInvCreditCard    `json:"cdcs"`
+	Chqs             []*ListInvChqIn         `json:"chqs"`
 }
 
 type InvOutPutTax struct {
@@ -152,55 +148,58 @@ type InvItem struct {
 }
 
 type ListInvRecMoney struct {
-	CreditTypeSub  string `json:"credit_type_sub" db:"CreditTypeSub"`
+	CreditType     string `json:"credit_type" db:"CreditType"`
 	ConfirmNo      string `json:"confirm_no" db:"ConfirmNo"`
 	CreditRefNo    string `json:"credit_ref_no" db:"CreditRefNo"`
+	CreditDueDate  string `json:"credit_due_date" db:"CreditDueDate"`
 	BankCode       string `json:"bank_code" db:"BookCode"`
 	BankBranchCode string `json:"bank_branch_code" db:"BankBranchCode"`
+	BankRefNo      string `json:"bank_ref_no" db:"BankRefNo"`
 	TransBankDate  string `json:"trans_bank_date" db:"TransBankDate"`
 	RefDate        string `json:"ref_date" db:"RefDate"`
 }
 
-type ListArDepositUsed struct {
-	DepositNo      string `json:"deposit_no" db:"DepositNo"`
-	Balance        float64 `json:"balance" db:"Balance"`
+type ListInvArDepositUsed struct {
+	DepositNo  string  `json:"deposit_no" db:"DepositNo"`
+	Balance    float64 `json:"balance" db:"Balance"`
+	Amount     float64 `json:"amount" db:"Amount"`
+	NetAmount  float64 `json:"net_amount" db:"NetAmount"`
+	LineNumber int     `json:"line_number" db:"LineNumber"`
+}
+
+type ListInvChqIn struct {
+	ChqNumber      string  `json:"chq_number" db:"ChqNumber"`
+	BankCode       string  `json:"bank_code" db:"BankCode"`
+	BankBranchCode string  `json:"bank_branch_code" db:"BankBranchCode"`
+	BookNo         string  `json:"book_no" db:"BookNo"`
+	ReceiveDate    string  `json:"receive_date" db:"ReceiveDate"`
+	DueDate        string  `json:"due_date" db:"DueDate"`
+	Status         int     `json:"status" db:"Status"`
 	Amount         float64 `json:"amount" db:"Amount"`
-	NetAmount      float64 `json:"net_amount" db:"NetAmount"`
-	LineNumber     int `json:"line_number" db:"LineNumber"`
+	Balance        float64 `json:"balance" db:"Balance"`
+	RefChqRowOrder int     `json:"ref_chq_row_order" db:"RefChqRowOrder"`
+	SaveFrom       int     `json:"save_from" db:"SaveFrom"`
+	StatusDate     string  `json:"status_date" db:"StatusDate"`
+	StatusDocNo    string  `json:"status_doc_no" db:"StatusDocNo"`
 }
 
-type ListChqIn struct {
-	ChqNumber      string
-	BankCode       string
-	BankBranchCode string
-	BookNo         string
-	ReceiveDate    string
-	DueDate        string
-	Status         int
-	Amount         float64
-	Balance        float64
-	RefChqRowOrder int
-	SaveFrom       int
-	StatusDate     string
-	StatusDocNo    string
+type ListInvCreditCard struct {
+	BankCode       string  `json:"bank_code" db:"BankCode"`
+	CreditCardNo   string  `json:"credit_card_no" db:"CreditCardNo"`
+	ReceiveDate    string  `json:"receive_date" db:"ReceiveDate"`
+	DueDate        string  `json:"due_date" db:"DueDate"`
+	BookNo         string  `json:"book_no" db:"BookNo"`
+	Status         int     `json:"status" db:"Status"`
+	SaveFrom       int     `json:"save_from" db:"SaveFrom"`
+	StatusDate     string  `json:"status_date" db:"StatusDate"`
+	StatusDocNo    string  `json:"status_doc_no" db:"StatusDocNo"`
+	BankBranchCode string  `json:"bank_branch_code" db:"BankBranchCode"`
+	Amount         float64 `json:"amount" db:"Amount"`
+	MyDescription  string  `json:"my_description" db:"MyDescription"`
+	CreditType     string  `json:"credit_type" db:"CreditType"`
+	ConfirmNo      string  `json:"confirm_no" db:"ConfirmNo"`
+	ChargeAmount   float64 `json:"charge_amount" db:"ChargeAmount"`
 }
-
-type ListCreditCard struct {
-}
-
-//type ListInvRecMoney struct {
-//	PayAmount      float64 `json:"pay_amount" db:"PayAmount"`
-//	ChqTotalAmount float64 `json:"chq_total_amount" db:"ChqTotalAmount"`
-//	PaymentType    int     `json:"payment_type" db:"PaymentType"`
-//	CreditType     string  `json:"credit_type" db:"CreditType"`
-//	ConfirmNo      string  `json:"confirm_no" db:"ConfirmNo"`
-//	RefNo          string  `json:"ref_no" db:"RefNo"`
-//	BankCode       string  `json:"bank_code" db:"BookCode"`
-//	BankBranchCode string  `json:"bank_branch_code" db:"BankBranchCode"`
-//	TransBankDate  string  `json:"trans_bank_date" db:"TransBankDate"`
-//	RefDate        string  `json:"ref_date" db:"RefDate"`
-//	LineNumber     int     `json:"line_number" db:"LineNumber"`
-//}
 
 func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 	var check_exist int
@@ -224,32 +223,35 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 
 	switch {
 	case inv.DocNo == "":
-		return errors.New("docno is null")
+		return errors.New("Docno is null")
 	case inv.ArCode == "":
-		return errors.New("arcode is null")
+		return errors.New("Arcode is null")
 	case inv.DocDate == "":
-		return errors.New("docdate is null")
+		return errors.New("Docdate is null")
 	case inv.IsCancel == 1:
-		return errors.New("docno is cancel")
+		return errors.New("Docno is cancel")
 	case inv.IsConfirm == 1:
-		return errors.New("docno is confirm")
+		return errors.New("Docno is confirm")
 	case count_item == 0:
-		return errors.New("docno is not have item")
+		return errors.New("Docno is not have item")
 	case (inv.SumCashAmount == 0 && inv.SumCreditAmount == 0 && inv.SumChqAmount == 0 && inv.SumBankAmount == 0 && inv.SumOfDeposit1 == 0 && inv.BillType == 0):
-		return errors.New("docno not set money to another type payment")
+		return errors.New("Docno not set money to another type payment")
 	case inv.SumOfItemAmount == 0:
-		return errors.New("sumofitemamount = 0")
+		return errors.New("Sumofitemamount = 0")
 	case sum_pay_amount > inv.TotalAmount:
-		return errors.New("rec money is over totalamount")
-	case inv.SumCreditAmount != 0 && inv.PosStatus != 0 && (inv.CreditType == "" || inv.CofirmNo == "" || inv.CreditNo == ""):
-		return errors.New("credit card data not complete")
-	case inv.PosStatus != 0 && inv.MachineCode == "" && inv.MachineNo == "" && inv.ShiftCode == "" && inv.ShiftCode == "" && inv.CashierCode == "":
-		return errors.New("docno not have pos data")
+		return errors.New("Rec money is over totalamount")
+	case inv.PosStatus != 0 && (inv.MachineCode == "" || inv.MachineNo == "" || inv.ShiftCode == "" || inv.ShiftCode == "" || inv.CashierCode == ""):
+		return errors.New("Docno not have pos data")
+	case inv.SumChqAmount != 0 && len(inv.Chqs) == 0:
+		return errors.New("Docno not have chq use data")
+	case inv.SumCreditAmount != 0 && (inv.CreditRefNo == "" || inv.ConfirmNo == "" || inv.CreditType == "" || inv.BankCode == "" || inv.BankBranchCode == ""):
+		return errors.New("credit card not have credittype,confirmno,creditno,bankcode,bankbranch data not complete")
 	case inv.SumOfDeposit1 != 0 && len(inv.Deps) == 0:
-		return errors.New("docno not have deposit use data")
+		return errors.New("Docno not have deposit use data")
+	case inv.SumBankAmount != 0 && inv.BankRefNo == "":
+		return errors.New("Bank transfer not have accountcode data not complete")
 	}
 
-	inv.SaveFrom = 0
 	inv.DepositIncTax = 1
 
 	def := m.Default{}
@@ -264,10 +266,21 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		inv.ExchangeRate = def.ExchangeRateDefault
 	}
 
+	if inv.SaveFrom == 0 {
+		inv.SaveFrom = def.ArInvoiceSaveFrom
+	}
+
+	inv.AfterDiscount = inv.AfterDiscount - inv.SumOfDeposit1
+
 	inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount = m.CalcTaxItem(inv.TaxType, inv.TaxRate, inv.AfterDiscount)
 
-	if (((inv.SumCreditAmount + inv.SumCashAmount + inv.SumBankAmount + inv.SumChqAmount) != inv.TotalAmount) && inv.BillType == 0) {
-		return errors.New("receive not equal totalamount")
+	inv.NetDebtAmount = inv.TotalAmount
+	inv.HomeAmount = inv.TotalAmount
+
+	inv.BillBalance = inv.TotalAmount + inv.OtherIncome - (inv.SumCashAmount + inv.SumCreditAmount + inv.SumChqAmount + inv.SumBankAmount + inv.OtherExpense)
+
+	if (inv.BillType == 0 && ((inv.TotalAmount+inv.OtherIncome-(inv.SumCashAmount+inv.SumCreditAmount+inv.SumChqAmount+inv.SumBankAmount+inv.OtherExpense))) != 0) {
+		return errors.New("Docno have money remain")
 	}
 
 	if (inv.BookCode == "") {
@@ -289,13 +302,31 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 	}
 	if (inv.CreditDay == 0 || inv.DueDate == "") {
 		inv.DueDate = inv.DocDate
+		inv.PayBillDate = inv.DocDate
 	} else {
 		inv.DueDate = now.AddDate(0, 0, inv.CreditDay).Format("2006-01-02")
+		inv.PayBillDate = now.AddDate(0, 0, inv.CreditDay).Format("2006-01-02")
 	}
 	if (inv.DeliveryDay == 0 && inv.DeliveryDate == "") {
 		inv.DeliveryDate = inv.DocDate
 	} else {
 		inv.DeliveryDate = now.AddDate(0, 0, inv.DeliveryDay).Format("2006-01-02")
+	}
+
+	if (inv.SumCreditAmount != 0 && inv.CreditDueDate == "") {
+		inv.CreditDueDate = inv.DocDate
+	}
+
+	if (inv.SumBankAmount != 0 && inv.TransBankDate == "") {
+		inv.TransBankDate = inv.DocDate
+	}
+
+	if (inv.SumOfDeposit1 != 0 && inv.TaxRate != 0) {
+		if inv.TaxType == 1 {
+			inv.SumOfDeposit2 = inv.SumOfDeposit1 - m.ToFixed(inv.SumOfDeposit1-((inv.SumOfDeposit1*100)/(100+float64(inv.TaxRate))), 2)
+		} else {
+			inv.SumOfDeposit2 = inv.SumOfDeposit1 + m.ToFixed(inv.SumOfDeposit1-((inv.SumOfDeposit1*100)/(100+float64(inv.TaxRate))), 2)
+		}
 	}
 
 	fmt.Println("UserCode = ", inv.UserCode)
@@ -317,7 +348,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 			}
 		} else {
 			sql := `insert into dbo.bcarinvoice(DocNo,DocDate,TaxNo,ArCode,SaleCode,TaxType,DepartCode,CreditDay,DeliveryDay,DeliveryDate,DueDate,PayBillDate,TaxRate,IsConfirm,MyDescription,BillType,BillGroup,RefDocNo,DeliveryAddr,ContactCode,SumOfItemAmount,DiscountWord,DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,GLFormat,IsCancel,IsCompleteSave,AllocateCode,ProjectCode,RecurName,IsConditionSend,PayBillAmount,SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime,ShiftCode,CashierCode,ShiftNo,MachineNo,MachineCode,BillTime,CreditType,CreditDueDate,CreditNo,CofirmNo,CreditBaseAmount,CoupongAmount,ChangeAmount,ChargeAmount,GrandTotal) values(?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,1,?,?,?,?,?,?,?,0,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sql, inv.DocNo, inv.DocDate, inv.TaxNo, inv.ArCode, inv.SaleCode, inv.TaxType, inv.DepartCode, inv.CreditDay, inv.DeliveryDay, inv.DeliveryDate, inv.DueDate, inv.PayBillDate, inv.TaxRate, inv.MyDescription, inv.BillType, inv.BillGroup, inv.RefDocNo, inv.DeliveryAddr, inv.ContactCode, inv.SumOfItemAmount, inv.DiscountWord, inv.DiscountAmount, inv.AfterDiscount, inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount, inv.ZeroTaxAmount, inv.ExceptTaxAmount, inv.SumCashAmount, inv.SumChqAmount, inv.SumCreditAmount, inv.SumBankAmount, inv.DepositIncTax, inv.SumOfDeposit1, inv.SumOfDeposit2, inv.SumOfWTax, inv.NetDebtAmount, inv.HomeAmount, inv.OtherIncome, inv.OtherExpense, inv.ExcessAmount1, inv.ExcessAmount2, inv.BillBalance, inv.CurrencyCode, inv.ExchangeRate, inv.GLFormat, inv.AllocateCode, inv.ProjectCode, inv.RecurName, inv.IsConditionSend, inv.PayBillAmount, inv.SORefNo, inv.HoldingStatus, inv.CreatorCode, inv.ShiftCode, inv.CashierCode, inv.ShiftNo, inv.MachineNo, inv.MachineCode, inv.BillTime, inv.CreditType, inv.CreditDueDate, inv.CreditNo, inv.CofirmNo, inv.CreditBaseAmount, inv.CoupongAmount, inv.ChangeAmount, inv.ChargeAmount, inv.GrandTotal)
+			_, err = db.Exec(sql, inv.DocNo, inv.DocDate, inv.TaxNo, inv.ArCode, inv.SaleCode, inv.TaxType, inv.DepartCode, inv.CreditDay, inv.DeliveryDay, inv.DeliveryDate, inv.DueDate, inv.PayBillDate, inv.TaxRate, inv.MyDescription, inv.BillType, inv.BillGroup, inv.RefDocNo, inv.DeliveryAddr, inv.ContactCode, inv.SumOfItemAmount, inv.DiscountWord, inv.DiscountAmount, inv.AfterDiscount, inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount, inv.ZeroTaxAmount, inv.ExceptTaxAmount, inv.SumCashAmount, inv.SumChqAmount, inv.SumCreditAmount, inv.SumBankAmount, inv.DepositIncTax, inv.SumOfDeposit1, inv.SumOfDeposit2, inv.SumOfWTax, inv.NetDebtAmount, inv.HomeAmount, inv.OtherIncome, inv.OtherExpense, inv.ExcessAmount1, inv.ExcessAmount2, inv.BillBalance, inv.CurrencyCode, inv.ExchangeRate, inv.GLFormat, inv.AllocateCode, inv.ProjectCode, inv.RecurName, inv.IsConditionSend, inv.PayBillAmount, inv.SORefNo, inv.HoldingStatus, inv.CreatorCode, inv.ShiftCode, inv.CashierCode, inv.ShiftNo, inv.MachineNo, inv.MachineCode, inv.BillTime, inv.CreditType, inv.CreditDueDate, inv.CreditRefNo, inv.ConfirmNo, inv.CreditBaseAmount, inv.CoupongAmount, inv.ChangeAmount, inv.ChargeAmount, inv.GrandTotal)
 			if err != nil {
 				fmt.Println(err.Error())
 				return err
@@ -344,7 +375,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 			}
 		} else {
 			sql := `insert into dbo.bcarinvoice(DocNo,DocDate,TaxNo,ArCode,SaleCode,TaxType,DepartCode,CreditDay,DeliveryDay,DeliveryDate,DueDate,PayBillDate,TaxRate,IsConfirm,MyDescription,BillType,BillGroup,RefDocNo,DeliveryAddr,ContactCode,SumOfItemAmount,DiscountWord,DiscountAmount,AfterDiscount,BeforeTaxAmount,TaxAmount,TotalAmount,ZeroTaxAmount,ExceptTaxAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,DepositIncTax,SumOfDeposit1,SumOfDeposit2,SumOfWTax,NetDebtAmount,HomeAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,GLFormat,IsCancel,IsCompleteSave,AllocateCode,ProjectCode,RecurName,IsConditionSend,PayBillAmount,SORefNo,HoldingStatus,PosStatus,CreatorCode,CreateDateTime,ShiftCode,CashierCode,ShiftNo,MachineNo,MachineCode,BillTime,CreditType,CreditDueDate,CreditNo,CofirmNo,CreditBaseAmount,CoupongAmount,ChangeAmount,ChargeAmount,GrandTotal) values(?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,1,?,?,?,?,?,?,?,0,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sql, inv.DocNo, inv.DocDate, inv.TaxNo, inv.ArCode, inv.SaleCode, inv.TaxType, inv.DepartCode, inv.CreditDay, inv.DeliveryDay, inv.DeliveryDate, inv.DueDate, inv.PayBillDate, inv.TaxRate, inv.MyDescription, inv.BillType, inv.BillGroup, inv.RefDocNo, inv.DeliveryAddr, inv.ContactCode, inv.SumOfItemAmount, inv.DiscountWord, inv.DiscountAmount, inv.AfterDiscount, inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount, inv.ZeroTaxAmount, inv.ExceptTaxAmount, inv.SumCashAmount, inv.SumChqAmount, inv.SumCreditAmount, inv.SumBankAmount, inv.DepositIncTax, inv.SumOfDeposit1, inv.SumOfDeposit2, inv.SumOfWTax, inv.NetDebtAmount, inv.HomeAmount, inv.OtherIncome, inv.OtherExpense, inv.ExcessAmount1, inv.ExcessAmount2, inv.BillBalance, inv.CurrencyCode, inv.ExchangeRate, inv.GLFormat, inv.AllocateCode, inv.ProjectCode, inv.RecurName, inv.IsConditionSend, inv.PayBillAmount, inv.SORefNo, inv.HoldingStatus, inv.CreatorCode, inv.ShiftCode, inv.CashierCode, inv.ShiftNo, inv.MachineNo, inv.MachineCode, inv.BillTime, inv.CreditType, inv.CreditDueDate, inv.CreditNo, inv.CofirmNo, inv.CreditBaseAmount, inv.CoupongAmount, inv.ChangeAmount, inv.ChargeAmount, inv.GrandTotal)
+			_, err = db.Exec(sql, inv.DocNo, inv.DocDate, inv.TaxNo, inv.ArCode, inv.SaleCode, inv.TaxType, inv.DepartCode, inv.CreditDay, inv.DeliveryDay, inv.DeliveryDate, inv.DueDate, inv.PayBillDate, inv.TaxRate, inv.MyDescription, inv.BillType, inv.BillGroup, inv.RefDocNo, inv.DeliveryAddr, inv.ContactCode, inv.SumOfItemAmount, inv.DiscountWord, inv.DiscountAmount, inv.AfterDiscount, inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount, inv.ZeroTaxAmount, inv.ExceptTaxAmount, inv.SumCashAmount, inv.SumChqAmount, inv.SumCreditAmount, inv.SumBankAmount, inv.DepositIncTax, inv.SumOfDeposit1, inv.SumOfDeposit2, inv.SumOfWTax, inv.NetDebtAmount, inv.HomeAmount, inv.OtherIncome, inv.OtherExpense, inv.ExcessAmount1, inv.ExcessAmount2, inv.BillBalance, inv.CurrencyCode, inv.ExchangeRate, inv.GLFormat, inv.AllocateCode, inv.ProjectCode, inv.RecurName, inv.IsConditionSend, inv.PayBillAmount, inv.SORefNo, inv.HoldingStatus, inv.CreatorCode, inv.ShiftCode, inv.CashierCode, inv.ShiftNo, inv.MachineNo, inv.MachineCode, inv.BillTime, inv.CreditType, inv.CreditDueDate, inv.CreditRefNo, inv.ConfirmNo, inv.CreditBaseAmount, inv.CoupongAmount, inv.ChangeAmount, inv.ChargeAmount, inv.GrandTotal)
 			if err != nil {
 				fmt.Println(err.Error())
 				return err
@@ -423,11 +454,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 
 	var my_description_recmoney string
 
-	if (inv.MyDescription == "") {
-		my_description_recmoney = "ขายเงินสด"
-	} else {
-		my_description_recmoney = inv.MyDescription
-	}
+	my_description_recmoney = "ขายเงินสด"
 
 	fmt.Println("RecMoney")
 	var linenumber int
@@ -449,8 +476,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 			} else {
 				linenumber = 0
 			}
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumCreditAmount, inv.SumCreditAmount, 1, inv.CreditType, inv.ConfirmNo, linenumber, inv.CreditRefNo, inv.BankCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate)
+			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,BankBranchCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumCreditAmount, inv.SumCreditAmount, 1, inv.CreditType, inv.ConfirmNo, linenumber, inv.CreditRefNo, inv.BankCode, inv.BankBranchCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate)
 			if err != nil {
 				return err
 			}
@@ -469,8 +496,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 				linenumber = 0
 			}
 
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,TransBankDate,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumChqAmount, 2, linenumber, inv.CreditRefNo, inv.BankCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, inv.BankBranchCode, inv.TransBankDate, my_description_recmoney, inv.RefDate)
+			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumChqAmount, 2, linenumber, inv.CreditRefNo, inv.BankCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, inv.BankBranchCode, my_description_recmoney, inv.RefDate)
 			if err != nil {
 				return err
 			}
@@ -499,23 +526,23 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 				linenumber = 0
 			}
 
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumBankAmount, 3, linenumber, inv.CreditRefNo, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate)
+			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate,TransBankDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumBankAmount, 3, linenumber, inv.BankRefNo, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate, inv.TransBankDate)
 			if err != nil {
 				return err
 			}
 		}
 	}
 
-	sqldepdel := `delete dbo.BCArDepositUse where docno = ?`
-	_, err = db.Exec(sqldepdel, inv.DocNo)
-	if err != nil {
-		return err
-	}
-
 	var depLineNumber int
 
-	if (inv.SumOfDeposit1 > 0) {
+	if (inv.SumOfDeposit1 != 0) {
+		sqldepdel := `delete dbo.BCArDepositUse where docno = ?`
+		_, err = db.Exec(sqldepdel, inv.DocNo)
+		if err != nil {
+			return err
+		}
+
 		for _, d := range inv.Deps {
 			d.LineNumber = depLineNumber
 			sqldep := `insert into dbo.bcardeposituse(DocNo,DepositNo,DocDate,MyDescription,Balance,Amount,DeposTaxType,NetAmount,LineNumber) values(?,?,?,?,?,?,?,?,?)`
@@ -527,15 +554,20 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		}
 	}
 
-	sqlchqdel := `delete dbo.BCChqIn where docno = ?`
-	_, err = db.Exec(sqlchqdel, inv.DocNo)
-	if err != nil {
-		return err
-	}
+	if (inv.SumChqAmount != 0) {
+		sqlchqdel := `delete dbo.BCChqIn where docno = ?`
+		_, err = db.Exec(sqlchqdel, inv.DocNo)
+		if err != nil {
+			return err
+		}
 
-	if (inv.SumChqAmount > 0) {
 		for _, c := range inv.Chqs {
-			sqldep := `set dateformat dmy     insert into dbo.bcchqin(BankCode,ChqNumber,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,Balance,MyDescription,ExchangeRate,RefChqRowOrder) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			if ((c.ReceiveDate == "") || (c.DueDate == "")) {
+				c.ReceiveDate = inv.DocDate
+				c.DueDate = inv.DocDate
+			}
+
+			sqldep := `insert into dbo.bcchqin(BankCode,ChqNumber,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,Balance,MyDescription,ExchangeRate,RefChqRowOrder) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 			_, err = db.Exec(sqldep, c.BankCode, c.ChqNumber, inv.DocNo, inv.ArCode, inv.SaleCode, c.ReceiveDate, c.DueDate, c.BookNo, c.Status, c.SaveFrom, c.StatusDate, c.StatusDocNo, inv.DepartCode, c.BankBranchCode, c.Amount, c.Balance, my_description_recmoney, inv.ExchangeRate, c.RefChqRowOrder)
 			if err != nil {
 				return err
@@ -543,8 +575,28 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		}
 	}
 
-	if (inv.SumCreditAmount > 0) {
+	if (inv.SumCreditAmount != 0) {
+		sqlcrddel := `delete dbo.BCCreditCard where docno = ?`
+		_, err = db.Exec(sqlcrddel, inv.DocNo)
+		if err != nil {
+			return err
+		}
 
+		if len((inv.Cdcs)) == 0 {
+			sqlcrd := `insert into dbo.bccreditcard(BankCode,CreditCardNo,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,MyDescription,ExchangeRate,CreditType,ConfirmNo,ChargeAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate())`
+			_, err = db.Exec(sqlcrd, inv.BankCode, inv.CreditRefNo, inv.DocNo, inv.ArCode, inv.SaleCode, inv.DocDate, inv.DueDate, inv.BookNo, d.Status, d.SaveFrom, d.StatusDate, d.StatusDocNo, inv.DepartCode, d.BankBranchCode, d.Amount, my_description_recmoney, inv.ExchangeRate, d.CreditType, d.ConfirmNo, d.ChargeAmount, inv.UserCode)
+			if err != nil {
+				return err
+			}
+		} else {
+			for _, d := range inv.Cdcs {
+				sqlcrd := `insert into dbo.bccreditcard(BankCode,CreditCardNo,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,MyDescription,ExchangeRate,CreditType,ConfirmNo,ChargeAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate())`
+				_, err = db.Exec(sqlcrd, d.BankCode, d.CreditCardNo, inv.DocNo, inv.ArCode, inv.SaleCode, d.ReceiveDate, d.DueDate, d.BookNo, d.Status, d.SaveFrom, d.StatusDate, d.StatusDocNo, inv.DepartCode, d.BankBranchCode, d.Amount, my_description_recmoney, inv.ExchangeRate, d.CreditType, d.ConfirmNo, d.ChargeAmount, inv.UserCode)
+				if err != nil {
+					return err
+				}
+			}
+		}
 	}
 
 	return nil
