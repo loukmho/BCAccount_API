@@ -28,20 +28,21 @@ func main() {
 
 	r.GET("/arinvoice", s.SearchArInvoiceByDocNo)
 	r.GET("/arinvoices", s.SearchArInvoiceByKeyword)
-	r.POST("/arinvoice", s.InsertArinvoice)
-	r.PUT("/arinvoice", s.InsertArinvoice)
+	r.POST("/arinvoice", s.InsertAndEditArinvoice)
+	r.PUT("/arinvoice", s.InsertAndEditArinvoice)
 
 	r.GET("/creditnote", s.SearchCreditNoteByDocNo)
 	r.GET("/creditnotes", s.SearchCreditNoteByKeyword)
+	r.POST("/creditnote", s.InsertAndEditCreditNote)
 
 	r.GET("/ardeposit", s.SearchArDepositByDocNo)
 	r.GET("/ardeposits", s.SearchArDepositByKeyword)
-	r.POST("/ardeposit", s.InsertArDespoit)
+	r.POST("/ardeposit", s.InsertAndEditArDespoit)
 	//r.PUT("/ardeposit", s.UpdateArDespoit)
 
 	r.GET("/ardepositspecial", s.SearchArDepositSpecialByDocNo)
 	r.GET("/ardepositspecials", s.SearchArDepositSpecialByKeyword)
-	r.POST("/ardepositspecial", s.InsertArDespoit)
+	r.POST("/ardepositspecial", s.InsertAndEditArDespoit)
 	//r.PUT("/ardepositspecial", s.UpdateArDespoit)
 
 	r.GET("/item", i.SearchItemByCode)

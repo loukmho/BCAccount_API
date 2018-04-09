@@ -143,6 +143,7 @@ type InvItem struct {
 	IsConditionSend int     `json:"is_condition_send" db:"IsConditionSend"`
 	AverageCost     float64 `json:"averagecost" db:"AverageCost"`
 	LotNumber       string  `json:"lot_number" db:"LotNumber"`
+	StockType       int     `json:"stock_type" db:"StockType"`
 	PackingRate1    float64 `json:"packing_rate_1" db:"PackingRate1"`
 	PackingRate2    float64 `json:"packing_rate_2" db:"PackingRate2"`
 }
@@ -178,7 +179,6 @@ type ListInvChqIn struct {
 	Amount         float64 `json:"amount" db:"Amount"`
 	Balance        float64 `json:"balance" db:"Balance"`
 	RefChqRowOrder int     `json:"ref_chq_row_order" db:"RefChqRowOrder"`
-	SaveFrom       int     `json:"save_from" db:"SaveFrom"`
 	StatusDate     string  `json:"status_date" db:"StatusDate"`
 	StatusDocNo    string  `json:"status_doc_no" db:"StatusDocNo"`
 }
@@ -190,7 +190,6 @@ type ListInvCreditCard struct {
 	DueDate        string  `json:"due_date" db:"DueDate"`
 	BookNo         string  `json:"book_no" db:"BookNo"`
 	Status         int     `json:"status" db:"Status"`
-	SaveFrom       int     `json:"save_from" db:"SaveFrom"`
 	StatusDate     string  `json:"status_date" db:"StatusDate"`
 	StatusDocNo    string  `json:"status_doc_no" db:"StatusDocNo"`
 	BankBranchCode string  `json:"bank_branch_code" db:"BankBranchCode"`
@@ -201,21 +200,39 @@ type ListInvCreditCard struct {
 	ChargeAmount   float64 `json:"charge_amount" db:"ChargeAmount"`
 }
 
-func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
+func (inv *ArInvoice) InsertAndEditArInvoice(db *sqlx.DB) error {
 	var check_exist int
 	var count_item int
 	var sum_pay_amount float64
 
 	now := time.Now()
 
+	def := m.Default{}
+	def = m.LoadDefaultData("bcdata.json")
+
+	fmt.Println("TaxRate = ", def.TaxRateDefault)
+
+	if inv.TaxRate == 0 {
+		inv.TaxRate = def.TaxRateDefault
+	}
+
+	sum_pay_amount = (inv.SumCashAmount + inv.SumCreditAmount + inv.SumChqAmount + inv.SumBankAmount + inv.OtherExpense) - inv.OtherIncome
+
+	var AfterDepositAmount float64
+
+	AfterDepositAmount = inv.AfterDiscount - inv.SumOfDeposit1
+
+	if (inv.BeforeTaxAmount == 0 && inv.TaxAmount == 0) {
+		inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount = m.CalcTaxItem(inv.TaxType, inv.TaxRate, AfterDepositAmount)
+	}
 	for _, sub_item := range inv.Subs {
 		if (sub_item.Qty != 0) {
 			count_item = count_item + 1
 		}
 	}
 
-	sqlexist := `select count(docno) as check_exist from dbo.bcarinvoice where docno = ? and arcode = ?`
-	err := db.Get(&check_exist, sqlexist, inv.DocNo, inv.ArCode)
+	sqlexist := `select count(docno) as check_exist from dbo.bcarinvoice where docno = ?`
+	err := db.Get(&check_exist, sqlexist, inv.DocNo)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil
@@ -238,7 +255,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		return errors.New("Docno not set money to another type payment")
 	case inv.SumOfItemAmount == 0:
 		return errors.New("Sumofitemamount = 0")
-	case sum_pay_amount > inv.TotalAmount:
+	case sum_pay_amount > inv.TotalAmount && inv.BillType == 0:
 		return errors.New("Rec money is over totalamount")
 	case inv.PosStatus != 0 && (inv.MachineCode == "" || inv.MachineNo == "" || inv.ShiftCode == "" || inv.ShiftCode == "" || inv.CashierCode == ""):
 		return errors.New("Docno not have pos data")
@@ -252,16 +269,20 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		return errors.New("Bank transfer not have accountcode data not complete")
 	}
 
+	var sumDepNetAmount float64
+
+	if inv.TaxType == 1 {
+		for _, dep := range inv.Deps {
+			sumDepNetAmount = sumDepNetAmount + dep.Amount
+		}
+
+		if inv.SumOfDeposit1 != sumDepNetAmount {
+			return errors.New("Docno not have deposit not equa receive data")
+		}
+	}
+
 	inv.DepositIncTax = 1
 
-	def := m.Default{}
-	def = m.LoadDefaultData("bcdata.json")
-
-	fmt.Println("TaxRate = ", def.TaxRateDefault)
-
-	if inv.TaxRate == 0 {
-		inv.TaxRate = def.TaxRateDefault
-	}
 	if inv.ExchangeRate == 0 {
 		inv.ExchangeRate = def.ExchangeRateDefault
 	}
@@ -269,10 +290,6 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 	if inv.SaveFrom == 0 {
 		inv.SaveFrom = def.ArInvoiceSaveFrom
 	}
-
-	inv.AfterDiscount = inv.AfterDiscount - inv.SumOfDeposit1
-
-	inv.BeforeTaxAmount, inv.TaxAmount, inv.TotalAmount = m.CalcTaxItem(inv.TaxType, inv.TaxRate, inv.AfterDiscount)
 
 	inv.NetDebtAmount = inv.TotalAmount
 	inv.HomeAmount = inv.TotalAmount
@@ -325,7 +342,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		if inv.TaxType == 1 {
 			inv.SumOfDeposit2 = inv.SumOfDeposit1 - m.ToFixed(inv.SumOfDeposit1-((inv.SumOfDeposit1*100)/(100+float64(inv.TaxRate))), 2)
 		} else {
-			inv.SumOfDeposit2 = inv.SumOfDeposit1 + m.ToFixed(inv.SumOfDeposit1-((inv.SumOfDeposit1*100)/(100+float64(inv.TaxRate))), 2)
+			inv.SumOfDeposit2 = inv.SumOfDeposit1 //+ m.ToFixed(inv.SumOfDeposit1-((inv.SumOfDeposit1*100)/(100+float64(inv.TaxRate))), 2)
 		}
 	}
 
@@ -335,6 +352,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		inv.IsCompleteSave = 1
 	}
 
+	fmt.Println("check_exist = ", check_exist)
 	if (check_exist == 0) {
 		//Insert/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		inv.CreatorCode = inv.UserCode
@@ -393,7 +411,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 
 	for _, item := range inv.Subs {
 		fmt.Println("ItemSub")
-		item.MyType = 4
+		item.MyType = def.ArInvoiceMyType
 		item.CNQty = item.Qty
 		item.BalanceAmount = item.Amount
 		item.LineNumber = vLineNumber
@@ -422,8 +440,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 			item.NetAmount = item.Amount
 		}
 
-		sqlsub := ` insert into dbo.BCArInvoiceSub(MyType,DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode, SORefNo, PORefNo, LineNumber, RefLineNumber, IsCancel, BarCode, POSSTATUS,IsConditionSend, AVERAGECOST, LotNumber, PackingRate1, PackingRate2) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-		_, err = db.Exec(sqlsub, item.MyType, inv.DocNo, inv.TaxNo, inv.TaxType, item.ItemCode, inv.DocDate, inv.ArCode, inv.DepartCode, inv.SaleCode, item.MyDescription, item.ItemName, item.WHCode, item.ShelfCode, item.CNQty, item.Qty, item.Price, item.DiscountWord, item.DiscountAmount, item.Amount, item.NetAmount, item.HomeAmount, item.SumOfCost, item.BalanceAmount, item.UnitCode, item.SORefNo, item.PORefNo, item.LineNumber, item.RefLineNumber, item.IsCancel, item.BarCode, item.PosStatus, item.IsConditionSend, item.AverageCost, item.LotNumber, item.PackingRate1, item.PackingRate2)
+		sqlsub := ` insert into dbo.BCArInvoiceSub(MyType,DocNo, TaxNo, TaxType, ItemCode, StockType, DocDate, ArCode, DepartCode, SaleCode, MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode, SORefNo, PORefNo, LineNumber, RefLineNumber, IsCancel, BarCode, POSSTATUS,IsConditionSend, AVERAGECOST, LotNumber, PackingRate1, PackingRate2) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+		_, err = db.Exec(sqlsub, item.MyType, inv.DocNo, inv.TaxNo, inv.TaxType, item.ItemCode, item.StockType, inv.DocDate, inv.ArCode, inv.DepartCode, inv.SaleCode, item.MyDescription, item.ItemName, item.WHCode, item.ShelfCode, item.CNQty, item.Qty, item.Price, item.DiscountWord, item.DiscountAmount, item.Amount, item.NetAmount, item.HomeAmount, item.SumOfCost, item.BalanceAmount, item.UnitCode, item.SORefNo, item.PORefNo, item.LineNumber, item.RefLineNumber, item.IsCancel, item.BarCode, item.PosStatus, item.IsConditionSend, item.AverageCost, item.LotNumber, item.PackingRate1, item.PackingRate2)
 		fmt.Println("sqltax = ", sqlsub)
 		if err != nil {
 			fmt.Println(err.Error())
@@ -462,8 +480,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 	if (inv.BillType == 0) {
 		if (inv.SumCashAmount != 0) { //subs.PaymentType == 0:
 			fmt.Println("SumCashAmount")
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumCashAmount, 0, linenumber, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney)
+			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumCashAmount, 0, inv.SaveFrom, linenumber, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney)
 			if err != nil {
 				return err
 			}
@@ -476,8 +494,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 			} else {
 				linenumber = 0
 			}
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,BankBranchCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumCreditAmount, inv.SumCreditAmount, 1, inv.CreditType, inv.ConfirmNo, linenumber, inv.CreditRefNo, inv.BankCode, inv.BankBranchCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate)
+			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,SaveFrom,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,BankBranchCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumCreditAmount, inv.SumCreditAmount, 1, inv.SaveFrom, inv.CreditType, inv.ConfirmNo, linenumber, inv.CreditRefNo, inv.BankCode, inv.BankBranchCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate)
 			if err != nil {
 				return err
 			}
@@ -496,8 +514,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 				linenumber = 0
 			}
 
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumChqAmount, 2, linenumber, inv.CreditRefNo, inv.BankCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, inv.BankBranchCode, my_description_recmoney, inv.RefDate)
+			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumChqAmount, 2, inv.SaveFrom, linenumber, inv.CreditRefNo, inv.BankCode, inv.ProjectCode, inv.DepartCode, inv.SaleCode, inv.BankBranchCode, my_description_recmoney, inv.RefDate)
 			if err != nil {
 				return err
 			}
@@ -526,8 +544,8 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 				linenumber = 0
 			}
 
-			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate,TransBankDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumBankAmount, 3, linenumber, inv.BankRefNo, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate, inv.TransBankDate)
+			sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate,TransBankDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+			_, err = db.Exec(sqlrec, inv.DocNo, inv.DocDate, inv.ArCode, inv.ExchangeRate, inv.SumBankAmount, 3, inv.SaveFrom, linenumber, inv.BankRefNo, inv.ProjectCode, inv.DepartCode, inv.SaleCode, my_description_recmoney, inv.DocDate, inv.TransBankDate)
 			if err != nil {
 				return err
 			}
@@ -544,9 +562,18 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		}
 
 		for _, d := range inv.Deps {
+			var depNetAmount float64
 			d.LineNumber = depLineNumber
+
+			if inv.TaxType == 0 {
+				depNetAmount = d.Amount - (m.ToFixed(d.Amount-((d.Amount*100)/(100+float64(inv.TaxRate))), 2))
+
+			} else {
+				depNetAmount = d.Amount - (m.ToFixed(d.Amount-((d.Amount*100)/(100+float64(inv.TaxRate))), 2))
+			}
+
 			sqldep := `insert into dbo.bcardeposituse(DocNo,DepositNo,DocDate,MyDescription,Balance,Amount,DeposTaxType,NetAmount,LineNumber) values(?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqldep, inv.DocNo, d.DepositNo, inv.DocDate, my_description_recmoney, d.Balance, d.Amount, inv.TaxType, d.NetAmount, d.LineNumber)
+			_, err = db.Exec(sqldep, inv.DocNo, d.DepositNo, inv.DocDate, my_description_recmoney, d.Balance, d.Amount, inv.TaxType, depNetAmount, d.LineNumber)
 			if err != nil {
 				return err
 			}
@@ -568,7 +595,7 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 			}
 
 			sqldep := `insert into dbo.bcchqin(BankCode,ChqNumber,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,Balance,MyDescription,ExchangeRate,RefChqRowOrder) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqldep, c.BankCode, c.ChqNumber, inv.DocNo, inv.ArCode, inv.SaleCode, c.ReceiveDate, c.DueDate, c.BookNo, c.Status, c.SaveFrom, c.StatusDate, c.StatusDocNo, inv.DepartCode, c.BankBranchCode, c.Amount, c.Balance, my_description_recmoney, inv.ExchangeRate, c.RefChqRowOrder)
+			_, err = db.Exec(sqldep, c.BankCode, c.ChqNumber, inv.DocNo, inv.ArCode, inv.SaleCode, c.ReceiveDate, c.DueDate, c.BookNo, c.Status, inv.SaveFrom, c.StatusDate, c.StatusDocNo, inv.DepartCode, c.BankBranchCode, c.Amount, c.Balance, my_description_recmoney, inv.ExchangeRate, c.RefChqRowOrder)
 			if err != nil {
 				return err
 			}
@@ -583,15 +610,18 @@ func (inv *ArInvoice) InsertArInvoice(db *sqlx.DB) error {
 		}
 
 		if len((inv.Cdcs)) == 0 {
+			BookNo := ""
+			Status := 0
+
 			sqlcrd := `insert into dbo.bccreditcard(BankCode,CreditCardNo,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,MyDescription,ExchangeRate,CreditType,ConfirmNo,ChargeAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate())`
-			_, err = db.Exec(sqlcrd, inv.BankCode, inv.CreditRefNo, inv.DocNo, inv.ArCode, inv.SaleCode, inv.DocDate, inv.DueDate, inv.BookNo, d.Status, d.SaveFrom, d.StatusDate, d.StatusDocNo, inv.DepartCode, d.BankBranchCode, d.Amount, my_description_recmoney, inv.ExchangeRate, d.CreditType, d.ConfirmNo, d.ChargeAmount, inv.UserCode)
+			_, err = db.Exec(sqlcrd, inv.BankCode, inv.CreditRefNo, inv.DocNo, inv.ArCode, inv.SaleCode, inv.DocDate, inv.DueDate, BookNo, Status, inv.SaveFrom, inv.DocDate, inv.DocNo, inv.DepartCode, inv.BankBranchCode, inv.SumCreditAmount, my_description_recmoney, inv.ExchangeRate, inv.CreditType, inv.ConfirmNo, inv.ChargeAmount, inv.UserCode)
 			if err != nil {
 				return err
 			}
 		} else {
 			for _, d := range inv.Cdcs {
 				sqlcrd := `insert into dbo.bccreditcard(BankCode,CreditCardNo,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,MyDescription,ExchangeRate,CreditType,ConfirmNo,ChargeAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate())`
-				_, err = db.Exec(sqlcrd, d.BankCode, d.CreditCardNo, inv.DocNo, inv.ArCode, inv.SaleCode, d.ReceiveDate, d.DueDate, d.BookNo, d.Status, d.SaveFrom, d.StatusDate, d.StatusDocNo, inv.DepartCode, d.BankBranchCode, d.Amount, my_description_recmoney, inv.ExchangeRate, d.CreditType, d.ConfirmNo, d.ChargeAmount, inv.UserCode)
+				_, err = db.Exec(sqlcrd, d.BankCode, d.CreditCardNo, inv.DocNo, inv.ArCode, inv.SaleCode, d.ReceiveDate, d.DueDate, d.BookNo, d.Status, inv.SaveFrom, d.StatusDate, d.StatusDocNo, inv.DepartCode, d.BankBranchCode, d.Amount, my_description_recmoney, inv.ExchangeRate, d.CreditType, d.ConfirmNo, d.ChargeAmount, inv.UserCode)
 				if err != nil {
 					return err
 				}
@@ -610,7 +640,7 @@ func (inv *ArInvoice) SearchArInvoiceByDocNo(db *sqlx.DB, docno string) error {
 		fmt.Println(err.Error())
 		return err
 	}
-	sqlsub := `set dateformat dmy    select MyType, ItemCode, isnull(MyDescription,'') as MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode , isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AverageCost , isnull(LotNumber,'') as LotNumber, isnull(PackingRate1,1) as PackingRate1, isnull(PackingRate2,1) as PackingRate2 from dbo.bcarinvoicesub  where docno = ? order by LineNumber`
+	sqlsub := `set dateformat dmy    select MyType, ItemCode, StockType,isnull(MyDescription,'') as MyDescription, ItemName, WHCode, ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, UnitCode , isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AverageCost , isnull(LotNumber,'') as LotNumber, isnull(PackingRate1,1) as PackingRate1, isnull(PackingRate2,1) as PackingRate2 from dbo.bcarinvoicesub  where docno = ? order by LineNumber`
 	fmt.Println("sqlsub=", sqlsub)
 	err = db.Select(&inv.Subs, sqlsub, docno)
 	if err != nil {
@@ -629,7 +659,7 @@ func (inv *ArInvoice) SearchArInvoiceByKeyword(db *sqlx.DB, keyword string) (inv
 		return nil, err
 	}
 	for _, sub := range invs {
-		sqlsub := `set dateformat dmy    select MyType, ItemCode, isnull(MyDescription,'') as MyDescription, ItemName, isnull(WHCode,'') as WHCode, isnull(ShelfCode,'') as ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, isnull(UnitCode,'') as UnitCode, isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AverageCost , isnull(LotNumber,'') as LotNumber, isnull(PackingRate1,1) as PackingRate1, isnull(PackingRate2,1) as PackingRate2 from dbo.bcarinvoicesub  where docno = ? order by LineNumber`
+		sqlsub := `set dateformat dmy    select MyType, ItemCode, StockType, isnull(MyDescription,'') as MyDescription, isnull(ItemName,'') as ItemName, isnull(WHCode,'') as WHCode, isnull(ShelfCode,'') as ShelfCode, CNQty, Qty, Price, isnull(DiscountWord,'') as DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, BalanceAmount, isnull(UnitCode,'') as UnitCode, isnull(SORefNo,'') as SORefNo, isnull(PORefNo,'') as PORefNo, LineNumber, RefLineNumber, IsCancel, isnull(BarCode,'') as BarCode, IsConditionSend, AverageCost , isnull(LotNumber,'') as LotNumber, isnull(PackingRate1,1) as PackingRate1, isnull(PackingRate2,1) as PackingRate2 from dbo.bcarinvoicesub  where docno = ? order by LineNumber`
 		fmt.Println("sqlsub=", sqlsub)
 		err = db.Select(&sub.Subs, sqlsub, sub.DocNo)
 		if err != nil {

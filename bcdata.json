@@ -11,12 +11,14 @@
   "ar_invoice_cash_gl_format": "B01",
   "ar_invoice_credit_gl_format": "B02",
   "ar_invoice_book_code": "03",
-  "ar_invoice_save_from": 6,
+  "ar_invoice_save_from": 1,
   "ar_invoice_source": 6,
+  "ar_invoice_my_type": 4,
 
-  "creditnote_gl_format": "B01",
-  "creditnote_save_from": 5,
-  "creditnote_source": 7
+  "credit_note_gl_format": "B05",
+  "credit_note_save_from": 5,
+  "credit_note_source": 7,
+  "credit_note_my_type": 5
 
 
 }

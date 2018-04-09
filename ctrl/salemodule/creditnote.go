@@ -5,7 +5,29 @@ import (
 	ct "github.com/loukmho/bcaccount_api/ctrl"
 	"github.com/loukmho/bcaccount_api/model/salemodule"
 	"net/http"
+	"fmt"
 )
+
+func InsertAndEditCreditNote(c *gin.Context){
+	c.Keys = ct.HeaderKeys
+
+	crd := &model.CreditNote{}
+	err := c.BindJSON(crd)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	err = crd.InsertAndEditCreditNote(ct.Dbc)
+	rs := ct.Response{}
+	if err != nil {
+		rs.Status = "error"
+		rs.Message = "No Content and Error : " + err.Error()
+		c.JSON(http.StatusNotFound, rs)
+	}else{
+		rs.Status = "success"
+		rs.Data = crd
+		c.JSON(http.StatusNotFound, rs)
+	}
+}
 
 func SearchCreditNoteByDocNo(c *gin.Context){
 	c.Keys = ct.HeaderKeys

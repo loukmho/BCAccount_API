@@ -49,7 +49,7 @@ func SearchArDepositByKeyword(c *gin.Context) {
 
 }
 
-func InsertArDespoit(c *gin.Context) {
+func InsertAndEditArDespoit(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 	dp := &model.ArDeposit{}
@@ -57,7 +57,7 @@ func InsertArDespoit(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = dp.SaveArDeposit(ct.Dbc)
+	err = dp.InsertAndEditArDeposit(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {

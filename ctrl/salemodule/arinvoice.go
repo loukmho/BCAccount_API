@@ -8,7 +8,7 @@ import(
 	"fmt"
 )
 
-func InsertArinvoice(c *gin.Context){
+func InsertAndEditArinvoice(c *gin.Context){
 	c.Keys = ct.HeaderKeys
 
 	inv := &model.ArInvoice{}
@@ -16,7 +16,7 @@ func InsertArinvoice(c *gin.Context){
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = inv.InsertArInvoice(ct.Dbc)
+	err = inv.InsertAndEditArInvoice(ct.Dbc)
 	rs := ct.Response{}
 	if err != nil {
 		rs.Status = "error"

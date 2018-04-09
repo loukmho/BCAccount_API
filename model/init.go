@@ -16,8 +16,8 @@ func ToFixed(num float64, precision int) float64 {
 	return float64(round(num*output)) / output
 }
 
-func CalcTaxDoc(taxtype int, taxrate float64, totalamount float64)(beforetaxamount float64,taxamount float64){
-	fmt.Println("taxtype,taxrate,total",taxtype,taxrate,totalamount)
+func CalcTaxDoc(taxtype int, taxrate float64, totalamount float64) (beforetaxamount float64, taxamount float64) {
+	fmt.Println("taxtype,taxrate,total", taxtype, taxrate, totalamount)
 
 	switch taxtype {
 	case 0:
@@ -31,59 +31,77 @@ func CalcTaxDoc(taxtype int, taxrate float64, totalamount float64)(beforetaxamou
 		taxamount = 0
 	}
 
-	fmt.Println("Before,Tax",beforetaxamount,taxamount)
+	fmt.Println("Before,Tax", beforetaxamount, taxamount)
 
-	return beforetaxamount,taxamount
+	return beforetaxamount, taxamount
 }
 
-func CalcTaxItem(taxtype int, taxrate float64, afterdiscountamount float64)(beforetaxamount float64,taxamount float64,totalamount float64){
+func CalcTaxItem(taxtype int, taxrate float64, afterdiscountamount float64) (beforetaxamount float64, taxamount float64, totalamount float64) {
 	switch taxtype {
 	case 0:
 		beforetaxamount = ToFixed(afterdiscountamount, 2)
 		taxamount = ToFixed(((afterdiscountamount*(100+float64(taxrate)))/(100))-afterdiscountamount, 2)
-		totalamount = ToFixed(beforetaxamount+taxamount,2)
+		totalamount = ToFixed(beforetaxamount+taxamount, 2)
 	case 1:
 		taxamount = ToFixed(afterdiscountamount-((afterdiscountamount*100)/(100+float64(taxrate))), 2)
 		beforetaxamount = ToFixed(afterdiscountamount-taxamount, 2)
-		totalamount = ToFixed(afterdiscountamount,2)
+		totalamount = ToFixed(afterdiscountamount, 2)
 	case 2:
 		beforetaxamount = ToFixed(afterdiscountamount, 2)
 		taxamount = 0
-		totalamount = ToFixed(afterdiscountamount,2)
+		totalamount = ToFixed(afterdiscountamount, 2)
 	}
 
-	fmt.Println("taxtype,taxrate,beforetaxamount,taxamount,totalamount",taxtype,taxrate,beforetaxamount,taxamount,totalamount)
+	fmt.Println("taxtype,taxrate,beforetaxamount,taxamount,totalamount", taxtype, taxrate, beforetaxamount, taxamount, totalamount)
 
+	return beforetaxamount, taxamount, totalamount
+}
 
-	return beforetaxamount,taxamount,totalamount
+func CalcTaxCredit(taxtype int, taxrate float64, totalamount float64) (beforetaxamount float64, taxamount float64) {
+	fmt.Println("taxtype,taxrate,total", taxtype, taxrate, totalamount)
+
+	switch taxtype {
+	case 0:
+		beforetaxamount = ToFixed(((totalamount * (100)) / (100 + float64(taxrate))), 2)
+		taxamount = ToFixed(totalamount-beforetaxamount, 2)
+	case 1:
+		taxamount = ToFixed(totalamount-((totalamount*100)/(100+float64(taxrate))), 2)
+		beforetaxamount = ToFixed(totalamount-taxamount, 2)
+	case 2:
+		beforetaxamount = ToFixed(totalamount, 2)
+		taxamount = 0
+	}
+
+	fmt.Println("Before,Tax", beforetaxamount, taxamount)
+
+	return beforetaxamount, taxamount
 }
 
 type Default struct {
-	TaxRateDefault float64 `json:"tax_rate_default"`
+	TaxRateDefault      float64 `json:"tax_rate_default"`
 	ExchangeRateDefault float64 `json:"exchange_rate_default"`
 
 	ArDepositGLFormat string `json:"ar_deposit_gl_format"`
 	ArDepositBookCode string `json:"ar_deposit_book_code"`
-	ArDepositSource int `json:"ar_deposit_source"`
-	ArDepositSaveFrom int `json:"ar_deposit_save_from"`
+	ArDepositSource   int    `json:"ar_deposit_source"`
+	ArDepositSaveFrom int    `json:"ar_deposit_save_from"`
 
-	ArInvoiceCashGLFormat string `json:"ar_invoice_cash_gl_format"`
+	ArInvoiceCashGLFormat   string `json:"ar_invoice_cash_gl_format"`
 	ArInvoiceCreditGLFormat string `json:"ar_invoice_credit_gl_format"`
-	ArInvoiceBookCode string `json:"ar_invoice_book_code"`
-	ArInvoiceSource int `json:"ar_invoice_source"`
-	ArInvoiceSaveFrom int `json:"ar_invoice_save_from"`
+	ArInvoiceBookCode       string `json:"ar_invoice_book_code"`
+	ArInvoiceSource         int    `json:"ar_invoice_source"`
+	ArInvoiceSaveFrom       int    `json:"ar_invoice_save_from"`
+	ArInvoiceMyType         int    `json:"ar_invoice_my_type"`
 
-	CreditGLFormat string `json:"credit_gl_format"`
-	CreditBookCode string `json:"credit_book_code"`
-	CreditSource int `json:"credit_source"`
-	CreditSaveFrom int `json:"credit_save_from"`
+	CreditNoteGLFormat string `json:"credit_note_gl_format"`
+	CreditNoteBookCode string `json:"credit_note_book_code"`
+	CreditNoteSource   int    `json:"credit_note_source"`
+	CreditNoteSaveFrom int    `json:"credit_note_save_from"`
+	CreditNoteMyType   int    `json:"credit_note_my_type"`
 
 	ArDepositSpecialGLFormat string `json:"ar_deposit_special_gl_format"`
-	CreditnoteGLFormat string `json:"creditnote_gl_format"`
-	DebitNoteGLFormat string `json:"debit_note_gl_format"`
-
+	DebitNoteGLFormat        string `json:"debit_note_gl_format"`
 }
-
 
 func LoadDefaultData(fileName string) (df Default) {
 

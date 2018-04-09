@@ -104,7 +104,6 @@ type ListDepChqIn struct {
 	Amount         float64 `json:"amount" db:"Amount"`
 	Balance        float64 `json:"balance" db:"Balance"`
 	RefChqRowOrder int     `json:"ref_chq_row_order" db:"RefChqRowOrder"`
-	SaveFrom       int     `json:"save_from" db:"SaveFrom"`
 	StatusDate     string  `json:"status_date" db:"StatusDate"`
 	StatusDocNo    string  `json:"status_doc_no" db:"StatusDocNo"`
 }
@@ -116,7 +115,6 @@ type ListDepCreditCard struct {
 	DueDate        string  `json:"due_date" db:"DueDate"`
 	BookNo         string  `json:"book_no" db:"BookNo"`
 	Status         int     `json:"status" db:"Status"`
-	SaveFrom       int     `json:"save_from" db:"SaveFrom"`
 	StatusDate     string  `json:"status_date" db:"StatusDate"`
 	StatusDocNo    string  `json:"status_doc_no" db:"StatusDocNo"`
 	BankBranchCode string  `json:"bank_branch_code" db:"BankBranchCode"`
@@ -127,18 +125,20 @@ type ListDepCreditCard struct {
 	ChargeAmount   float64 `json:"charge_amount" db:"ChargeAmount"`
 }
 
-func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
+func (dp *ArDeposit) InsertAndEditArDeposit(db *sqlx.DB) error {
 	var check_exist int
 	var sum_pay_amount float64
 
 	now := time.Now()
 
-	sqlexist := `select count(docno) as check_exist from dbo.bcardeposit where docno = ? and arcode = ?` //เช็คว่ามีเอกสารหรือยัง
-	err := db.Get(&check_exist, sqlexist, dp.DocNo, dp.ArCode)
+	sqlexist := `select count(docno) as check_exist from dbo.bcardeposit where docno = ?` //เช็คว่ามีเอกสารหรือยัง
+	err := db.Get(&check_exist, sqlexist, dp.DocNo)
 	if err != nil {
 		fmt.Println(err.Error())
 		return nil
 	}
+
+	sum_pay_amount = (dp.SumCashAmount+dp.SumCreditAmount+dp.SumChqAmount+dp.SumBankAmount+dp.OtherExpense)-dp.OtherIncome
 
 	switch {
 	case dp.DocNo == "":
@@ -212,9 +212,11 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 		dp.TransBankDate = dp.DocDate
 	}
 
-	dp.BeforeTaxAmount, dp.TaxAmount = m.CalcTaxDoc(dp.TaxType, dp.TaxRate, dp.TotalAmount)
+	if (dp.BeforeTaxAmount == 0 && dp.TaxAmount == 0) {
+		dp.BeforeTaxAmount, dp.TaxAmount = m.CalcTaxDoc(dp.TaxType, dp.TaxRate, dp.TotalAmount)
+	}
 
-	//fmt.Println("BeforeTax,TaxAmount", dp.BeforeTaxAmount, dp.TaxAmount)
+	fmt.Println("BeforeTax,TaxAmount", dp.BeforeTaxAmount, dp.TaxAmount)
 
 	fmt.Println("check_exist = ", check_exist)
 
@@ -272,10 +274,11 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 	fmt.Println("RecMoney")
 	var linenumber int
 
+
 	if (dp.SumCashAmount != 0) { //subs.PaymentType == 0:
 		fmt.Println("SumCashAmount")
-		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?)`
-		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCashAmount, 0, linenumber, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney)
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCashAmount, 0,dp.SaveFrom, linenumber, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney)
 		if err != nil {
 			return err
 		}
@@ -288,8 +291,8 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 		} else {
 			linenumber = 0
 		}
-		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,BankBranchCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCreditAmount, dp.SumCreditAmount, 1, dp.CreditType, dp.ConfirmNo, linenumber, dp.CreditRefNo, dp.BankCode, dp.BankBranchCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,SaveFrom,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,BankBranchCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumCreditAmount, dp.SumCreditAmount, 1,dp.SaveFrom, dp.CreditType, dp.ConfirmNo, linenumber, dp.CreditRefNo, dp.BankCode, dp.BankBranchCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate)
 		if err != nil {
 			return err
 		}
@@ -308,8 +311,8 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 			linenumber = 0
 		}
 
-		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumChqAmount, 2, linenumber, dp.CreditRefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, dp.BankBranchCode, my_description_recmoney, dp.RefDate)
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumChqAmount, 2,dp.SaveFrom, linenumber, dp.CreditRefNo, dp.BankCode, dp.ProjectCode, dp.DepartCode, dp.SaleCode, dp.BankBranchCode, my_description_recmoney, dp.RefDate)
 		if err != nil {
 			return err
 		}
@@ -338,8 +341,8 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 			linenumber = 0
 		}
 
-		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate,TransBankDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumBankAmount, 3, linenumber, dp.BankRefNo, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate, dp.TransBankDate)
+		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate,TransBankDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlrec, dp.DocNo, dp.DocDate, dp.ArCode, dp.ExchangeRate, dp.SumBankAmount, 3,dp.SaveFrom, linenumber, dp.BankRefNo, dp.ProjectCode, dp.DepartCode, dp.SaleCode, my_description_recmoney, dp.DocDate, dp.TransBankDate)
 		if err != nil {
 			return err
 		}
@@ -359,7 +362,7 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 			}
 
 			sqldep := `insert into dbo.bcchqin(BankCode,ChqNumber,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,Balance,MyDescription,ExchangeRate,RefChqRowOrder) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-			_, err = db.Exec(sqldep, c.BankCode, c.ChqNumber, dp.DocNo, dp.ArCode, dp.SaleCode, c.ReceiveDate, c.DueDate, c.BookNo, c.Status, c.SaveFrom, c.StatusDate, c.StatusDocNo, dp.DepartCode, c.BankBranchCode, c.Amount, c.Balance, my_description_recmoney, dp.ExchangeRate, c.RefChqRowOrder)
+			_, err = db.Exec(sqldep, c.BankCode, c.ChqNumber, dp.DocNo, dp.ArCode, dp.SaleCode, c.ReceiveDate, c.DueDate, c.BookNo, c.Status, dp.SaveFrom, c.StatusDate, c.StatusDocNo, dp.DepartCode, c.BankBranchCode, c.Amount, c.Balance, my_description_recmoney, dp.ExchangeRate, c.RefChqRowOrder)
 			if err != nil {
 				fmt.Println("Chq", err.Error())
 				return err
@@ -378,7 +381,7 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 		if len((dp.Cdcs)) != 0 {
 			for _, d := range dp.Cdcs {
 				sqlcrd := `insert into dbo.bccreditcard(BankCode,CreditCardNo,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,MyDescription,ExchangeRate,CreditType,ConfirmNo,ChargeAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate())`
-				_, err = db.Exec(sqlcrd, d.BankCode, d.CreditCardNo, dp.DocNo, dp.ArCode, dp.SaleCode, d.ReceiveDate, d.DueDate, d.BookNo, d.Status, d.SaveFrom, d.StatusDate, d.StatusDocNo, dp.DepartCode, d.BankBranchCode, d.Amount, my_description_recmoney, dp.ExchangeRate, d.CreditType, d.ConfirmNo, d.ChargeAmount, dp.UserCode)
+				_, err = db.Exec(sqlcrd, d.BankCode, d.CreditCardNo, dp.DocNo, dp.ArCode, dp.SaleCode, d.ReceiveDate, d.DueDate, d.BookNo, d.Status, dp.SaveFrom, d.StatusDate, d.StatusDocNo, dp.DepartCode, d.BankBranchCode, d.Amount, my_description_recmoney, dp.ExchangeRate, d.CreditType, d.ConfirmNo, d.ChargeAmount, dp.UserCode)
 				if err != nil {
 					fmt.Println("Credit", err.Error())
 					return err
@@ -387,10 +390,9 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 		} else {
 			BookNo := ""
 			Status := 0
-			SaveFrom := 0
 
 			sqlcrd := `insert into dbo.bccreditcard(BankCode,CreditCardNo,DocNo,ArCode,SaleCode,ReceiveDate,DueDate,BookNo,Status,SaveFrom,StatusDate,StatusDocNo,DepartCode,BankBranchCode,Amount,MyDescription,ExchangeRate,CreditType,ConfirmNo,ChargeAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate())`
-			_, err = db.Exec(sqlcrd, dp.BankCode, dp.CreditRefNo, dp.DocNo, dp.ArCode, dp.SaleCode, dp.DocDate, dp.DueDate, BookNo, Status, SaveFrom, dp.DocDate, dp.DocNo, dp.DepartCode, dp.BankBranchCode, dp.SumCreditAmount, my_description_recmoney, dp.ExchangeRate, dp.CreditType, dp.ConfirmNo, dp.ChargeAmount, dp.UserCode)
+			_, err = db.Exec(sqlcrd, dp.BankCode, dp.CreditRefNo, dp.DocNo, dp.ArCode, dp.SaleCode, dp.DocDate, dp.DueDate, BookNo, Status, dp.SaveFrom, dp.DocDate, dp.DocNo, dp.DepartCode, dp.BankBranchCode, dp.SumCreditAmount, my_description_recmoney, dp.ExchangeRate, dp.CreditType, dp.ConfirmNo, dp.ChargeAmount, dp.UserCode)
 			if err != nil {
 				fmt.Println("Credit", err.Error())
 				return err
@@ -500,7 +502,7 @@ func (dp *ArDeposit) SaveArDeposit(db *sqlx.DB) error {
 //}
 
 func (dp *ArDeposit) SearchArDepositByDocNo(db *sqlx.DB, docno string) error {
-	sql := `set dateformat dmy     select a.RowOrder,a.DocNo as DocNo,a.DocDate,a.TaxDate,a.TaxType,a.TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,a.SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a WITH (NOLOCK) left join dbo.bcar b WITH (NOLOCK) on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d WITH (NOLOCK) on d.docno = a.docno and d.arcode = a.arcode where a.docno  = ?`
+	sql := `set dateformat dmy     select a.RowOrder,a.DocNo as DocNo,a.DocDate,isnull(a.TaxDate,'') as TaxDate,a.TaxType,isnull(a.TaxNo,'') as TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,isnull(a.SaleCode,'') as SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a WITH (NOLOCK) left join dbo.bcar b WITH (NOLOCK) on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d WITH (NOLOCK) on d.docno = a.docno and d.arcode = a.arcode where a.docno  = ?`
 	err := db.Get(dp, sql, docno)
 	fmt.Println("sql =", sql)
 	if err != nil {
@@ -510,7 +512,7 @@ func (dp *ArDeposit) SearchArDepositByDocNo(db *sqlx.DB, docno string) error {
 }
 
 func (dp *ArDeposit) SearchArDepositByKeyword(db *sqlx.DB, keyword string) (dps []*ArDeposit, err error) {
-	sql := `set dateformat dmy     select a.RowOrder,a.DocNo as DocNo,a.DocDate,a.TaxDate,a.TaxType,a.TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,a.SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a WITH (NOLOCK) left join dbo.bcar b WITH (NOLOCK) on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d WITH (NOLOCK) on d.docno = a.docno and d.arcode = a.arcode where (a.docno  like '%'+?+'%' or a.arcode like '%'+?+'%' or a.salecode like '%'+?+'%' or b.name1 like '%'+?+'%')  order by a.docno`
+	sql := `set dateformat dmy     select a.RowOrder,a.DocNo as DocNo,a.DocDate,isnull(a.TaxDate,'') as TaxDate,a.TaxType,isnull(a.TaxNo,'') as TaxNo,a.ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,a.CreditDay,a.DueDate,isnull(a.SaleCode,'') as SaleCode,isnull(c.name,'') as SaleName,a.TaxRate,isnull(a.MyDescription,'') as MyDescription,a.BeforeTaxAmount,a.TaxAmount,a.TotalAmount,a.SumOfWTax,a.NetAmount,a.BillBalance,a.OtherIncome,a.OtherExpense,a.ExcessAmount1,a.ExcessAmount2,a.ChargeAmount,a.ChangeAmount,isnull(a.RefNo,'') as RefNo,isnull(a.CurrencyCode,'') as CurrencyCode,a.ExchangeRate,a.SumCashAmount,a.SumChqAmount,a.SumCreditAmount,a.SumBankAmount,isnull(a.GLFormat,'') as GLFormat,isnull(a.AllocateCode,'') as AllocateCode,isnull(a.ProjectCode,'') as ProjectCode,isnull(a.BillGroup,'') as BillGroup,isnull(a.RecurName,'') as RecurName,a.CreatorCode,a.CreateDateTime,isnull(d.bookcode,'') as BookCode from dbo.bcardeposit a WITH (NOLOCK) left join dbo.bcar b WITH (NOLOCK) on a.arcode = b.code left join dbo.bcsale c on a.salecode = c.code left join dbo.bcoutputtax d WITH (NOLOCK) on d.docno = a.docno and d.arcode = a.arcode where (a.docno  like '%'+?+'%' or a.arcode like '%'+?+'%' or a.salecode like '%'+?+'%' or b.name1 like '%'+?+'%')  order by a.docno`
 	err = db.Select(&dps, sql, keyword, keyword, keyword, keyword)
 	fmt.Println("sql =", sql)
 	if err != nil {
