@@ -81,6 +81,14 @@ type Default struct {
 	TaxRateDefault      float64 `json:"tax_rate_default"`
 	ExchangeRateDefault float64 `json:"exchange_rate_default"`
 
+	ApInvoiceCashGLFormat   string `json:"ap_invoice_cash_gl_format"`
+	ApInvoiceCreditGLFormat string `json:"ap_invoice_credit_gl_format"`
+	ApInvoiceBookCode       string `json:"ap_invoice_book_code"`
+	ApInvoiceSource         int    `json:"ap_invoice_source"`
+	ApInvoiceSaveFrom       int    `json:"ap_invoice_save_from"`
+	ApInvoiceMyType         int    `json:"ap_invoice_my_type"`
+
+
 	ArDepositGLFormat string `json:"ar_deposit_gl_format"`
 	ArDepositBookCode string `json:"ar_deposit_book_code"`
 	ArDepositSource   int    `json:"ar_deposit_source"`
@@ -99,8 +107,13 @@ type Default struct {
 	CreditNoteSaveFrom int    `json:"credit_note_save_from"`
 	CreditNoteMyType   int    `json:"credit_note_my_type"`
 
+	DebitNoteGLFormat string `json:"debit_note_gl_format"`
+	DebitNoteBookCode string `json:"debit_note_book_code"`
+	DebitNoteSource   int    `json:"debit_note_source"`
+	DebitNoteSaveFrom int    `json:"debit_note_save_from"`
+	DebitNoteMyType   int    `json:"debit_note_my_type"`
+
 	ArDepositSpecialGLFormat string `json:"ar_deposit_special_gl_format"`
-	DebitNoteGLFormat        string `json:"debit_note_gl_format"`
 }
 
 func LoadDefaultData(fileName string) (df Default) {

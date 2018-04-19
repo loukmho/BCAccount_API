@@ -9,6 +9,7 @@ import (
 )
 
 type CreditNote struct {
+	SaveFrom        int                  `json:"save_from" db"SaveFrom"`
 	DocNo           string               `json:"doc_no" db:"DocNo"`
 	TaxNo           string               `json:"tax_no" db:"TaxNo"`
 	TaxDate         string               `json:"tax_date" db:"TaxDate"`
@@ -75,7 +76,6 @@ type CreditNote struct {
 	CancelDateTime  string               `json:"cancel_date_time" db:"CancelDateTime"`
 	PayBillAmount   float64              `json:"pay_bill_amount" db:"PayBillAmount"`
 	BillTemporary   float64              `json:"bill_temporary" db:"BillTemporary"`
-	SaveFrom        int                  `json:"save_from" db"SaveFrom"`
 	UserCode        string               `json:"user_code" db:"UserCode"`
 	ListCrdRecMoney
 	Subs            []*CrdItem           `json:"subs"`
@@ -341,6 +341,16 @@ func (crd *CreditNote) InsertAndEditCreditNote(db *sqlx.DB) error {
 			fmt.Println(err.Error())
 			return err
 		}
+
+		if (item.ItemType  != 1){
+			sqlprocess := ` insert into dbo.ProcessStock (ItemCode,ProcessFlag,FlowStatus) values(?, 1, 0)`
+			_, err = db.Exec(sqlprocess, item.ItemCode )
+			fmt.Println("sqlprocess = ", sqlsub)
+			if err != nil {
+				fmt.Println(err.Error())
+			}
+		}
+
 		vLineNumber = vLineNumber + 1
 	}
 

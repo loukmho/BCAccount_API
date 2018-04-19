@@ -62,8 +62,8 @@ type ArDeposit struct {
 	LastEditDateT   string               `json:"last_edit_date_t" db:"LastEditDateT"`
 	UserCode        string               `json:"user_code" db:"UserCode"`
 	ListArDepRecMoney
-	Cdcs            []*ListInvCreditCard `json:"cdcs"`
-	Chqs            []*ListInvChqIn      `json:"chqs"`
+	Cdcs            []*ListDepCreditCard `json:"cdcs"`
+	Chqs            []*ListDepChqIn      `json:"chqs"`
 }
 
 type Customer struct {

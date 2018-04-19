@@ -21,6 +21,8 @@ func main() {
 	//r.Use(y.Document())
 
 	r.GET("/apinvoice", b.SearchApInvoiceByDocNo)
+	r.GET("/apinvoices", b.SearchApInvoiceByKeyword)
+	r.POST("/apinvoice", b.InsertAndEditApinvoice)
 
 	r.GET("/customer", c.SearchCustomerByCode)
 	r.GET("/customers", c.SearchCustomerByKeyword)
@@ -28,22 +30,23 @@ func main() {
 
 	r.GET("/arinvoice", s.SearchArInvoiceByDocNo)
 	r.GET("/arinvoices", s.SearchArInvoiceByKeyword)
-	r.POST("/arinvoice", s.InsertAndEditArinvoice)
-	r.PUT("/arinvoice", s.InsertAndEditArinvoice)
+	r.POST("/arinvoice", s.InsertAndEditArInvoice)
 
 	r.GET("/creditnote", s.SearchCreditNoteByDocNo)
 	r.GET("/creditnotes", s.SearchCreditNoteByKeyword)
 	r.POST("/creditnote", s.InsertAndEditCreditNote)
 
+	r.GET("/debitnote", s.SearchDebitNoteByDocNo)
+	r.GET("/debitnotes", s.SearchDebitNoteByKeyword)
+	r.POST("/debitnote", s.InsertAndEditDebitNote)
+
 	r.GET("/ardeposit", s.SearchArDepositByDocNo)
 	r.GET("/ardeposits", s.SearchArDepositByKeyword)
 	r.POST("/ardeposit", s.InsertAndEditArDespoit)
-	//r.PUT("/ardeposit", s.UpdateArDespoit)
 
 	r.GET("/ardepositspecial", s.SearchArDepositSpecialByDocNo)
 	r.GET("/ardepositspecials", s.SearchArDepositSpecialByKeyword)
-	r.POST("/ardepositspecial", s.InsertAndEditArDespoit)
-	//r.PUT("/ardepositspecial", s.UpdateArDespoit)
+	r.POST("/ardepositspecial", s.InsertAndEditArDespoitSpecial)
 
 	r.GET("/item", i.SearchItemByCode)
 	r.GET("/items", i.SearchItemByKeyword)

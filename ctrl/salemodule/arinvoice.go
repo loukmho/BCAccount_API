@@ -8,7 +8,7 @@ import(
 	"fmt"
 )
 
-func InsertAndEditArinvoice(c *gin.Context){
+func InsertAndEditArInvoice(c *gin.Context){
 	c.Keys = ct.HeaderKeys
 
 	inv := &model.ArInvoice{}

@@ -9,35 +9,34 @@ import (
 )
 
 
-func InsertAndEditArDespoitSpecial(c *gin.Context) {
+func InsertAndEditDebitNote(c *gin.Context){
 	c.Keys = ct.HeaderKeys
 
-	dps := &model.ArDepositSpecial{}
-	err := c.BindJSON(dps)
+	dbt := &model.DebitNote{}
+	err := c.BindJSON(dbt)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = dps.InsertAndEditArDepositSpecial(ct.Dbc)
-
+	err = dbt.InsertAndEditDebitNote(ct.Dbc)
 	rs := ct.Response{}
 	if err != nil {
 		rs.Status = "error"
 		rs.Message = "No Content and Error : " + err.Error()
 		c.JSON(http.StatusNotFound, rs)
-	} else {
+	}else{
 		rs.Status = "success"
-		rs.Data = dps
-		c.JSON(http.StatusOK, rs)
+		rs.Data = dbt
+		c.JSON(http.StatusNotFound, rs)
 	}
-
 }
 
-func SearchArDepositSpecialByDocNo(c *gin.Context){
+func SearchDebitNoteByDocNo(c *gin.Context){
 	c.Keys = ct.HeaderKeys
+
 	docno := c.Request.URL.Query().Get("docno")
 
-	dps := new(model.ArDepositSpecial)
-	err := dps.SearchArDepositSpecialByDocNo(ct.Dbc, docno)
+	dbt := new(model.DebitNote)
+	err := dbt.SearchDebitNoteByDocNo(ct.Dbc, docno)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -46,18 +45,19 @@ func SearchArDepositSpecialByDocNo(c *gin.Context){
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dps
+		rs.Data = dbt
 		c.JSON(http.StatusOK, rs)
 	}
 
 }
 
-func SearchArDepositSpecialByKeyword(c *gin.Context){
+func SearchDebitNoteByKeyword(c *gin.Context){
 	c.Keys = ct.HeaderKeys
+
 	keyword := c.Request.URL.Query().Get("keyword")
 
-	dps := new(model.ArDepositSpecial)
-	dpsList, err := dps.SearchArDepositSpecialByKeyword(ct.Dbc, keyword)
+	dbt := new(model.DebitNote)
+	dbts, err := dbt.SearchDebitNoteByKeyword(ct.Dbc, keyword)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -66,7 +66,7 @@ func SearchArDepositSpecialByKeyword(c *gin.Context){
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dpsList
+		rs.Data = dbts
 		c.JSON(http.StatusOK, rs)
 	}
 

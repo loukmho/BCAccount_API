@@ -4,14 +4,17 @@
     <list default="true" id="04fb81d0-cba6-4721-a376-cc3403a2134e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/bcdata.json" afterPath="$PROJECT_DIR$/bcdata.json" />
-      <change beforePath="$PROJECT_DIR$/ctrl/salemodule/ardeposit.go" afterPath="$PROJECT_DIR$/ctrl/salemodule/ardeposit.go" />
+      <change beforePath="$PROJECT_DIR$/ctrl/buymodule/apinvoice.go" afterPath="$PROJECT_DIR$/ctrl/buymodule/apinvoice.go" />
+      <change beforePath="$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go" afterPath="$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go" />
       <change beforePath="$PROJECT_DIR$/ctrl/salemodule/arinvoice.go" afterPath="$PROJECT_DIR$/ctrl/salemodule/arinvoice.go" />
-      <change beforePath="$PROJECT_DIR$/ctrl/salemodule/creditnote.go" afterPath="$PROJECT_DIR$/ctrl/salemodule/creditnote.go" />
       <change beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
+      <change beforePath="$PROJECT_DIR$/model/buymodule/apinvoice.go" afterPath="$PROJECT_DIR$/model/buymodule/apinvoice.go" />
       <change beforePath="$PROJECT_DIR$/model/init.go" afterPath="$PROJECT_DIR$/model/init.go" />
       <change beforePath="$PROJECT_DIR$/model/salemodule/ardeposit.go" afterPath="$PROJECT_DIR$/model/salemodule/ardeposit.go" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" afterPath="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" />
       <change beforePath="$PROJECT_DIR$/model/salemodule/arinvoice.go" afterPath="$PROJECT_DIR$/model/salemodule/arinvoice.go" />
       <change beforePath="$PROJECT_DIR$/model/salemodule/creditnote.go" afterPath="$PROJECT_DIR$/model/salemodule/creditnote.go" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/debitnote.go" afterPath="$PROJECT_DIR$/model/salemodule/debitnote.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,12 +25,58 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.go">
+      <file leaf-file-name="arinvoice.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="33" column="51" lean-forward="false" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
-              <folding />
+            <state relative-caret-position="3230">
+              <caret line="593" column="40" lean-forward="false" selection-start-line="593" selection-start-column="33" selection-end-line="593" selection-end-column="40" />
+              <folding>
+                <element signature="e#15#121#0" expanded="true" />
+                <marker date="1524020219144" expanded="true" signature="12073:12144" ph="select count... bcarinvoice" />
+                <marker date="1524020219144" expanded="true" signature="16525:17390" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1524020219144" expanded="true" signature="18421:19488" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1524020219144" expanded="true" signature="20766:20992" ph="insert into dbo.BCOutputTax... " />
+                <marker date="1524020219144" expanded="true" signature="21488:22336" ph="update dbo.bcarinvoice... " />
+                <marker date="1524020219144" expanded="true" signature="23414:24481" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1524020219144" expanded="true" signature="26725:27266" ph="insert into dbo.BCArInvoiceSub... " />
+                <marker date="1524020219144" expanded="true" signature="28015:28093" ph="insert into dbo.ProcessStock... " />
+                <marker date="1524020219144" expanded="true" signature="28411:28637" ph="insert into dbo.BCOutputTax... " />
+                <marker date="1524020219144" expanded="true" signature="29306:29487" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524020219144" expanded="true" signature="29963:30232" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524020219144" expanded="true" signature="31083:31310" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524020219144" expanded="true" signature="32763:32978" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524020219144" expanded="true" signature="33816:33960" ph="insert into dbo.bcardeposituse... " />
+                <marker date="1524020219144" expanded="true" signature="34522:34782" ph="insert into dbo.bcchqin... " />
+                <marker date="1524020219144" expanded="true" signature="35368:35688" ph="insert into dbo.bccreditcard... " />
+                <marker date="1524020219144" expanded="true" signature="36126:36446" ph="insert into dbo.bccreditcard... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="apinvoice.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/model/buymodule/apinvoice.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="365" column="25" lean-forward="true" selection-start-line="365" selection-start-column="25" selection-end-line="365" selection-end-column="25" />
+              <folding>
+                <element signature="e#15#121#0" expanded="true" />
+                <marker date="1524129360306" expanded="true" signature="10982:11053" ph="select count... bcarinvoice" />
+                <marker date="1524129360306" expanded="true" signature="14576:15429" ph="insert into dbo.bcarinvoice... " />
+                <marker date="1524129360306" expanded="true" signature="16507:16733" ph="insert into dbo.BCOutputTax... " />
+                <marker date="1524129360306" expanded="true" signature="17199:18033" ph="update dbo.bcapinvoice... " />
+                <marker date="1524129360306" expanded="true" signature="20056:20547" ph="insert into dbo.BCArInvoiceSub... " />
+                <marker date="1524129360306" expanded="true" signature="21278:21356" ph="insert into dbo.ProcessStock... " />
+                <marker date="1524129360306" expanded="true" signature="21672:21898" ph="insert into dbo.BCOutputTax... " />
+                <marker date="1524129360306" expanded="true" signature="22567:22737" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524129360306" expanded="true" signature="23193:23264" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524129360306" expanded="true" signature="23193:23409" ph="insert into dbo.BCPayMoney... " />
+                <marker date="1524129360306" expanded="true" signature="24180:24289" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524129360306" expanded="true" signature="24180:24384" ph="insert into dbo.BCPayMoney... " />
+                <marker date="1524129360306" expanded="true" signature="25855:26070" ph="insert into dbo.BCRecMoney... " />
+                <marker date="1524129360306" expanded="true" signature="26918:27062" ph="insert into dbo.bcardeposituse... " />
+                <marker date="1524129360306" expanded="true" signature="27625:27861" ph="insert into dbo.bcchqin... " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,8 +84,8 @@
       <file leaf-file-name="init.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/init.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1598">
-              <caret line="99" column="58" lean-forward="false" selection-start-line="99" selection-start-column="58" selection-end-line="99" selection-end-column="58" />
+            <state relative-caret-position="1275">
+              <caret line="80" column="57" lean-forward="false" selection-start-line="80" selection-start-column="57" selection-end-line="80" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -45,56 +94,44 @@
       <file leaf-file-name="bcdata.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bcdata.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
+            <state relative-caret-position="136">
+              <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="creditnote.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/model/salemodule/creditnote.go">
+      <file leaf-file-name="apinvoice.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ctrl/buymodule/apinvoice.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="331" column="30" lean-forward="true" selection-start-line="331" selection-start-column="30" selection-end-line="331" selection-end-column="30" />
+            <state relative-caret-position="204">
+              <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
               <folding>
-                <element signature="e#15#123#0" expanded="true" />
-                <marker date="1523266633521" expanded="true" signature="10059:10131" ph="select count... bccreditnote" />
-                <marker date="1523266633521" expanded="true" signature="12744:13609" ph="insert into dbo.bccreditnote... " />
-                <marker date="1523266633521" expanded="true" signature="14712:15577" ph="update dbo.bccreditnote... " />
-                <marker date="1523266633521" expanded="true" signature="14712:15578" ph="update dbo.bccreditnote... " />
-                <marker date="1523266633521" expanded="true" signature="17721:18257" ph="insert into dbo.BCArInvoiceSub... " />
-                <marker date="1523266633521" expanded="true" signature="19114:20879" ph="select a.Doc... BCCreditNote" />
-                <marker date="1523266633521" expanded="true" signature="21403:22057" ph="select a.MyT... BCCreditNoteSub" />
-                <marker date="1523266633521" expanded="true" signature="22316:24203" ph="select a.Doc... BCCreditNote" />
-                <marker date="1523266633521" expanded="true" signature="24811:25465" ph="select a.MyT... BCCreditNoteSub" />
+                <element signature="e#14#194#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="arinvoice.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
+        <entry file="file://$PROJECT_DIR$/ctrl/salemodule/arinvoice.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="668" column="5" lean-forward="true" selection-start-line="668" selection-start-column="5" selection-end-line="668" selection-end-column="5" />
+            <state relative-caret-position="119">
+              <caret line="13" column="29" lean-forward="false" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
               <folding>
-                <marker date="1523255804186" expanded="true" signature="12073:12144" ph="select count... bcarinvoice" />
-                <marker date="1523255804186" expanded="true" signature="16525:17390" ph="insert into dbo.bcarinvoice... " />
-                <marker date="1523255804186" expanded="true" signature="18421:19488" ph="insert into dbo.bcarinvoice... " />
-                <marker date="1523255804186" expanded="true" signature="20766:20992" ph="insert into dbo.BCOutputTax... " />
-                <marker date="1523255804186" expanded="true" signature="21488:22336" ph="update dbo.bcarinvoice... " />
-                <marker date="1523255804186" expanded="true" signature="23414:24481" ph="insert into dbo.bcarinvoice... " />
-                <marker date="1523255804186" expanded="true" signature="26725:27266" ph="insert into dbo.BCArInvoiceSub... " />
-                <marker date="1523255804186" expanded="true" signature="28138:28364" ph="insert into dbo.BCOutputTax... " />
-                <marker date="1523255804186" expanded="true" signature="29033:29214" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1523255804186" expanded="true" signature="29690:29959" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1523255804186" expanded="true" signature="30810:31037" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1523255804186" expanded="true" signature="32490:32705" ph="insert into dbo.BCRecMoney... " />
-                <marker date="1523255804186" expanded="true" signature="33543:33687" ph="insert into dbo.bcardeposituse... " />
-                <marker date="1523255804186" expanded="true" signature="34249:34509" ph="insert into dbo.bcchqin... " />
-                <marker date="1523255804186" expanded="true" signature="35095:35415" ph="insert into dbo.bccreditcard... " />
-                <marker date="1523255804186" expanded="true" signature="35853:36173" ph="insert into dbo.bccreditcard... " />
+                <element signature="e#14#167#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="35" column="54" lean-forward="false" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
+              <folding>
+                <element signature="e#14#381#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,15 +161,22 @@
       <find>glformat</find>
       <find>CreditType</find>
       <find>ExchangeRate</find>
-      <find>Source</find>
       <find>Save</find>
       <find>source</find>
       <find>PayBillDate</find>
       <find>TransBankDate</find>
-      <find>SaveFrom</find>
       <find>inv.</find>
       <find>CreditNoteGLFormat</find>
       <find>Itemtype</find>
+      <find>GLStart</find>
+      <find>IspostGL</find>
+      <find>Pay</find>
+      <find>PayBills</find>
+      <find>PayBillStatus</find>
+      <find>SaveFrom</find>
+      <find>Source</find>
+      <find>DepositIncTax</find>
+      <find>ReceiveDate</find>
     </findStrings>
     <replaceStrings>
       <replace>crd.</replace>
@@ -145,7 +189,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/model/apinvoice.go" />
         <option value="$PROJECT_DIR$/config/config.go" />
         <option value="$PROJECT_DIR$/ctrl/recmoney.go" />
         <option value="$PROJECT_DIR$/model/recmoney.go" />
@@ -155,10 +198,8 @@
         <option value="$PROJECT_DIR$/ctrl/salemodule/recmoney.go" />
         <option value="$PROJECT_DIR$/ctrl/init.go" />
         <option value="$PROJECT_DIR$/ctrl/resp.go" />
-        <option value="$PROJECT_DIR$/ctrl/buymodule/apinvoice.go" />
         <option value="$PROJECT_DIR$/model/salemodule/recmoney.go" />
         <option value="$PROJECT_DIR$/model/invenmodule/stkissue.go" />
-        <option value="$PROJECT_DIR$/model/buymodule/apinvoice.go" />
         <option value="$PROJECT_DIR$/model/buymodule/stkrefund.go" />
         <option value="$PROJECT_DIR$/model/buymodule/debitnote2.go" />
         <option value="$PROJECT_DIR$/model/invenmodule/stkadjust.go" />
@@ -173,29 +214,32 @@
         <option value="$PROJECT_DIR$/model/custmodule/receipt3.go" />
         <option value="$PROJECT_DIR$/model/custmodule/receipt1.go" />
         <option value="$PROJECT_DIR$/model/custmodule/arotherdebt.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/debitnote.go" />
         <option value="$PROJECT_DIR$/model/salemodule/returndepspecial.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/bankexpense.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/bankincome.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/cashbankin.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/cashbankout.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/otherexpense.go" />
-        <option value="$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" />
         <option value="$PROJECT_DIR$/model/invenmodule/item.go" />
         <option value="$PROJECT_DIR$/ctrl/invenmodule/item.go" />
         <option value="$PROJECT_DIR$/model/custmodule/customer.go" />
         <option value="$PROJECT_DIR$/ctrl/custmodule/customer.go" />
         <option value="$PROJECT_DIR$/config.json" />
-        <option value="$PROJECT_DIR$/model/salemodule/ardeposit.go" />
         <option value="$PROJECT_DIR$/ctrl/salemodule/ardeposit.go" />
-        <option value="$PROJECT_DIR$/ctrl/salemodule/arinvoice.go" />
         <option value="$PROJECT_DIR$/ctrl/salemodule/creditnote.go" />
-        <option value="$PROJECT_DIR$/main.go" />
-        <option value="$PROJECT_DIR$/bcdata.json" />
-        <option value="$PROJECT_DIR$/model/init.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/arinvoice.go" />
+        <option value="$PROJECT_DIR$/ctrl/salemodule/debitnote.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/ardeposit.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" />
+        <option value="$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go" />
         <option value="$PROJECT_DIR$/model/salemodule/creditnote.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/debitnote.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/arinvoice.go" />
+        <option value="$PROJECT_DIR$/model/init.go" />
+        <option value="$PROJECT_DIR$/bcdata.json" />
+        <option value="$PROJECT_DIR$/ctrl/salemodule/arinvoice.go" />
+        <option value="$PROJECT_DIR$/ctrl/buymodule/apinvoice.go" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/model/buymodule/apinvoice.go" />
       </list>
     </option>
   </component>
@@ -227,6 +271,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -243,13 +288,12 @@
               <item name="bcaccount_api" type="b2602c69:ProjectViewProjectNode" />
               <item name="bcaccount_api" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="salemodule" type="462c0819:PsiDirectoryNode" />
+              <item name="buymodule" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -353,7 +397,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config.go" />
     <entry file="file://$PROJECT_DIR$/ReadMe.md" />
     <entry file="file://$PROJECT_DIR$/../../itnopadol/drivethru_api/example/main.go" />
     <entry file="file://$PROJECT_DIR$/../../jmoiron/sqlx/sqlx.go">
@@ -367,13 +410,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/recmoney.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -475,20 +511,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/buymodule/apinvoice.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2006">
-          <caret line="120" column="0" lean-forward="false" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/debitnote.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="75" column="51" lean-forward="false" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/salemodule/returndepspecial.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
@@ -542,27 +564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="26" lean-forward="false" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/ardepositspecial.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="62" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="25" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/buymodule/apinvoice.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -631,99 +632,161 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/salemodule/ardeposit.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="123" column="61" lean-forward="true" selection-start-line="123" selection-start-column="61" selection-end-line="123" selection-end-column="61" />
+        <state relative-caret-position="153">
+          <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="68" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/arinvoice.go">
+    <entry file="file://$PROJECT_DIR$/model/salemodule/ardepositspecial.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+        <state relative-caret-position="4437">
+          <caret line="267" column="0" lean-forward="false" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ctrl/salemodule/ardeposit.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="55" column="25" lean-forward="true" selection-start-line="55" selection-start-column="25" selection-end-line="55" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="33" column="51" lean-forward="false" selection-start-line="33" selection-start-column="51" selection-end-line="33" selection-end-column="51" />
-          <folding />
+        <state relative-caret-position="1122">
+          <caret line="72" column="1" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="72" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ctrl/salemodule/creditnote.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="13" column="30" lean-forward="false" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
-          <folding>
-            <element signature="e#14#168#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="391">
+          <caret line="29" column="1" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="29" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bcdata.json">
+    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/debitnote.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-          <folding />
+        <state relative-caret-position="102">
+          <caret line="12" column="26" lean-forward="false" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/init.go">
+    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/recmoney.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="99" column="58" lean-forward="false" selection-start-line="99" selection-start-column="58" selection-end-line="99" selection-end-column="58" />
-          <folding />
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
+    <entry file="file://$PROJECT_DIR$/model/salemodule/debitnote.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="668" column="5" lean-forward="true" selection-start-line="668" selection-start-column="5" selection-end-line="668" selection-end-column="5" />
-          <folding>
-            <marker date="1523255804186" expanded="true" signature="12073:12144" ph="select count... bcarinvoice" />
-            <marker date="1523255804186" expanded="true" signature="16525:17390" ph="insert into dbo.bcarinvoice... " />
-            <marker date="1523255804186" expanded="true" signature="18421:19488" ph="insert into dbo.bcarinvoice... " />
-            <marker date="1523255804186" expanded="true" signature="20766:20992" ph="insert into dbo.BCOutputTax... " />
-            <marker date="1523255804186" expanded="true" signature="21488:22336" ph="update dbo.bcarinvoice... " />
-            <marker date="1523255804186" expanded="true" signature="23414:24481" ph="insert into dbo.bcarinvoice... " />
-            <marker date="1523255804186" expanded="true" signature="26725:27266" ph="insert into dbo.BCArInvoiceSub... " />
-            <marker date="1523255804186" expanded="true" signature="28138:28364" ph="insert into dbo.BCOutputTax... " />
-            <marker date="1523255804186" expanded="true" signature="29033:29214" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1523255804186" expanded="true" signature="29690:29959" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1523255804186" expanded="true" signature="30810:31037" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1523255804186" expanded="true" signature="32490:32705" ph="insert into dbo.BCRecMoney... " />
-            <marker date="1523255804186" expanded="true" signature="33543:33687" ph="insert into dbo.bcardeposituse... " />
-            <marker date="1523255804186" expanded="true" signature="34249:34509" ph="insert into dbo.bcchqin... " />
-            <marker date="1523255804186" expanded="true" signature="35095:35415" ph="insert into dbo.bccreditcard... " />
-            <marker date="1523255804186" expanded="true" signature="35853:36173" ph="insert into dbo.bccreditcard... " />
-          </folding>
+        <state relative-caret-position="3264">
+          <caret line="197" column="25" lean-forward="true" selection-start-line="197" selection-start-column="25" selection-end-line="197" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="29" column="33" lean-forward="false" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/salemodule/creditnote.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="331" column="30" lean-forward="true" selection-start-line="331" selection-start-column="30" selection-end-line="331" selection-end-column="30" />
+        <state relative-caret-position="-391">
+          <caret line="338" column="40" lean-forward="false" selection-start-line="338" selection-start-column="40" selection-end-line="338" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/init.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="80" column="57" lean-forward="false" selection-start-line="80" selection-start-column="57" selection-end-line="80" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bcdata.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/arinvoice.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="13" column="29" lean-forward="false" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
           <folding>
-            <element signature="e#15#123#0" expanded="true" />
-            <marker date="1523266633521" expanded="true" signature="10059:10131" ph="select count... bccreditnote" />
-            <marker date="1523266633521" expanded="true" signature="12744:13609" ph="insert into dbo.bccreditnote... " />
-            <marker date="1523266633521" expanded="true" signature="14712:15577" ph="update dbo.bccreditnote... " />
-            <marker date="1523266633521" expanded="true" signature="14712:15578" ph="update dbo.bccreditnote... " />
-            <marker date="1523266633521" expanded="true" signature="17721:18257" ph="insert into dbo.BCArInvoiceSub... " />
-            <marker date="1523266633521" expanded="true" signature="19114:20879" ph="select a.Doc... BCCreditNote" />
-            <marker date="1523266633521" expanded="true" signature="21403:22057" ph="select a.MyT... BCCreditNoteSub" />
-            <marker date="1523266633521" expanded="true" signature="22316:24203" ph="select a.Doc... BCCreditNote" />
-            <marker date="1523266633521" expanded="true" signature="24811:25465" ph="select a.MyT... BCCreditNoteSub" />
+            <element signature="e#14#167#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ctrl/buymodule/apinvoice.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="19" column="5" lean-forward="false" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding>
+            <element signature="e#14#194#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="35" column="54" lean-forward="false" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
+          <folding>
+            <element signature="e#14#381#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3230">
+          <caret line="593" column="40" lean-forward="false" selection-start-line="593" selection-start-column="33" selection-end-line="593" selection-end-column="40" />
+          <folding>
+            <element signature="e#15#121#0" expanded="true" />
+            <marker date="1524020219144" expanded="true" signature="12073:12144" ph="select count... bcarinvoice" />
+            <marker date="1524020219144" expanded="true" signature="16525:17390" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1524020219144" expanded="true" signature="18421:19488" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1524020219144" expanded="true" signature="20766:20992" ph="insert into dbo.BCOutputTax... " />
+            <marker date="1524020219144" expanded="true" signature="21488:22336" ph="update dbo.bcarinvoice... " />
+            <marker date="1524020219144" expanded="true" signature="23414:24481" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1524020219144" expanded="true" signature="26725:27266" ph="insert into dbo.BCArInvoiceSub... " />
+            <marker date="1524020219144" expanded="true" signature="28015:28093" ph="insert into dbo.ProcessStock... " />
+            <marker date="1524020219144" expanded="true" signature="28411:28637" ph="insert into dbo.BCOutputTax... " />
+            <marker date="1524020219144" expanded="true" signature="29306:29487" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524020219144" expanded="true" signature="29963:30232" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524020219144" expanded="true" signature="31083:31310" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524020219144" expanded="true" signature="32763:32978" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524020219144" expanded="true" signature="33816:33960" ph="insert into dbo.bcardeposituse... " />
+            <marker date="1524020219144" expanded="true" signature="34522:34782" ph="insert into dbo.bcchqin... " />
+            <marker date="1524020219144" expanded="true" signature="35368:35688" ph="insert into dbo.bccreditcard... " />
+            <marker date="1524020219144" expanded="true" signature="36126:36446" ph="insert into dbo.bccreditcard... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/buymodule/apinvoice.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="365" column="25" lean-forward="true" selection-start-line="365" selection-start-column="25" selection-end-line="365" selection-end-column="25" />
+          <folding>
+            <element signature="e#15#121#0" expanded="true" />
+            <marker date="1524129360306" expanded="true" signature="10982:11053" ph="select count... bcarinvoice" />
+            <marker date="1524129360306" expanded="true" signature="14576:15429" ph="insert into dbo.bcarinvoice... " />
+            <marker date="1524129360306" expanded="true" signature="16507:16733" ph="insert into dbo.BCOutputTax... " />
+            <marker date="1524129360306" expanded="true" signature="17199:18033" ph="update dbo.bcapinvoice... " />
+            <marker date="1524129360306" expanded="true" signature="20056:20547" ph="insert into dbo.BCArInvoiceSub... " />
+            <marker date="1524129360306" expanded="true" signature="21278:21356" ph="insert into dbo.ProcessStock... " />
+            <marker date="1524129360306" expanded="true" signature="21672:21898" ph="insert into dbo.BCOutputTax... " />
+            <marker date="1524129360306" expanded="true" signature="22567:22737" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524129360306" expanded="true" signature="23193:23264" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524129360306" expanded="true" signature="23193:23409" ph="insert into dbo.BCPayMoney... " />
+            <marker date="1524129360306" expanded="true" signature="24180:24289" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524129360306" expanded="true" signature="24180:24384" ph="insert into dbo.BCPayMoney... " />
+            <marker date="1524129360306" expanded="true" signature="25855:26070" ph="insert into dbo.BCRecMoney... " />
+            <marker date="1524129360306" expanded="true" signature="26918:27062" ph="insert into dbo.bcardeposituse... " />
+            <marker date="1524129360306" expanded="true" signature="27625:27861" ph="insert into dbo.bcchqin... " />
           </folding>
         </state>
       </provider>
