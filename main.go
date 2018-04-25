@@ -24,6 +24,9 @@ func main() {
 	r.GET("/apinvoices", b.SearchApInvoiceByKeyword)
 	r.POST("/apinvoice", b.InsertAndEditApinvoice)
 
+	r.GET("/stkrefund", b.SearchStkRefundByDocNo)
+	r.GET("/stkrefunds", b.SearchStkRefundByKeyword)
+
 	r.GET("/customer", c.SearchCustomerByCode)
 	r.GET("/customers", c.SearchCustomerByKeyword)
 	r.POST("/customer", c.SaveUpdateCustomer)

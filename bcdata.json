@@ -10,6 +10,12 @@
   "ap_invoice_source": 6,
   "ap_invoice_my_type": 4,
 
+  "stk_refund_gl_format": "B01",
+  "stk_refund_book_code": "03",
+  "stk_refund_save_from": 1,
+  "stk_refund_source": 6,
+  "stk_refund_my_type": 4,
+
   "ar_deposit_gl_format": "D01",
   "ar_deposit_book_code": "41",
   "ar_deposit_save_from": 5,

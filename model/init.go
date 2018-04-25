@@ -88,6 +88,11 @@ type Default struct {
 	ApInvoiceSaveFrom       int    `json:"ap_invoice_save_from"`
 	ApInvoiceMyType         int    `json:"ap_invoice_my_type"`
 
+	StkRefundGLFormat   string `json:"stk_refund_gl_format"`
+	StkRefundBookCode       string `json:"StkRefund_book_code"`
+	StkRefundSource         int    `json:"StkRefund_source"`
+	StkRefundSaveFrom       int    `json:"StkRefund_save_from"`
+	StkRefundMyType         int    `json:"StkRefund_my_type"`
 
 	ArDepositGLFormat string `json:"ar_deposit_gl_format"`
 	ArDepositBookCode string `json:"ar_deposit_book_code"`
