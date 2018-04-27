@@ -43,6 +43,7 @@ type StkRefund struct {
 	CurrencyCode      string     `json:"currency_code" db:"CurrencyCode"`
 	ExchangeRate      float64    `json:"exchange_rate" db:"ExchangeRate"`
 	GLFormat          string     `json:"gl_format" db:"GLFormat"`
+	GLStartPosting    int        `json:"gl_start_posting" db:"GLStartPosting"`
 	IsCancel          int        `json:"is_cancel" db:"IsCancel"`
 	IsCompleteSave    int        `json:"is_complete_save" db:"IsCompleteSave"`
 	ReturnMoney       int        `json:"return_money" db:"ReturnMoney"`
@@ -199,8 +200,8 @@ func (srf *StkRefund) InsertAndEditStkRefund(db *sqlx.DB) error {
 	if check_exist == 0 {
 		srf.CreatorCode = srf.UserCode
 
-		sql := `insert into dbo.bcstkrefund(DocNo,TaxNo,DocDate,CreatorCode,CreateDateTime,DueDate,TaxType,ApCode,DepartCode,TaxRate,IsConfirm,MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfExceptTax,SumOfZeroTax,SumOfWTax,NetDebtAmount,SumExchangeProfit,BillBalance,CurrencyCode,ExchangeRate,GLFormat,IsCancel,IsCompleteSave,ReturnMoney,BillType,CauseType,CauseCode,AllocateCode,ProjectCode,BillGroup,RecurName,PayBillAmount) values(?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		_, err = db.Exec(sql, srf.DocNo,srf.TaxNo,srf.DocDate,srf.CreatorCode,srf.DueDate,srf.TaxType,srf.ApCode,srf.DepartCode,srf.TaxRate,srf.IsConfirm,srf.MyDescription,srf.SumOfItemAmount,srf.SumOldAmount,srf.SumTrueAmount,srf.SumofDiffAmount,srf.DiscountWord,srf.DiscountAmount,srf.SumofBeforeTax,srf.SumOfTaxAmount,srf.SumOfTotalTax,srf.SumOfExceptTax,srf.SumOfZeroTax,srf.SumOfWTax,srf.NetDebtAmount,srf.SumExchangeProfit,srf.BillBalance,srf.CurrencyCode,srf.ExchangeRate,srf.GLFormat,srf.IsCancel,srf.IsCompleteSave,srf.ReturnMoney,srf.BillType,srf.CauseType,srf.CauseCode,srf.AllocateCode,srf.ProjectCode,srf.BillGroup,srf.RecurName,srf.PayBillAmount)
+		sql := `insert into dbo.bcstkrefund(DocNo,TaxNo,DocDate,CreatorCode,CreateDateTime,DueDate,TaxType,ApCode,DepartCode,TaxRate,IsConfirm,MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfExceptTax,SumOfZeroTax,SumOfWTax,NetDebtAmount,SumExchangeProfit,BillBalance,CurrencyCode,ExchangeRate,GLFormat,GLStartPosting, IsCancel,IsCompleteSave,ReturnMoney,BillType,CauseType,CauseCode,AllocateCode,ProjectCode,BillGroup,RecurName,PayBillAmount) values(?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sql, srf.DocNo, srf.TaxNo, srf.DocDate, srf.CreatorCode, srf.DueDate, srf.TaxType, srf.ApCode, srf.DepartCode, srf.TaxRate, srf.IsConfirm, srf.MyDescription, srf.SumOfItemAmount, srf.SumOldAmount, srf.SumTrueAmount, srf.SumofDiffAmount, srf.DiscountWord, srf.DiscountAmount, srf.SumofBeforeTax, srf.SumOfTaxAmount, srf.SumOfTotalTax, srf.SumOfExceptTax, srf.SumOfZeroTax, srf.SumOfWTax, srf.NetDebtAmount, srf.SumExchangeProfit, srf.BillBalance, srf.CurrencyCode, srf.ExchangeRate, srf.GLFormat, srf.GLStartPosting, srf.IsCancel, srf.IsCompleteSave, srf.ReturnMoney, srf.BillType, srf.CauseType, srf.CauseCode, srf.AllocateCode, srf.ProjectCode, srf.BillGroup, srf.RecurName, srf.PayBillAmount)
 		if err != nil {
 			fmt.Println("Insert Credit =", err.Error())
 			return err
@@ -208,8 +209,8 @@ func (srf *StkRefund) InsertAndEditStkRefund(db *sqlx.DB) error {
 	} else {
 		srf.LastEditorCode = srf.UserCode
 
-		sql := `update dbo.bcstkrefund set TaxNo=?,DocDate=?,CreatorCode=?,LastEditDateT=getdate(),DueDate=?,TaxType=?,ApCode=?,DepartCode=?,TaxRate=?,IsConfirm=?,MyDescription=?,SumOfItemAmount=?,SumOldAmount=?,SumTrueAmount=?,SumofDiffAmount=?,DiscountWord=?,DiscountAmount=?,SumofBeforeTax=?,SumOfTaxAmount=?,SumOfTotalTax=?,SumOfExceptTax=?,SumOfZeroTax=?,SumOfWTax=?,NetDebtAmount=?,SumExchangeProfit=?,BillBalance=?,CurrencyCode=?,ExchangeRate=?,GLFormat=?,IsCancel=?,IsCompleteSave=?,ReturnMoney=?,BillType=?,CauseType=?,CauseCode=?,AllocateCode=?,ProjectCode=?,BillGroup=?,RecurName=?,PayBillAmount=? where docno = ? `
-		_, err = db.Exec(sql, srf.TaxNo,srf.DocDate,srf.LastEditorCode,srf.DueDate,srf.TaxType,srf.ApCode,srf.DepartCode,srf.TaxRate,srf.IsConfirm,srf.MyDescription,srf.SumOfItemAmount,srf.SumOldAmount,srf.SumTrueAmount,srf.SumofDiffAmount,srf.DiscountWord,srf.DiscountAmount,srf.SumofBeforeTax,srf.SumOfTaxAmount,srf.SumOfTotalTax,srf.SumOfExceptTax,srf.SumOfZeroTax,srf.SumOfWTax,srf.NetDebtAmount,srf.SumExchangeProfit,srf.BillBalance,srf.CurrencyCode,srf.ExchangeRate,srf.GLFormat,srf.IsCancel,srf.IsCompleteSave,srf.ReturnMoney,srf.BillType,srf.CauseType,srf.CauseCode,srf.AllocateCode,srf.ProjectCode,srf.BillGroup,srf.RecurName,srf.PayBillAmount, srf.DocNo)
+		sql := `update dbo.bcstkrefund set TaxNo=?,DocDate=?,CreatorCode=?,LastEditDateT=getdate(),DueDate=?,TaxType=?,ApCode=?,DepartCode=?,TaxRate=?,IsConfirm=?,MyDescription=?,SumOfItemAmount=?,SumOldAmount=?,SumTrueAmount=?,SumofDiffAmount=?,DiscountWord=?,DiscountAmount=?,SumofBeforeTax=?,SumOfTaxAmount=?,SumOfTotalTax=?,SumOfExceptTax=?,SumOfZeroTax=?,SumOfWTax=?,NetDebtAmount=?,SumExchangeProfit=?,BillBalance=?,CurrencyCode=?,ExchangeRate=?,GLFormat=?, GLStartPosting=?,IsCancel=?,IsCompleteSave=?,ReturnMoney=?,BillType=?,CauseType=?,CauseCode=?,AllocateCode=?,ProjectCode=?,BillGroup=?,RecurName=?,PayBillAmount=? where docno = ? `
+		_, err = db.Exec(sql, srf.TaxNo, srf.DocDate, srf.LastEditorCode, srf.DueDate, srf.TaxType, srf.ApCode, srf.DepartCode, srf.TaxRate, srf.IsConfirm, srf.MyDescription, srf.SumOfItemAmount, srf.SumOldAmount, srf.SumTrueAmount, srf.SumofDiffAmount, srf.DiscountWord, srf.DiscountAmount, srf.SumofBeforeTax, srf.SumOfTaxAmount, srf.SumOfTotalTax, srf.SumOfExceptTax, srf.SumOfZeroTax, srf.SumOfWTax, srf.NetDebtAmount, srf.SumExchangeProfit, srf.BillBalance, srf.CurrencyCode, srf.ExchangeRate, srf.GLFormat, srf.GLStartPosting, srf.IsCancel, srf.IsCompleteSave, srf.ReturnMoney, srf.BillType, srf.CauseType, srf.CauseCode, srf.AllocateCode, srf.ProjectCode, srf.BillGroup, srf.RecurName, srf.PayBillAmount, srf.DocNo)
 		if err != nil {
 			fmt.Println("Insert Credit =", err.Error())
 			return err
@@ -258,16 +259,16 @@ func (srf *StkRefund) InsertAndEditStkRefund(db *sqlx.DB) error {
 		}
 
 		sqlsub := ` insert into dbo.BCStkRefundSub(MyType,DocNo,TaxNo,TaxType,ItemType,ItemCode,DocDate,ApCode,DepartCode,MyDescription,WHCode,ShelfCode,DiscQty,TempQty,BillQty,Price,DiscountWord,DiscountAmount,Amount,NetAmount,HomeAmount,UnitCode,IsCancel,LineNumber,RefLineNumber,BarCode,AVERAGECOST,SumOfCost,LotNumber,ItemName,TaxRate,PackingRate1,PackingRate2) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		_, err = db.Exec(sqlsub, item.MyType,srf.DocNo,srf.TaxNo,srf.TaxType,item.ItemType,item.ItemCode,srf.DocDate,srf.ApCode,srf.DepartCode,item.MyDescription,item.WHCode,item.ShelfCode,item.DiscQty,item.TempQty,item.BillQty,item.Price,item.DiscountWord,item.DiscountAmount,item.Amount,item.NetAmount,item.HomeAmount,item.UnitCode,item.IsCancel,item.LineNumber,item.RefLineNumber,item.BarCode,item.AverageCost,item.SumOfCost,item.LotNumber,item.ItemName,srf.TaxRate,item.PackingRate1,item.PackingRate2)
+		_, err = db.Exec(sqlsub, item.MyType, srf.DocNo, srf.TaxNo, srf.TaxType, item.ItemType, item.ItemCode, srf.DocDate, srf.ApCode, srf.DepartCode, item.MyDescription, item.WHCode, item.ShelfCode, item.DiscQty, item.TempQty, item.BillQty, item.Price, item.DiscountWord, item.DiscountAmount, item.Amount, item.NetAmount, item.HomeAmount, item.UnitCode, item.IsCancel, item.LineNumber, item.RefLineNumber, item.BarCode, item.AverageCost, item.SumOfCost, item.LotNumber, item.ItemName, srf.TaxRate, item.PackingRate1, item.PackingRate2)
 		fmt.Println("sqltax = ", sqlsub)
 		if err != nil {
 			fmt.Println(err.Error())
 			return err
 		}
 
-		if (item.ItemType  != 1){
+		if (item.ItemType != 1) {
 			sqlprocess := ` insert into dbo.ProcessStock (ItemCode,ProcessFlag,FlowStatus) values(?, 1, 0)`
-			_, err = db.Exec(sqlprocess, item.ItemCode )
+			_, err = db.Exec(sqlprocess, item.ItemCode)
 			fmt.Println("sqlprocess = ", sqlsub)
 			if err != nil {
 				fmt.Println(err.Error())
@@ -294,7 +295,7 @@ func (srf *StkRefund) InsertAndEditStkRefund(db *sqlx.DB) error {
 
 func (srf *StkRefund) SearchStkRefundByDocNo(db *sqlx.DB, docno string) error {
 	fmt.Println("StkRefund")
-	sql := `set dateformat dmy     select DocNo,isnull(a.TaxNo,'') as TaxNo,DocDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,isnull(a.DueDate,'') as DueDate,isnull(a.TaxType,'') as TaxType,isnull(a.ApCode,'') as ApCode,isnull(b.name1,'') as ApName,isnull(a.DepartCode,'') as DepartCode,isnull(a.TaxRate,'') as TaxRate,isnull(IsConfirm,'') as IsConfirm,isnull(MyDescription,'') as MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,isnull(DiscountWord,'') as DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfExceptTax,SumOfZeroTax,SumOfWTax,NetDebtAmount,SumExchangeProfit,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,IsCancel,IsCompleteSave,ReturnMoney,BillType,isnull(CauseType,0) as CauseType,isnull(CauseCode,'') as CauseCode,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,isnull(RecurName,'') as RecurName,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime,PayBillAmount from dbo.BCStkRefund a left join dbo.bcap b with (nolock) on a.apcode = b.code where a.docno = ?`
+	sql := `set dateformat dmy     select DocNo,isnull(a.TaxNo,'') as TaxNo,DocDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,isnull(a.DueDate,'') as DueDate,isnull(a.TaxType,'') as TaxType,isnull(a.ApCode,'') as ApCode,isnull(b.name1,'') as ApName,isnull(a.DepartCode,'') as DepartCode,isnull(a.TaxRate,'') as TaxRate,isnull(IsConfirm,'') as IsConfirm,isnull(MyDescription,'') as MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,isnull(DiscountWord,'') as DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfExceptTax,SumOfZeroTax,SumOfWTax,NetDebtAmount,SumExchangeProfit,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsCancel,IsCompleteSave,ReturnMoney,BillType,isnull(CauseType,0) as CauseType,isnull(CauseCode,'') as CauseCode,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,isnull(RecurName,'') as RecurName,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime,PayBillAmount from dbo.BCStkRefund a left join dbo.bcap b with (nolock) on a.apcode = b.code where a.docno = ?`
 	err := db.Get(srf, sql, docno)
 	if err != nil {
 		fmt.Println(err)
@@ -312,17 +313,17 @@ func (srf *StkRefund) SearchStkRefundByDocNo(db *sqlx.DB, docno string) error {
 
 func (srf *StkRefund) SearchStkRefundByKeyword(db *sqlx.DB, keyword string) (srfs []*StkRefund, err error) {
 	fmt.Println("StkRefund")
-	sql := `set dateformat dmy     select DocNo,isnull(a.TaxNo,'') as TaxNo,DocDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,isnull(a.DueDate,'') as DueDate,isnull(a.TaxType,'') as TaxType,isnull(a.ApCode,'') as ApCode,isnull(b.name1,'') as ApName,isnull(a.DepartCode,'') as DepartCode,isnull(a.TaxRate,'') as TaxRate,isnull(IsConfirm,'') as IsConfirm,isnull(MyDescription,'') as MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,isnull(DiscountWord,'') as DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfExceptTax,SumOfZeroTax,SumOfWTax,NetDebtAmount,SumExchangeProfit,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,IsCancel,IsCompleteSave,ReturnMoney,BillType,isnull(CauseType,0) as CauseType,isnull(CauseCode,'') as CauseCode,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,isnull(RecurName,'') as RecurName,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime,PayBillAmount from dbo.BCStkRefund a left join dbo.bcap b with (nolock) on a.apcode = b.code where (a.docno  like '%'+?+'%' or a.apcode like '%'+?+'%' or b.name1 like '%'+?+'%' ) order by docno`
-	fmt.Println("StkRefund sql =",sql, keyword)
+	sql := `set dateformat dmy     select DocNo,isnull(a.TaxNo,'') as TaxNo,DocDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,isnull(a.DueDate,'') as DueDate,isnull(a.TaxType,'') as TaxType,isnull(a.ApCode,'') as ApCode,isnull(b.name1,'') as ApName,isnull(a.DepartCode,'') as DepartCode,isnull(a.TaxRate,'') as TaxRate,isnull(IsConfirm,'') as IsConfirm,isnull(MyDescription,'') as MyDescription,SumOfItemAmount,SumOldAmount,SumTrueAmount,SumofDiffAmount,isnull(DiscountWord,'') as DiscountWord,DiscountAmount,SumofBeforeTax,SumOfTaxAmount,SumOfTotalTax,SumOfExceptTax,SumOfZeroTax,SumOfWTax,NetDebtAmount,SumExchangeProfit,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsCancel,IsCompleteSave,ReturnMoney,BillType,isnull(CauseType,0) as CauseType,isnull(CauseCode,'') as CauseCode,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,isnull(RecurName,'') as RecurName,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime,PayBillAmount from dbo.BCStkRefund a left join dbo.bcap b with (nolock) on a.apcode = b.code where (a.docno  like '%'+?+'%' or a.apcode like '%'+?+'%' or b.name1 like '%'+?+'%' ) order by docno`
+	fmt.Println("StkRefund sql =", sql, keyword)
 	err = db.Select(&srfs, sql, keyword, keyword, keyword)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
 	}
 	//sqlsub := `MyType, DocNo, TaxNo, TaxType, ItemCode, DocDate, ArCode, DepartCode, SaleCode, CashierCode, MyDescription, ItemName, WHCode, ShelfCode, DiscQty, TempQty, BillQty, Price, DiscountWord, DiscountAmount, Amount, NetAmount, HomeAmount, SumOfCost, UnitCode, InvoiceNo, ItemType, ExceptTax, IsPos, IsCancel, LineNumber, RefLineNumber, BarCode,AVERAGECOST, LotNumber, PackingRate1, PackingRate2`
-	for _, sub := range srfs{
+	for _, sub := range srfs {
 		sqlsub := `set dateformat dmy     select MyType,isnull(ItemCode,'') as ItemCode,isnull(MyDescription,'') as MyDescription,isnull(WHCode,'') as WHCode,isnull(ShelfCode,'') as ShelfCode,isnull(DiscQty,0) as DiscQty,isnull(TempQty,0) as TempQty,isnull(BillQty,0) as BillQty,isnull(Price,0) as Price,isnull(DiscountWord,'') as DiscountWord,DiscountAmount,Amount,NetAmount,HomeAmount,isnull(UnitCode,'') as UnitCode,IsCancel,LineNumber,RefLineNumber,isnull(BarCode,'') as BarCode,AVERAGECOST,SumOfCost,isnull(LotNumber,'') as LotNumber,isnull(ItemName,'') as ItemName,isnull(PackingRate1,1) as PackingRate1,isnull(PackingRate2,1) as PackingRate2 from dbo.bcstkrefundsub with (nolock) where docno = ?`
-		fmt.Println("StkRefund sqlsub =",sqlsub, sub.DocNo)
+		fmt.Println("StkRefund sqlsub =", sqlsub, sub.DocNo)
 		err = db.Select(&sub.Subs, sqlsub, sub.DocNo)
 		if err != nil {
 			fmt.Println(err)

@@ -26,10 +26,14 @@ func main() {
 
 	r.GET("/stkrefund", b.SearchStkRefundByDocNo)
 	r.GET("/stkrefunds", b.SearchStkRefundByKeyword)
+	r.POST("/stkrefund", b.InsertAndEditStkRefund)
+
+	r.GET("/debitnote2", b.SearchDebitNote2ByDocNo)
+	r.GET("/debitnote2s", b.SearchDebitNote2ByKeyword)
 
 	r.GET("/customer", c.SearchCustomerByCode)
 	r.GET("/customers", c.SearchCustomerByKeyword)
-	r.POST("/customer", c.SaveUpdateCustomer)
+	r.POST("/customer", c.InsertAndEditCustomer)
 
 	r.GET("/arinvoice", s.SearchArInvoiceByDocNo)
 	r.GET("/arinvoices", s.SearchArInvoiceByKeyword)
@@ -53,7 +57,7 @@ func main() {
 
 	r.GET("/item", i.SearchItemByCode)
 	r.GET("/items", i.SearchItemByKeyword)
-	r.POST("/item", i.SaveUpdateItem)
+	r.POST("/item", i.InsertAndEditItem)
 
 	r.Run(":8002")
 }

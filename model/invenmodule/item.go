@@ -72,7 +72,7 @@ func (itm *Item) SearchItemByKeycode(db *sqlx.DB, keyword string) (itmList []*It
 	return itmList, nil
 }
 
-func (itm *Item) SaveItem(db *sqlx.DB) error {
+func (itm *Item) InsertAndEditItem(db *sqlx.DB) error {
 	var check_exist int
 
 	sqlexist := `select count(code) as check_exist from dbo.bcitem where code = ?`

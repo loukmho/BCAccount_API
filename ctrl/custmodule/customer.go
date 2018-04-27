@@ -48,7 +48,7 @@ func SearchCustomerByKeyword(c *gin.Context){
 	}
 }
 
-func SaveUpdateCustomer(c *gin.Context){
+func InsertAndEditCustomer(c *gin.Context){
 	c.Keys = ct.HeaderKeys
 
 	ctm := &model.Customer{}
@@ -57,7 +57,7 @@ func SaveUpdateCustomer(c *gin.Context){
 		fmt.Println(err.Error())
 	}
 
-	err = ctm.SaveCustomer(ct.Dbc)
+	err = ctm.InsertAndEditCustomer(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {

@@ -48,7 +48,7 @@ func SearchItemByKeyword(c *gin.Context){
 	}
 }
 
-func SaveUpdateItem(c *gin.Context){
+func InsertAndEditItem(c *gin.Context){
 	c.Keys = ct.HeaderKeys
 
 	itm := &model.Item{}
@@ -56,7 +56,7 @@ func SaveUpdateItem(c *gin.Context){
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = itm.SaveItem(ct.Dbc)
+	err = itm.InsertAndEditItem(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {
