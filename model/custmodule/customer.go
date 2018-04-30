@@ -42,6 +42,7 @@ type Customer struct {
 	LastEditDateT  string  `json:"last_edit_date_t" db:"LastEditDateT"`
 	UserCode       string  `json:"user_code" db:"UserCode"`
 }
+
 //
 //func (ctm *Customer) InsertAndEditCustomer(db *sqlx.DB) error {
 //	var check_exist int
@@ -125,10 +126,9 @@ func (ctm *Customer) InsertAndEditCustomer(db *sqlx.DB) error {
 		return errors.New("address is null")
 	}
 
-	if (ctm.WorkAddress==""){
+	if (ctm.WorkAddress == "") {
 		ctm.WorkAddress = ctm.BillAddress
 	}
-
 
 	if (check_exist == 0) {
 		ctm.ActiveStatus = 1

@@ -1,13 +1,13 @@
 package model
 
 type ArOtherDebt struct {
-	DocNo           string `json:"doc_no" db:""`
-	DocDate         string `json:"doc_date" db:""`
-	ArCode          string `json:"ar_code" db:""`
-	GLBookCode      string `json:"gl_book_code" db:""`
-	SumofDebit      float64 `json:"sumof_debit" db:""`
-	SumofCredit     float64 `json:"sumof_credit" db:""`
-	DepartCode      string `json:"depart_code" db:""`
+	DocNo           string `json:"doc_no" db:"DocNo"`
+	DocDate         string `json:"doc_date" db:"DocDate"`
+	ArCode          string `json:"ar_code" db:"ArCode"`
+	GLBookCode      string `json:"gl_book_code" db:"GLBookCode"`
+	SumofDebit      float64 `json:"sumof_debit" db:"SumofDebit"`
+	SumofCredit     float64 `json:"sumof_credit" db:"SumofCredit"`
+	DepartCode      string `json:"depart_code" db:"DepartCode"`
 	CreditDay       int `json:"credit_day" db:""`
 	DueDate         string `json:"due_date" db:""`
 	PayBillDate     string `json:"pay_bill_date" db:""`
