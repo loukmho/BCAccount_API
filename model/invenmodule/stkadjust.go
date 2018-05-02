@@ -1,33 +1,33 @@
 package model
 
 type StkAdjust struct {
-	DocNo           string  `json:"doc_no" db:""`
-	DocDate         string  `json:"doc_date" db:""`
-	CreatorCode     string  `json:"creator_code" db:""`
-	CreateDateTime  string  `json:"create_date_time" db:""`
-	LastEditorCode  string  `json:"last_editor_code" db:""`
-	LastEditDateT   string  `json:"last_edit_date_t" db:""`
-	cancelcode      string  `json:"cancelcode" db:""`
-	canceldatetime  string  `json:"canceldatetime" db:""`
-	InspectNo       string  `json:"inspect_no" db:""`
-	MyDescription   string  `json:"my_description" db:""`
-	GLFormat        string  `json:"gl_format" db:""`
-	IsConfirm       int     `json:"is_confirm" db:""`
-	IsCancel        int     `json:"is_cancel" db:""`
-	SumAmount       float64 `json:"sum_amount" db:""`
-	SumAmount2      float64 `json:"sum_amount_2" db:""`
-	IsCompleteSave  int     `json:"is_complete_save" db:""`
-	TaxAmount       float64 `json:"tax_amount" db:""`
-	TotalAmount     float64 `json:"total_amount" db:""`
-	SumOfExceptTax  float64 `json:"sum_of_except_tax" db:""`
-	OutputTaxStatus int     `json:"output_tax_status" db:""`
-	AdjustType      int     `json:"adjust_type" db:""`
-	ConfirmCode     string  `json:"confirm_code" db:""`
-	ConfirmDateTime string  `json:"confirm_date_time" db:""`
-	SumOfCost       float64 `json:"sum_of_cost" db:""`
-	AllocateCode    string  `json:"allocate_code" db:""`
-	ProjectCode     string  `json:"project_code" db:""`
-	DepartCode      string  `json:"depart_code" db:""`
+	DocNo           string  `json:"doc_no" db:"DocNo"`
+	DocDate         string  `json:"doc_date" db:"DocDate"`
+	CreatorCode     string  `json:"creator_code" db:"CreatorCode"`
+	CreateDateTime  string  `json:"create_date_time" db:"CreateDateTime"`
+	LastEditorCode  string  `json:"last_editor_code" db:"LastEditorCode"`
+	LastEditDateT   string  `json:"last_edit_date_t" db:"LastEditDateT"`
+	cancelcode      string  `json:"cancelcode" db:"cancelcode"`
+	canceldatetime  string  `json:"canceldatetime" db:"canceldatetime"`
+	InspectNo       string  `json:"inspect_no" db:"InspectNo"`
+	MyDescription   string  `json:"my_description" db:"MyDescription"`
+	GLFormat        string  `json:"gl_format" db:"GLFormat"`
+	IsConfirm       int     `json:"is_confirm" db:"IsConfirm"`
+	IsCancel        int     `json:"is_cancel" db:"IsCancel"`
+	SumAmount       float64 `json:"sum_amount" db:"SumAmount"`
+	SumAmount2      float64 `json:"sum_amount_2" db:"SumAmount2"`
+	IsCompleteSave  int     `json:"is_complete_save" db:"IsCompleteSave"`
+	TaxAmount       float64 `json:"tax_amount" db:"TaxAmount"`
+	TotalAmount     float64 `json:"total_amount" db:"TotalAmount"`
+	SumOfExceptTax  float64 `json:"sum_of_except_tax" db:"SumOfExceptTax"`
+	OutputTaxStatus int     `json:"output_tax_status" db:"OutputTaxStatus"`
+	AdjustType      int     `json:"adjust_type" db:"AdjustType"`
+	ConfirmCode     string  `json:"confirm_code" db:"ConfirmCode"`
+	ConfirmDateTime string  `json:"confirm_date_time" db:"ConfirmDateTime"`
+	SumOfCost       float64 `json:"sum_of_cost" db:"SumOfCost"`
+	AllocateCode    string  `json:"allocate_code" db:"AllocateCode"`
+	ProjectCode     string  `json:"project_code" db:"ProjectCode"`
+	DepartCode      string  `json:"depart_code" db:"DepartCode"`
 }
 
 type AdjItem struct {
