@@ -130,7 +130,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 	sqlexist := `select count(docno) as check_exist from dbo.bcardepositspecial where docno = ?` //เช็คว่ามีเอกสารหรือยัง
 	err := db.Get(&check_exist, sqlexist, dps.DocNo)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println("Error = ", err.Error())
 		return nil
 	}
 
@@ -212,7 +212,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 		sql := `Insert into dbo.BCArDepositSpecial(DocNo,DocDate,ArCode,CreatorCode,CreateDateTime,DepartCode,SaleCode,IsConfirm,CreditDay,DueDate,MyDescription,TotalAmount,SumOfWTax,BeforeTaxAmount,NetAmount,BillBalance,ExcessAmount1,ExcessAmount2,ChargeAmount,ChangeAmount,OtherIncome,OtherExpense,RefNo,CurrencyCode,ExchangeRate,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,PettyCashAmount,GLFormat,IsCancel,IsReturnMoney,AllocateCode,ProjectCode,BillGroup,RecurName) values(?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 		_, err = db.Exec(sql, dps.DocNo,dps.DocDate,dps.ArCode,dps.UserCode,dps.DepartCode,dps.SaleCode,dps.IsConfirm,dps.CreditDay,dps.DueDate,dps.MyDescription,dps.TotalAmount,dps.SumOfWTax,dps.BeforeTaxAmount,dps.NetAmount,dps.BillBalance,dps.ExcessAmount1,dps.ExcessAmount2,dps.ChargeAmount,dps.ChangeAmount,dps.OtherIncome,dps.OtherExpense,dps.RefNo,dps.CurrencyCode,dps.ExchangeRate,dps.SumCashAmount,dps.SumChqAmount,dps.SumCreditAmount,dps.SumBankAmount,dps.PettyCashAmount,dps.GLFormat,dps.IsCancel,dps.IsReturnMoney,dps.AllocateCode,dps.ProjectCode,dps.BillGroup,dps.RecurName)
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 
@@ -226,6 +226,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 		sql := `Update dbo.BCArDepositSpecial set DocDate=?,ArCode=?,DepartCode=?,SaleCode=?,IsConfirm=?,CreditDay=?,DueDate=?,MyDescription=?,TotalAmount=?,SumOfWTax=?,BeforeTaxAmount=?,NetAmount=?,BillBalance=?,ExcessAmount1=?,ExcessAmount2=?,ChargeAmount=?,ChangeAmount=?,OtherIncome=?,OtherExpense=?,RefNo=?,CurrencyCode=?,ExchangeRate=?,SumCashAmount=?,SumChqAmount=?,SumCreditAmount=?,SumBankAmount=?,PettyCashAmount=?,GLFormat=?,IsCancel=?,IsReturnMoney=?,AllocateCode=?,ProjectCode=?,BillGroup=?,RecurName=?,LastEditorCode=?,LastEditDateT=getdate() where docno = ?`
 		_, err := db.Exec(sql, dps.DocDate,dps.ArCode,dps.DepartCode,dps.SaleCode,dps.IsConfirm,dps.CreditDay,dps.DueDate,dps.MyDescription,dps.TotalAmount,dps.SumOfWTax,dps.BeforeTaxAmount,dps.NetAmount,dps.BillBalance,dps.ExcessAmount1,dps.ExcessAmount2,dps.ChargeAmount,dps.ChangeAmount,dps.OtherIncome,dps.OtherExpense,dps.RefNo,dps.CurrencyCode,dps.ExchangeRate,dps.SumCashAmount,dps.SumChqAmount,dps.SumCreditAmount,dps.SumBankAmount,dps.PettyCashAmount,dps.GLFormat,dps.IsCancel,dps.IsReturnMoney,dps.AllocateCode,dps.ProjectCode,dps.BillGroup,dps.RecurName,dps.UserCode, dps.DocNo)
 		if err != nil {
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 	}
@@ -233,6 +234,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 	sqlrecdel := `delete dbo.BCRecMoney where docno = ?`
 	_, err = db.Exec(sqlrecdel, dps.DocNo)
 	if err != nil {
+		fmt.Println("Error = ", err.Error())
 		return err
 	}
 
@@ -248,6 +250,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,ProjectCode,DepartCode,SaleCode,MyDescription) values(?,?,?,?,?,?,?,?,?,?,?,?)`
 		_, err = db.Exec(sqlrec, dps.DocNo, dps.DocDate, dps.ArCode, dps.ExchangeRate, dps.SumCashAmount, 0, dps.SaveFrom, linenumber, dps.ProjectCode, dps.DepartCode, dps.SaleCode, my_description_recmoney)
 		if err != nil {
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 	}
@@ -262,6 +265,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,ChqTotalAmount,PaymentType,SaveFrom,CreditType,ConfirmNo,LineNumber,RefNo,BankCode,BankBranchCode,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 		_, err = db.Exec(sqlrec, dps.DocNo, dps.DocDate, dps.ArCode, dps.ExchangeRate, dps.SumCreditAmount, dps.SumCreditAmount, 1, dps.SaveFrom, dps.CreditType, dps.ConfirmNo, linenumber, dps.CreditRefNo, dps.BankCode, dps.BankBranchCode, dps.ProjectCode, dps.DepartCode, dps.SaleCode, my_description_recmoney, dps.DocDate)
 		if err != nil {
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 	}
@@ -282,6 +286,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,RefNo,BankCode,ProjectCode,DepartCode,SaleCode,BankBranchCode,MyDescription,RefDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 		_, err = db.Exec(sqlrec, dps.DocNo, dps.DocDate, dps.ArCode, dps.ExchangeRate, dps.SumChqAmount, 2, dps.SaveFrom, linenumber, dps.CreditRefNo, dps.BankCode, dps.ProjectCode, dps.DepartCode, dps.SaleCode, dps.BankBranchCode, my_description_recmoney, dps.RefDate)
 		if err != nil {
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 	}
@@ -312,6 +317,7 @@ func (dps *ArDepositSpecial) InsertAndEditArDepositSpecial(db *sqlx.DB) error {
 		sqlrec := `insert	into dbo.BCRecMoney(DocNo,DocDate,ArCode,ExchangeRate,PayAmount,PaymentType,SaveFrom,LineNumber,RefNo,ProjectCode,DepartCode,SaleCode,MyDescription,RefDate,TransBankDate) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 		_, err = db.Exec(sqlrec, dps.DocNo, dps.DocDate, dps.ArCode, dps.ExchangeRate, dps.SumBankAmount, 3, dps.SaveFrom, linenumber, dps.BankRefNo, dps.ProjectCode, dps.DepartCode, dps.SaleCode, my_description_recmoney, dps.DocDate, dps.TransBankDate)
 		if err != nil {
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 	}
@@ -377,6 +383,7 @@ func (dps *ArDepositSpecial) SearchArDepositSpecialByDocNo(db *sqlx.DB, docno st
 	err := db.Get(dps, sql, docno)
 	fmt.Println("sql =", sql)
 	if err != nil {
+		fmt.Println("Error = ", err.Error())
 		return err
 	}
 	return nil
@@ -387,6 +394,7 @@ func (dps *ArDepositSpecial) SearchArDepositSpecialByKeyword(db *sqlx.DB, keywor
 	err = db.Select(&dpsList, sql, keyword, keyword, keyword, keyword)
 	fmt.Println("sql =", sql)
 	if err != nil {
+		fmt.Println("Error = ", err.Error())
 		return nil, err
 	}
 	return dpsList, nil

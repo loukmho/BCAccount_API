@@ -2,22 +2,21 @@ package ctrl
 
 import (
 	"github.com/gin-gonic/gin"
-	ct "github.com/loukmho/bcaccount_api/ctrl"
 	"github.com/loukmho/bcaccount_api/model/salemodule"
-	"net/http"
+	ct "github.com/loukmho/bcaccount_api/ctrl"
 	"fmt"
+	"net/http"
 )
 
-
-func InsertAndEditArDepoitSpecial(c *gin.Context) {
+func InsertAndEditReturnDepSpecial(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
-	dps := &model.ArDepositSpecial{}
-	err := c.BindJSON(dps)
+	rds := &model.ReturnDepSpecial{}
+	err := c.BindJSON(rds)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = dps.InsertAndEditArDepositSpecial(ct.Dbc)
+	err = rds.InsertAndEditReturnDepSpecial(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -26,18 +25,18 @@ func InsertAndEditArDepoitSpecial(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dps
+		rs.Data = rds
 		c.JSON(http.StatusOK, rs)
 	}
 
 }
 
-func SearchArDepositSpecialByDocNo(c *gin.Context){
+func SearchReturnDepSpecialByDocNo(c *gin.Context){
 	c.Keys = ct.HeaderKeys
 	docno := c.Request.URL.Query().Get("docno")
 
-	dps := new(model.ArDepositSpecial)
-	err := dps.SearchArDepositSpecialByDocNo(ct.Dbc, docno)
+	rds := new(model.ReturnDepSpecial)
+	err := rds.SearchReturnDepSpecialByDocNo(ct.Dbc, docno)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -46,18 +45,18 @@ func SearchArDepositSpecialByDocNo(c *gin.Context){
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dps
+		rs.Data = rds
 		c.JSON(http.StatusOK, rs)
 	}
 
 }
 
-func SearchArDepositSpecialByKeyword(c *gin.Context){
+func SearchReturnDepSpecialByKeyword(c *gin.Context){
 	c.Keys = ct.HeaderKeys
 	keyword := c.Request.URL.Query().Get("keyword")
 
-	dps := new(model.ArDepositSpecial)
-	dpsList, err := dps.SearchArDepositSpecialByKeyword(ct.Dbc, keyword)
+	rds := new(model.ReturnDepSpecial)
+	rdsList, err := rds.SearchReturnDepSpecialByKeyword(ct.Dbc, keyword)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -66,7 +65,7 @@ func SearchArDepositSpecialByKeyword(c *gin.Context){
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dpsList
+		rs.Data = rdsList
 		c.JSON(http.StatusOK, rs)
 	}
 

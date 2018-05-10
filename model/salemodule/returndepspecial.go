@@ -67,10 +67,10 @@ type RdsSaleMan struct {
 }
 
 
-func (rds *ReturnDepSpecial) SearchReturnDepSpecialByDocNo() error {
-	//sql := `DocNo, DocDate, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, EarnestNo, ArCode, DepartCode, IsConfirm, CreditDay, SaleCode, DueDate, MyDescription, TotalAmount,BeforeTaxAmount, NetAmount, SumOfWTax, ExcessAmount1, ExcessAmount2, BillBalance, CurrencyCode, ExchangeRate, PettyCashAmount, SumCashAmount, SumChqAmount, SumCreditAmount, SumBankAmount,EarnestAmount, EarnestBalance, OtherIncome, OtherExpense, GLFormat, IsCancel, IsReturnMoney, AllocateCode, ProjectCode, BillGroup, RecurName, ConfirmCode, ConfirmDateTime, CancelCode,CancelDateTime`
-	return nil
-}
+//func (rds *ReturnDepSpecial) SearchReturnDepSpecialByDocNo() error {
+//	//sql := `DocNo, DocDate, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, EarnestNo, ArCode, DepartCode, IsConfirm, CreditDay, SaleCode, DueDate, MyDescription, TotalAmount,BeforeTaxAmount, NetAmount, SumOfWTax, ExcessAmount1, ExcessAmount2, BillBalance, CurrencyCode, ExchangeRate, PettyCashAmount, SumCashAmount, SumChqAmount, SumCreditAmount, SumBankAmount,EarnestAmount, EarnestBalance, OtherIncome, OtherExpense, GLFormat, IsCancel, IsReturnMoney, AllocateCode, ProjectCode, BillGroup, RecurName, ConfirmCode, ConfirmDateTime, CancelCode,CancelDateTime`
+//	return nil
+//}
 
 func (rds *ReturnDepSpecial) InsertAndEditReturnDepSpecial(db *sqlx.DB) error{
 	var check_exist int
@@ -81,7 +81,7 @@ func (rds *ReturnDepSpecial) InsertAndEditReturnDepSpecial(db *sqlx.DB) error{
 	sqlexist := `select count(docno) as check_exist from dbo.BCReturnDepSpecial where docno = ?` //เช็คว่ามีเอกสารหรือยัง
 	err := db.Get(&check_exist, sqlexist, rds.DocNo)
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Println("Error = ", err.Error())
 		return nil
 	}
 
@@ -144,7 +144,7 @@ func (rds *ReturnDepSpecial) InsertAndEditReturnDepSpecial(db *sqlx.DB) error{
 		sql := `insert dbo.BCReturnDepSpecial(DocNo,DocDate,CreatorCode,CreateDateTime,EarnestNo,ArCode,DepartCode,IsConfirm,CreditDay,SaleCode,DueDate,MyDescription,TotalAmount,BeforeTaxAmount,NetAmount,SumOfWTax,ExcessAmount1,ExcessAmount2,BillBalance,CurrencyCode,ExchangeRate,PettyCashAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,EarnestAmount,EarnestBalance,OtherIncome,OtherExpense,GLFormat,IsCancel,IsReturnMoney,AllocateCode,ProjectCode,BillGroup,RecurName) values(?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 		_, err = db.Exec(sql, rds.DocNo,rds.DocDate,rds.CreatorCode,rds.EarnestNo,rds.ArCode,rds.DepartCode,rds.IsConfirm,rds.CreditDay,rds.SaleCode,rds.DueDate,rds.MyDescription,rds.TotalAmount,rds.BeforeTaxAmount,rds.NetAmount,rds.SumOfWTax,rds.ExcessAmount1,rds.ExcessAmount2,rds.BillBalance,rds.CurrencyCode,rds.ExchangeRate,rds.PettyCashAmount,rds.SumCashAmount,rds.SumChqAmount,rds.SumCreditAmount,rds.SumBankAmount,rds.EarnestAmount,rds.EarnestBalance,rds.OtherIncome,rds.OtherExpense,rds.GLFormat,rds.IsCancel,rds.IsReturnMoney,rds.AllocateCode,rds.ProjectCode,rds.BillGroup,rds.RecurName)
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 
@@ -156,9 +156,32 @@ func (rds *ReturnDepSpecial) InsertAndEditReturnDepSpecial(db *sqlx.DB) error{
 		sql := `update dbo.BCReturnDepSpecial set DocDate=?,LastEditorCode=?,LastEditDateT=?,EarnestNo=?,ArCode=?,DepartCode=?,IsConfirm=?,CreditDay=?,SaleCode=?,DueDate=?,MyDescription=?,TotalAmount=?,BeforeTaxAmount=?,NetAmount=?,SumOfWTax=?,ExcessAmount1=?,ExcessAmount2=?,BillBalance=?,CurrencyCode=?,ExchangeRate=?,PettyCashAmount=?,SumCashAmount=?,SumChqAmount=?,SumCreditAmount=?,SumBankAmount=?,EarnestAmount=?,EarnestBalance=?,OtherIncome=?,OtherExpense=?,GLFormat=?,IsCancel=?,IsReturnMoney=?,AllocateCode=?,ProjectCode=?,BillGroup=?,RecurName) where docno = ?`
 		_, err := db.Exec(sql, rds.DocDate,rds.LastEditorCode,rds.LastEditDateT,rds.EarnestNo,rds.ArCode,rds.DepartCode,rds.IsConfirm,rds.CreditDay,rds.SaleCode,rds.DueDate,rds.MyDescription,rds.TotalAmount,rds.BeforeTaxAmount,rds.NetAmount,rds.SumOfWTax,rds.ExcessAmount1,rds.ExcessAmount2,rds.BillBalance,rds.CurrencyCode,rds.ExchangeRate,rds.PettyCashAmount,rds.SumCashAmount,rds.SumChqAmount,rds.SumCreditAmount,rds.SumBankAmount,rds.EarnestAmount,rds.EarnestBalance,rds.OtherIncome,rds.OtherExpense,rds.GLFormat,rds.IsCancel,rds.IsReturnMoney,rds.AllocateCode,rds.ProjectCode,rds.BillGroup,rds.RecurName,rds.DocNo)
 		if err != nil {
+			fmt.Println("Error = ", err.Error())
 			return err
 		}
 	}
 
 	return nil
+}
+
+func (rds *ReturnDepSpecial) SearchReturnDepSpecialByDocNo(db *sqlx.DB, docno string) error {
+	sql := `set dateformat dmy     select DocNo,DocDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(EarnestNo,'') as EarnestNo,isnull(ArCode,'') as ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,IsConfirm,CreditDay,isnull(a.SaleCode,'') as SaleCode,isnull(c.name,'') as SaleName,isnull(DueDate,'') as DueDate,isnull(MyDescription,'') as MyDescription,TotalAmount,BeforeTaxAmount,NetAmount,SumOfWTax,ExcessAmount1,ExcessAmount2,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,PettyCashAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,a.EarnestAmount,EarnestBalance,OtherIncome,OtherExpense,isnull(GLFormat,'') as GLFormat,IsCancel,IsReturnMoney,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,isnull(RecurName,'') as RecurName,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime from dbo.BCReturnDepSpecial  a left join dbo.bcar b with (nolock) on a.arcode = b.code left join dbo.bcsale c with (nolock) on a.salecode = c.code where docno = ? `
+	err := db.Get(rds, sql, docno)
+	fmt.Println("sql =", sql)
+	if err != nil {
+		fmt.Println("Error = ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func (rds *ReturnDepSpecial) SearchReturnDepSpecialByKeyword(db *sqlx.DB, keyword string) (rdsList []*ReturnDepSpecial, err error) {
+	sql := `set dateformat dmy     select DocNo,DocDate,isnull(a.CreatorCode,'') as CreatorCode,isnull(a.CreateDateTime,'') as CreateDateTime,isnull(EarnestNo,'') as EarnestNo,isnull(ArCode,'') as ArCode,isnull(b.name1,'') as ArName,isnull(a.DepartCode,'') as DepartCode,IsConfirm,CreditDay,isnull(a.SaleCode,'') as SaleCode,isnull(c.name,'') as SaleName,isnull(DueDate,'') as DueDate,isnull(MyDescription,'') as MyDescription,TotalAmount,BeforeTaxAmount,NetAmount,SumOfWTax,ExcessAmount1,ExcessAmount2,BillBalance,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,PettyCashAmount,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,a.EarnestAmount,EarnestBalance,OtherIncome,OtherExpense,isnull(GLFormat,'') as GLFormat,IsCancel,IsReturnMoney,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,isnull(RecurName,'') as RecurName,isnull(a.LastEditorCode,'') as LastEditorCode,isnull(a.LastEditDateT,'') as LastEditDateT,isnull(a.ConfirmCode,'') as ConfirmCode,isnull(a.ConfirmDateTime,'') as ConfirmDateTime,isnull(a.CancelCode,'') as CancelCode,isnull(a.CancelDateTime,'') as CancelDateTime from dbo.BCReturnDepSpecial  a left join dbo.bcar b with (nolock) on a.arcode = b.code left join dbo.bcsale c with (nolock) on a.salecode = c.code  where (a.docno  like '%'+?+'%' or a.arcode like '%'+?+'%' or a.salecode like '%'+?+'%' or b.name1 like '%'+?+'%')  order by a.docno`
+	err = db.Select(&rdsList, sql, keyword, keyword, keyword, keyword)
+	fmt.Println("sql =", sql)
+	if err != nil {
+		fmt.Println("Error = ", err.Error())
+		return nil, err
+	}
+	return rdsList, nil
 }

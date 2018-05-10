@@ -7,9 +7,13 @@ import (
 	s "github.com/loukmho/bcaccount_api/ctrl/salemodule"
 	b "github.com/loukmho/bcaccount_api/ctrl/buymodule"
 	i "github.com/loukmho/bcaccount_api/ctrl/invenmodule"
-	//y "github.com/betacraft/yaag/gin/v1"
-	  "github.com/betacraft/yaag/yaag"
+	"github.com/betacraft/yaag/yaag"
+	n "github.com/loukmho/bcaccount_api/ctrl/bankmodule"
 )
+
+//y "github.com/betacraft/yaag/gin/v1"
+//"github.com/betacraft/yaag/yaag"
+//)
 
 //yaag.Init(&yaag.Config{On: true, DocTitle: "Core", DocPath: "apidoc.html", BaseUrls: map[string]string{"Production": "", "Staging": ""}})
 
@@ -53,11 +57,19 @@ func main() {
 
 	r.GET("/ardepositspecial", s.SearchArDepositSpecialByDocNo)
 	r.GET("/ardepositspecials", s.SearchArDepositSpecialByKeyword)
-	r.POST("/ardepositspecial", s.InsertAndEditArDespoitSpecial)
+	r.POST("/ardepositspecial", s.InsertAndEditArDepoitSpecial)
+
+	r.GET("/returndepspecial", s.SearchReturnDepSpecialByDocNo)
+	r.GET("/returndepspecials", s.SearchReturnDepSpecialByKeyword)
+	r.POST("/returndepospecial", s.InsertAndEditReturnDepSpecial)
 
 	r.GET("/item", i.SearchItemByCode)
 	r.GET("/items", i.SearchItemByKeyword)
 	r.POST("/item", i.InsertAndEditItem)
+
+	r.GET("/banktransfer", n.SearchBankTransferByDocNo)
+	r.GET("/banktransfers", n.SearchBankTransferByKeyword)
+	r.POST("/banktransfer", n.InsertAndEditBankTransfer)
 
 	r.Run(":8002")
 }

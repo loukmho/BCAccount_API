@@ -3,21 +3,20 @@ package ctrl
 import (
 	"github.com/gin-gonic/gin"
 	ct "github.com/loukmho/bcaccount_api/ctrl"
-	"github.com/loukmho/bcaccount_api/model/salemodule"
-	"net/http"
+	"github.com/loukmho/bcaccount_api/model/bankmodule"
 	"fmt"
+	"net/http"
 )
 
-
-func InsertAndEditArDepoitSpecial(c *gin.Context) {
+func InsertAndEditBankTransfer(c *gin.Context){
 	c.Keys = ct.HeaderKeys
-
-	dps := &model.ArDepositSpecial{}
-	err := c.BindJSON(dps)
+	btf := &model.BankTransfer{}
+	err := c.BindJSON(btf)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = dps.InsertAndEditArDepositSpecial(ct.Dbc)
+
+	err = btf.InsertAndEditBankTransfer(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -26,18 +25,18 @@ func InsertAndEditArDepoitSpecial(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dps
+		rs.Data = btf
 		c.JSON(http.StatusOK, rs)
 	}
-
 }
 
-func SearchArDepositSpecialByDocNo(c *gin.Context){
+func SearchBankTransferByDocNo (c *gin.Context){
 	c.Keys = ct.HeaderKeys
+
 	docno := c.Request.URL.Query().Get("docno")
 
-	dps := new(model.ArDepositSpecial)
-	err := dps.SearchArDepositSpecialByDocNo(ct.Dbc, docno)
+	btf := new(model.BankTransfer)
+	err := btf.SearchBankTransferByDocNo(ct.Dbc, docno)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -46,18 +45,19 @@ func SearchArDepositSpecialByDocNo(c *gin.Context){
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dps
+		rs.Data = btf
 		c.JSON(http.StatusOK, rs)
 	}
-
 }
 
-func SearchArDepositSpecialByKeyword(c *gin.Context){
+
+func SearchBankTransferByKeyword (c *gin.Context){
 	c.Keys = ct.HeaderKeys
+
 	keyword := c.Request.URL.Query().Get("keyword")
 
-	dps := new(model.ArDepositSpecial)
-	dpsList, err := dps.SearchArDepositSpecialByKeyword(ct.Dbc, keyword)
+	btf := new(model.BankTransfer)
+	btfs, err := btf.SearchBankTransferByKeyword(ct.Dbc, keyword)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -66,8 +66,8 @@ func SearchArDepositSpecialByKeyword(c *gin.Context){
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = dpsList
+		rs.Data = btfs
 		c.JSON(http.StatusOK, rs)
 	}
-
 }
+
