@@ -49,10 +49,10 @@ type ChqInCancelSub struct {
 }
 
 
-func (cid *ChqInDeposit2) InsertAndEditChqInCancel(db *sqlx.DB) error {
+func (cic *ChqInCancel) InsertAndEditChqInCancel(db *sqlx.DB) error {
 	sql := `set dateformat dmy     insert into dbo.BCChqInCancel(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel) values(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel)`
 
-	db.Exec(sql, cid.DocNo)
+	db.Exec(sql, cic.DocNo)
 
 
 	sqlsub := `set dateformat dmy     insert into dbo.BCChqInCancelSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder)`
@@ -60,11 +60,11 @@ func (cid *ChqInDeposit2) InsertAndEditChqInCancel(db *sqlx.DB) error {
 	return nil
 }
 
-func (cid *ChqInDeposit2) SearchChqInCancelByDocNo(db *sqlx.DB, docno string) error {
+func (cic *ChqInCancel) SearchChqInCancelByDocNo(db *sqlx.DB, docno string) error {
 	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqInCancel where docno = ?`
 	db.Get(sql, docno)
 
 	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqInCancelSub`
-	db.Select(cid.Subs, sqlsub)
+	db.Select(cic.Subs, sqlsub)
 	return nil
 }

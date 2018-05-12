@@ -2,7 +2,7 @@ package model
 
 import "github.com/jmoiron/sqlx"
 
-type ChqInSale struct {
+type ChqOutPass struct {
 	DocNo           string          `json:"doc_no" db:"DocNo"`
 	DocDate         string          `json:"doc_date" db:"DocDate"`
 	CreatorCode     string          `json:"creator_code" db:"CreatorCode"`
@@ -26,10 +26,10 @@ type ChqInSale struct {
 	CancelDateTime  string          `json:"cancel_date_time" db:"CancelDateTime"`
 	IsCancel        int             `json:"is_cancel" db:"IsCancel"`
 	UserCode        string          `json:"user_code"`
-	Subs            []*ChqInRetSub `json:"subs"`
+	Subs            []*ChqInPassSub `json:"subs"`
 }
 
-type ChqInSaleSub struct {
+type ChqOutPassSub struct {
 	ChqRowOrder    int     `json:"chq_row_order" db:"ChqRowOrder"`
 	LineNumber     int     `json:"line_number" db:"LineNumber"`
 	TransState     int     `json:"trans_state" db:"TransState"`
@@ -41,29 +41,30 @@ type ChqInSaleSub struct {
 	CurrencyCode   string  `json:"currency_code" db:"CurrencyCode"`
 	ExchangeRate   float64 `json:"exchange_rate" db:"ExchangeRate"`
 	HomeAmount     float64 `json:"home_amount" db:"HomeAmount"`
+	OrgChqStatus   int     `json:"org_chq_status" db:"OrgChqStatus"`
 	Arcode         string  `json:"arcode" db:"Arcode"`
 	Bankcode       string  `json:"bankcode" db:"Bankcode"`
 	BankBranchCode string  `json:"bank_branch_code" db:"BankBranchCode"`
 	RefChqRowOrder int     `json:"ref_chq_row_order" db:"RefChqRowOrder"`
 }
 
-func (cis *ChqInSale) InsertAndEditChqInSale(db *sqlx.DB) error {
-	sql := `set dateformat dmy     insert into dbo.BCChqInSale(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel) values(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel)`
-	db.Exec(sql, cis.DocNo)
+func (cop *ChqOutPass) InsertAndEditChqOutPass(db *sqlx.DB) error {
+	sql := `set dateformat dmy     insert into dbo.BCChqOutPass(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel) values(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel)`
+	db.Exec(sql, cop.DocNo)
 
 
 
-
-	sqlsub := `set dateformat dmy     insert into dbo.BCChqInSaleSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder)`
+	sqlsub := `set dateformat dmy     insert into dbo.BCChqOutPassSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder)`
 	db.Exec(sqlsub)
 	return nil
 }
 
-func (cis *ChqInSale) SearchChqInSaleByDocNo(db *sqlx.DB, docno string) error {
-	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqInSale where docno = ?`
+func (cop *ChqOutPass) SearchChqOutPassByDocNo(db *sqlx.DB, docno string) error {
+	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqOutPass where docno = ?`
 	db.Get(sql, docno)
 
-	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqInSaleSub`
-	db.Select(cis.Subs, sqlsub)
+	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqOutPassSub`
+	db.Select(cop.Subs, sqlsub)
 	return nil
 }
+

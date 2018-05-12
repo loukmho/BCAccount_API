@@ -1,5 +1,7 @@
 package model
 
+import "github.com/jmoiron/sqlx"
+
 type ArOtherDebt struct {
 	DocNo           string  `json:"doc_no" db:"DocNo"`
 	DocDate         string  `json:"doc_date" db:"DocDate"`
@@ -37,7 +39,14 @@ type ArOtherDebt struct {
 	BillTemporary   float64 `json:"bill_temporary" db:"BillTemporary"`
 }
 
-func (ard *ArOtherDebt) SearchArOtherDebtByDocNo() error {
+func (otd *ArOtherDebt)InsertAndEditArOtherDebt(db *sqlx.DB) error{
+	sql := `set dateformat dmy     insert dbo.BCArOtherDebt(DocNo,DocDate,ArCode,GLBookCode,SumofDebit,SumofCredit,DepartCode,CreditDay,DueDate,PayBillDate,SaleCode,IsConfirm,PayBillStatus,MyDescription,BillGroup,ContactCode,NetDebtAmount,BillBalance,CurrencyCode,ExchangeRate,IsCancel,AllocateCode,ProjectCode,RecurName,CreatorCode,CreateDateTime,PayBillAmount,BillTemporary) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,getdate(),?,?)`
+	db.Exec(sql, otd.DocNo,otd.DocDate,otd.ArCode,otd.GLBookCode,otd.SumofDebit,otd.SumofCredit,otd.DepartCode,otd.CreditDay,otd.DueDate,otd.PayBillDate,otd.SaleCode,otd.IsConfirm,otd.PayBillStatus,otd.MyDescription,otd.BillGroup,otd.ContactCode,otd.NetDebtAmount,otd.BillBalance,otd.CurrencyCode,otd.ExchangeRate,otd.IsCancel,otd.AllocateCode,otd.ProjectCode,otd.RecurName,otd.CreatorCode,otd.PayBillAmount,otd.BillTemporary)
+
+	return nil
+}
+
+func (otd *ArOtherDebt) SearchArOtherDebtByDocNo() error {
 	//sql := `DocNo, DocDate, ArCode, GLBookCode, SumofDebit, SumofCredit, DepartCode, CreditDay, DueDate, PayBillDate, SaleCode, IsConfirm, PayBillStatus, MyDescription, BillGroup,ContactCode, NetDebtAmount, BillBalance, CurrencyCode, ExchangeRate, IsCancel, AllocateCode, ProjectCode, RecurName, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, ConfirmCode, ConfirmDateTime,CancelCode, CancelDateTime, PayBillAmount, BillTemporary`
 	return nil
 }

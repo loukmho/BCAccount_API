@@ -27,15 +27,15 @@ type BankExpense struct {
 	ConfirmDateTime string  `json:"confirm_date_time" db:"ConfirmDateTime"`
 	CancelCode      string  `json:"cancel_code" db:"CancelCode"`
 	CancelDateTime  string  `json:"cancel_date_time" db:"CancelDateTime"`
+	UserCode        string  `json:"user_code"`
 }
 
-func (bep *BankExpense) SearchBankExpenseByDocNo() error {
-	//sql := `DocNo, DocDate, BookNo, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, AccountCode, GLBookCode, DepartCode, MyDescription, Amount, AllocateCode, ProjectCode, IsCancel, IsConfirm, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime from dbo.BCBANKEXPENSE WITH (NOLOCK)`
-	return nil
-}
+//func (bep *BankExpense) SearchBankExpenseByDocNo() error {
+//	//sql := `DocNo, DocDate, BookNo, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, AccountCode, GLBookCode, DepartCode, MyDescription, Amount, AllocateCode, ProjectCode, IsCancel, IsConfirm, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime from dbo.BCBANKEXPENSE WITH (NOLOCK)`
+//	return nil
+//}
 
-
-func (bep *BankTransfer) InsertAndEditBankExpense(db *sqlx.DB) error {
+func (bep *BankExpense) InsertAndEditBankExpense(db *sqlx.DB) error {
 	var check_exist int
 
 	sqlexist := `select count(docno) as check_exist from dbo.bcbankexpense where docno = ?` //เช็คว่ามีเอกสารหรือยัง
@@ -49,14 +49,16 @@ func (bep *BankTransfer) InsertAndEditBankExpense(db *sqlx.DB) error {
 		//Insert//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		bep.CreatorCode = bep.UserCode
 
-		sql := `Insert into dbo.BCBankExpense(DocNo,DocDate,CreatorCode,CreateDateTime,FromBook,ToBook,GLBookCode,IsPostGL,IsCancel,DepartCode,AllocateCode,ProjectCode,MyDescription,Amount,ChargeAmount,TotalAmount,RecurName,IsConfirm) values(?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		_, err := db.Exec(sql, bep.DocNo, bep.DocDate, bep.CreatorCode, bep.FromBook, bep.ToBook, bep.GLBookCode, bep.IsPostGL, bep.IsCancel, bep.DepartCode, bep.AllocateCode, bep.ProjectCode, bep.MyDescription, bep.Amount, bep.ChargeAmount, bep.TotalAmount, bep.RecurName, bep.IsConfirm)
+		sql := `Insert into dbo.BCBankExpense(DocNo,DocDate,BookNo,CreatorCode,CreateDateTime,AccountCode,GLBookCode,DepartCode,MyDescription,Amount,AllocateCode,ProjectCode,IsCancel,IsConfirm,RecurName) values(?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?)`
+		_, err := db.Exec(sql, bep.DocNo,bep.DocDate,bep.BookNo,bep.CreatorCode,bep.AccountCode,bep.GLBookCode,bep.DepartCode,bep.MyDescription,bep.Amount,bep.AllocateCode,bep.ProjectCode,bep.IsCancel,bep.IsConfirm,bep.RecurName)
 		if err != nil {
 			return err
 		}
 	} else {
-		sql := `Update dbo.BCBankExpense set DocDate=?,LastEditorCode=?,LastEditDateT=getdate(),FromBook=?,ToBook=?,GLBookCode=?,IsPostGL=?,IsCancel=?,DepartCode=?,AllocateCode=?,ProjectCode=?,MyDescription=?,Amount=?,ChargeAmount=?,TotalAmount=?,RecurName=?,IsConfirm=? where docno = ?`
-		_, err := db.Exec(sql, bep.DocDate, bep.LastEditorCode, bep.FromBook, bep.ToBook, bep.GLBookCode, bep.IsPostGL, bep.IsCancel, bep.DepartCode, bep.AllocateCode, bep.ProjectCode, bep.MyDescription, bep.Amount, bep.ChargeAmount, bep.TotalAmount, bep.RecurName, bep.IsConfirm, bep.DocNo)
+		bep.LastEditorCode = bep.UserCode
+
+		sql := `Update dbo.BCBankExpense set DocDate=?,BookNo=?,LastEditCode=?,LastEditDateT=getdate(),AccountCode=?,GLBookCode=?,DepartCode=?,MyDescription=?,Amount=?,AllocateCode=?,ProjectCode=?,IsCancel=?,IsConfirm=?,RecurName=? where docno = ?`
+		_, err := db.Exec(sql, bep.DocDate,bep.BookNo,bep.LastEditorCode,bep.AccountCode,bep.GLBookCode,bep.DepartCode,bep.MyDescription,bep.Amount,bep.AllocateCode,bep.ProjectCode,bep.IsCancel,bep.IsConfirm,bep.RecurName, bep.DocNo)
 		if err != nil {
 			return err
 		}
@@ -65,8 +67,8 @@ func (bep *BankTransfer) InsertAndEditBankExpense(db *sqlx.DB) error {
 	return nil
 }
 
-func (bep *BankTransfer) SearchBankExpenseByDocNo(db *sqlx.DB, docno string) error {
-	sql := `set dateformat dmy     select DocNo,DocDate,CreatorCode,CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(FromBook,'') as FromBook,isnull(ToBook,'') as ToBook,isnull(GLBookCode,'') as GLBookCode,IsPostGL,IsCancel,isnull(DepartCode,'') as DepartCode,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(MyDescription,'') as MyDescription,Amount,ChargeAmount,TotalAmount,isnull(RecurName,'') as RecurName, IsConfirm,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime from dbo.bcbanktransfer where docno = ?`
+func (bep *BankExpense) SearchBankExpenseByDocNo(db *sqlx.DB, docno string) error {
+	sql := `set dateformat dmy     select DocNo,DocDate,isnull(BookNo,'') as BookNo,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(AccountCode,'') as AccountCode,isnull(GLBookCode,'') as GLBookCode,isnull(DepartCode,'') as DepartCode,isnull(MyDescription,'') as MyDescription,Amount,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,IsCancel,IsConfirm,isnull(RecurName,'') as RecurName from dbo.BCBankExpense with (nolock) where docno = ?`
 	err := db.Get(&bep, sql, docno)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())
@@ -75,8 +77,8 @@ func (bep *BankTransfer) SearchBankExpenseByDocNo(db *sqlx.DB, docno string) err
 	return nil
 }
 
-func (bep *BankTransfer) SearchBankExpenseByKeyword(db *sqlx.DB, docno string) (beps *[]BankTransfer, err error) {
-	sql := `set dateformat dmy     select DocNo,DocDate,CreatorCode,CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(FromBook,'') as FromBook,isnull(ToBook,'') as ToBook,isnull(GLBookCode,'') as GLBookCode,IsPostGL,IsCancel,isnull(DepartCode,'') as DepartCode,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(MyDescription,'') as MyDescription,Amount,ChargeAmount,TotalAmount,isnull(RecurName,'') as RecurName, IsConfirm,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime from dbo.bcbanktransfer where (docno  like '%'+?+'%' ) order by docno`
+func (bep *BankExpense) SearchBankExpenseByKeyword(db *sqlx.DB, docno string) (beps *[]BankExpense, err error) {
+	sql := `set dateformat dmy     select DocNo,DocDate,isnull(BookNo,'') as BookNo,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(AccountCode,'') as AccountCode,isnull(GLBookCode,'') as GLBookCode,isnull(DepartCode,'') as DepartCode,isnull(MyDescription,'') as MyDescription,Amount,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,IsCancel,IsConfirm,isnull(RecurName,'') as RecurName from dbo.BCBankExpense with (nolock) where (docno  like '%'+?+'%' ) order by docno`
 	err = db.Select(&bep, sql, docno)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())
