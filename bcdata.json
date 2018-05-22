@@ -36,6 +36,16 @@
   "debit_note_gl_format": "B05",
   "debit_note_save_from": 5,
   "debit_note_source": 7,
-  "debit_note_my_type": 5
+  "debit_note_my_type": 5,
 
+  "receipt1_gl_format": "B05",
+  "receipt1_book_code":"03",
+  "receipt1_Source": 8,
+  "receipt1_save_from": 2,
+
+  "stk_adjust_gl_format":"",
+  "stk_adjust_my_type": 0,
+
+  "stk_issue_gl_format": "",
+  "stk_issue_my_type": 0
 }

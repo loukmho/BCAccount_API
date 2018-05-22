@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+const MoneyPrecision  = 2
+
 //TODO: เมื่อรันจริงต้องเปลี่ยนเป็น Docker Network Bridge IP เช่น 172.17.0.3 เป็นต้น
 type Config struct {
 	DBHost string `json:"db_host"`

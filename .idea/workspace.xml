@@ -2,19 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="04fb81d0-cba6-4721-a376-cc3403a2134e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/model/chqmodule/chqoutcancel.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/chqmodule/chqoutpass.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctrl/custmodule/arotherdebt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctrl/custmodule/receipt1.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/services.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bankmodule/bankexpense.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/bankmodule/bankexpense.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bankmodule/bankincome.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/bankmodule/bankincome.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bankmodule/cashbankin.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/bankmodule/cashbankin.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bankmodule/cashbankout.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/bankmodule/cashbankout.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bankmodule/otherexpense.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/bankmodule/otherexpense.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bankmodule/otherexpense2.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/bankmodule/otherexpense2.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bankmodule/otherincome.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/bankmodule/otherincome.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bcaccount_api.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bcaccount_api.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bcdata.json" beforeDir="false" afterPath="$PROJECT_DIR$/bcdata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/buymodule/apinvoice.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/buymodule/apinvoice.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/buymodule/debitnote2.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/buymodule/debitnote2.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/buymodule/stkrefund.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/buymodule/stkrefund.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/chqmodule/chqincancel.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqincancel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/chqmodule/chqinsale.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqinsale.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/custmodule/arotherdebt.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/custmodule/arotherdebt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/custmodule/receipt1.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/custmodule/receipt1.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/invenmodule/stkadjust.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/invenmodule/stkadjust.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/invenmodule/stkissue.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/invenmodule/stkissue.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/invenmodule/stkissueret.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/invenmodule/stkissueret.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/ardeposit.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/salemodule/ardeposit.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/arinvoice.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/salemodule/arinvoice.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/creditnote.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/salemodule/creditnote.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/salemodule/debitnote.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/salemodule/debitnote.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,89 +35,62 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="otherexpense.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/bankmodule/otherexpense.go">
+      <file leaf-file-name="arinvoice.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="60" selection-start-line="60" selection-end-line="62" selection-end-column="38" />
+            <state relative-caret-position="170">
+              <caret line="451" selection-start-line="451" selection-end-line="459" selection-end-column="9" />
               <folding>
-                <element signature="e#15#59#0" expanded="true" />
+                <element signature="e#15#164#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="otherincome.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/bankmodule/otherincome.go">
+      <file leaf-file-name="init.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/init.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1411">
-              <caret line="86" selection-start-line="86" selection-end-line="86" />
+            <state relative-caret-position="493">
+              <caret line="117" column="51" lean-forward="true" selection-start-line="117" selection-start-column="51" selection-end-line="117" selection-end-column="51" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stkissue.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/invenmodule/stkissue.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stkissueret.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/model/invenmodule/stkissueret.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="86">
+              <caret line="143" column="36" lean-forward="true" selection-start-line="143" selection-start-column="36" selection-end-line="143" selection-end-column="36" />
               <folding>
-                <element signature="e#15#59#0" expanded="true" />
+                <element signature="e#15#67#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chqincancel.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/chqmodule/chqincancel.go">
+      <file leaf-file-name="stkadjust.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/invenmodule/stkadjust.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
-              <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+            <state relative-caret-position="222">
+              <caret line="146" selection-start-line="146" selection-end-line="152" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chqindeposit2.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/chqmodule/chqindeposit2.go">
+      <file leaf-file-name="bcdata.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bcdata.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1156">
-              <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chqinpass.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/chqmodule/chqinpass.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="935">
-              <caret line="55" selection-start-line="55" selection-end-line="55" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="arotherdebt.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/model/custmodule/arotherdebt.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="42" column="60" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="receipt1.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/custmodule/receipt1.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1054">
-              <caret line="62" column="54" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="receipt3.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/custmodule/receipt3.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="43" column="60" selection-start-line="43" selection-start-column="60" selection-end-line="43" selection-end-column="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="customer.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/custmodule/customer.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="29" column="66" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
+            <state relative-caret-position="256">
+              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
             </state>
           </provider>
         </entry>
@@ -123,11 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>glformat</find>
-      <find>CreditType</find>
-      <find>ExchangeRate</find>
-      <find>Save</find>
-      <find>source</find>
       <find>PayBillDate</find>
       <find>TransBankDate</find>
       <find>inv.</find>
@@ -139,7 +117,6 @@
       <find>PayBills</find>
       <find>PayBillStatus</find>
       <find>SaveFrom</find>
-      <find>Source</find>
       <find>DepositIncTax</find>
       <find>ReceiveDate</find>
       <find>ItemType</find>
@@ -153,6 +130,12 @@
       <find>CofirmNo</find>
       <find>EarnestNo</find>
       <find>CurrencyCode</find>
+      <find>Source</find>
+      <find>ListInvChqIn</find>
+      <find>ListInvCreditCard</find>
+      <find>Chqs</find>
+      <find>Credit</find>
+      <find>cof</find>
     </findStrings>
     <replaceStrings>
       <replace>crd.</replace>
@@ -165,39 +148,20 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/model/vendormodule/statement.go" />
-        <option value="$PROJECT_DIR$/config.json" />
-        <option value="$PROJECT_DIR$/ctrl/salemodule/ardeposit.go" />
-        <option value="$PROJECT_DIR$/ctrl/salemodule/creditnote.go" />
         <option value="$PROJECT_DIR$/ctrl/salemodule/debitnote.go" />
         <option value="$PROJECT_DIR$/ctrl/salemodule/arinvoice.go" />
         <option value="$PROJECT_DIR$/ctrl/buymodule/apinvoice.go" />
-        <option value="$PROJECT_DIR$/model/buymodule/apinvoice.go" />
-        <option value="$PROJECT_DIR$/bcdata.json" />
-        <option value="$PROJECT_DIR$/model/init.go" />
         <option value="$PROJECT_DIR$/ctrl/buymodule/debitnote2.go" />
         <option value="$PROJECT_DIR$/ctrl/buymodule/stkrefund.go" />
-        <option value="$PROJECT_DIR$/model/buymodule/stkrefund.go" />
-        <option value="$PROJECT_DIR$/model/buymodule/debitnote2.go" />
         <option value="$PROJECT_DIR$/model/invenmodule/item.go" />
         <option value="$PROJECT_DIR$/ctrl/invenmodule/item.go" />
         <option value="$PROJECT_DIR$/ctrl/custmodule/customer.go" />
-        <option value="$PROJECT_DIR$/model/custmodule/receipt1.go" />
         <option value="$PROJECT_DIR$/model/custmodule/receipt3.go" />
         <option value="$PROJECT_DIR$/model/invenmodule/finishgoods.go" />
-        <option value="$PROJECT_DIR$/model/invenmodule/stkadjust.go" />
-        <option value="$PROJECT_DIR$/model/invenmodule/stkissue.go" />
-        <option value="$PROJECT_DIR$/model/invenmodule/stkissueret.go" />
         <option value="$PROJECT_DIR$/model/vendormodule/apotherdebt.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/ardeposit.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/arinvoice.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/creditnote.go" />
-        <option value="$PROJECT_DIR$/model/salemodule/debitnote.go" />
         <option value="$PROJECT_DIR$/ctrl/salemodule/returndepspecial.go" />
         <option value="$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go" />
         <option value="$PROJECT_DIR$/model/salemodule/returndepspecial.go" />
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/banktransfer.go" />
         <option value="$PROJECT_DIR$/model/chqmodule/chqinpass.go" />
         <option value="$PROJECT_DIR$/model/chqmodule/chqindeposit2.go" />
@@ -205,7 +169,6 @@
         <option value="$PROJECT_DIR$/model/chqmodule/chqinreturn.go" />
         <option value="$PROJECT_DIR$/model/chqmodule/chqoutpass.go" />
         <option value="$PROJECT_DIR$/model/chqmodule/chqinsale.go" />
-        <option value="$PROJECT_DIR$/model/chqmodule/chqincancel.go" />
         <option value="$PROJECT_DIR$/model/chqmodule/chqoutcancel.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/bankexpense.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/cashbankin.go" />
@@ -215,7 +178,27 @@
         <option value="$PROJECT_DIR$/model/bankmodule/otherexpense2.go" />
         <option value="$PROJECT_DIR$/model/bankmodule/otherincome.go" />
         <option value="$PROJECT_DIR$/model/custmodule/customer.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/ardeposit.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/ardepositspecial.go" />
+        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/model/custmodule/arotherdebt.go" />
+        <option value="$PROJECT_DIR$/ctrl/custmodule/arotherdebt.go" />
+        <option value="$PROJECT_DIR$/model/custmodule/receipt1.go" />
+        <option value="$PROJECT_DIR$/ctrl/custmodule/receipt1.go" />
+        <option value="$PROJECT_DIR$/model/buymodule/apinvoice.go" />
+        <option value="$PROJECT_DIR$/model/buymodule/debitnote2.go" />
+        <option value="$PROJECT_DIR$/model/buymodule/stkrefund.go" />
+        <option value="$PROJECT_DIR$/model/chqmodule/chqincancel.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/creditnote.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/debitnote.go" />
+        <option value="$PROJECT_DIR$/config/config.go" />
+        <option value="$PROJECT_DIR$/model/salemodule/arinvoice.go" />
+        <option value="$PROJECT_DIR$/model/services.go" />
+        <option value="$PROJECT_DIR$/bcdata.json" />
+        <option value="$PROJECT_DIR$/model/init.go" />
+        <option value="$PROJECT_DIR$/model/invenmodule/stkadjust.go" />
+        <option value="$PROJECT_DIR$/model/invenmodule/stkissue.go" />
+        <option value="$PROJECT_DIR$/model/invenmodule/stkissueret.go" />
       </list>
     </option>
   </component>
@@ -233,7 +216,9 @@
     <option name="width" value="1370" />
     <option name="height" value="735" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -256,31 +241,7 @@
               <item name="bcaccount_api" type="b2602c69:ProjectViewProjectNode" />
               <item name="bcaccount_api" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="bankmodule" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcaccount_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcaccount_api" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="chqmodule" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcaccount_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcaccount_api" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="custmodule" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcaccount_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcaccount_api" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="invenmodule" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bcaccount_api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bcaccount_api" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="salemodule" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -343,12 +304,12 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32913387" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32913387" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32755905" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24963072" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -360,18 +321,18 @@
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24963072" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19106881" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32913387" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3290735" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -384,112 +345,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ctrl/buymodule/stkrefund.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/init.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ReadMe.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="58" lean-forward="true" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/buymodule/stkrefund.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="281" column="1" selection-start-line="110" selection-end-line="281" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/buymodule/debitnote2.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4080">
-          <caret line="245" column="46" lean-forward="true" selection-start-line="245" selection-start-column="46" selection-end-line="245" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/invenmodule/item.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/custmodule/customer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/invenmodule/finishgoods.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="54" selection-start-line="37" selection-start-column="54" selection-end-line="37" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/vendormodule/payment2.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/vendormodule/statement.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="25" column="22" lean-forward="true" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/creditnote.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="391" column="48" selection-start-line="391" selection-start-column="48" selection-end-line="391" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/debitnote.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="340" column="48" selection-start-line="340" selection-start-column="48" selection-end-line="340" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/ardeposit.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="533" column="1" lean-forward="true" selection-start-line="512" selection-end-line="533" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/ardepositspecial.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="380" selection-start-line="380" selection-end-line="400" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/recmoney.go" />
     <entry file="file://$PROJECT_DIR$/model/salemodule/recmoney.go" />
     <entry file="file://$PROJECT_DIR$/ctrl/salemodule/ardepositspecial.go">
       <provider selected="true" editor-type-id="text-editor">
@@ -519,34 +374,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/ardeposit.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="27" column="5" lean-forward="true" selection-start-line="18" selection-start-column="4" selection-end-line="27" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11373">
-          <caret line="675" column="76" selection-start-line="675" selection-start-column="76" selection-end-line="675" selection-end-column="106" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="37" column="46" selection-start-line="37" selection-start-column="46" selection-end-line="37" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/buymodule/apinvoice.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="52" column="16" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ctrl/bankmodule/banktransfer.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="969">
@@ -568,59 +395,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqoutcancel.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqoutpass.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/invenmodule/item.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="573">
           <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/invenmodule/stkadjust.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-263">
-          <caret line="18" column="73" selection-start-line="18" selection-start-column="73" selection-end-line="18" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/invenmodule/stkissue.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="41" column="47" lean-forward="true" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/invenmodule/stkissueret.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="37" column="62" lean-forward="true" selection-start-line="37" selection-start-column="62" selection-end-line="37" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/vendormodule/payment.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="53" selection-start-line="53" selection-end-line="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/vendormodule/apotherdebt.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="22" column="68" selection-start-line="22" selection-start-column="68" selection-end-line="22" selection-end-column="68" />
         </state>
       </provider>
     </entry>
@@ -638,58 +416,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/bankmodule/bankexpense.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="80" column="579" selection-start-line="80" selection-start-column="579" selection-end-line="80" selection-end-column="609" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/bankmodule/otherexpense2.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="91" lean-forward="true" selection-start-line="91" selection-end-line="91" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/bankmodule/banktransfer.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="71" column="5" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/bankmodule/bankincome.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/bankmodule/otherexpense.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="60" selection-start-line="60" selection-end-line="62" selection-end-column="38" />
-          <folding>
-            <element signature="e#15#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/bankmodule/otherincome.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1411">
-          <caret line="86" selection-start-line="86" selection-end-line="86" />
-          <folding>
-            <element signature="e#15#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqincancel.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -700,17 +430,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqinpass.go">
+    <entry file="file://$PROJECT_DIR$/model/bankmodule/otherexpense.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/custmodule/receipt1.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="62" column="54" selection-start-line="62" selection-start-column="54" selection-end-line="62" selection-end-column="54" />
+        <state relative-caret-position="119">
+          <caret line="51" column="4" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -721,6 +444,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/model/salemodule/ardepositspecial.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2737">
+          <caret line="167" column="5" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/bankmodule/otherexpense2.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1496">
+          <caret line="91" selection-start-line="91" selection-end-line="91" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/custmodule/customer.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -728,10 +465,241 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="40" column="22" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/custmodule/arotherdebt.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="42" column="60" selection-start-line="42" selection-start-column="60" selection-end-line="42" selection-end-column="60" />
+        <state relative-caret-position="-1953">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ctrl/custmodule/customer.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ctrl/salemodule/ardeposit.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ctrl/custmodule/arotherdebt.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="55" column="26" lean-forward="true" selection-start-line="55" selection-start-column="26" selection-end-line="55" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/custmodule/receipt1.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="468" lean-forward="true" selection-start-line="468" selection-end-line="468" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ctrl/custmodule/receipt1.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2">
+          <caret line="57" column="32" lean-forward="true" selection-start-line="57" selection-start-column="32" selection-end-line="57" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/bankmodule/otherincome.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/salemodule/ardeposit.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3876">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqincancel.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="66" column="415" selection-start-line="66" selection-start-column="415" selection-end-line="66" selection-end-column="415" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/salemodule/creditnote.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="753">
+          <caret line="375" column="1" lean-forward="true" selection-start-line="375" selection-start-column="1" selection-end-line="375" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/salemodule/debitnote.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="334" column="5" lean-forward="true" selection-start-line="334" selection-start-column="5" selection-end-line="334" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/vendormodule/apotherdebt.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-46">
+          <caret line="22" column="68" selection-start-line="22" selection-start-column="68" selection-end-line="22" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/vendormodule/payment.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-114">
+          <caret line="53" selection-start-line="53" selection-end-line="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/vendormodule/payment2.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/vendormodule/statement.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqoutcancel.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqoutpass.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/chqmodule/chqinpass.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/buymodule/stkrefund.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1501">
+          <caret line="315" column="1350" selection-start-line="315" selection-start-column="1350" selection-end-line="315" selection-end-column="1350" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/buymodule/debitnote2.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1586">
+          <caret line="275" column="1338" selection-start-line="275" selection-start-column="1338" selection-end-line="275" selection-end-column="1338" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/buymodule/apinvoice.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3082">
+          <caret line="582" column="690" selection-start-line="582" selection-start-column="690" selection-end-line="582" selection-end-column="690" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/bankmodule/bankincome.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/invenmodule/finishgoods.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-590" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/bankmodule/bankexpense.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="48" column="86" lean-forward="true" selection-start-line="48" selection-start-column="86" selection-end-line="48" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-182">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/services.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-640">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#15#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bcdata.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/init.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="117" column="51" lean-forward="true" selection-start-line="117" selection-start-column="51" selection-end-line="117" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/salemodule/arinvoice.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="451" selection-start-line="451" selection-end-line="459" selection-end-column="9" />
+          <folding>
+            <element signature="e#15#164#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/invenmodule/stkadjust.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="146" selection-start-line="146" selection-end-line="152" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/invenmodule/stkissue.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/invenmodule/stkissueret.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="143" column="36" lean-forward="true" selection-start-line="143" selection-start-column="36" selection-end-line="143" selection-end-column="36" />
+          <folding>
+            <element signature="e#15#67#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

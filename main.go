@@ -24,6 +24,12 @@ func main() {
 	yaag.Init(&yaag.Config{On: true, DocTitle: "Gin", DocPath: "apidoc.html", BaseUrls: map[string]string{"Production": "", "Staging": ""}})
 	//r.Use(y.Document())
 
+
+	//Module Vendor ///////////////////////////////////////////////////////////////////
+
+
+	//Module Buy ///////////////////////////////////////////////////////////////////
+
 	r.GET("/apinvoice", b.SearchApInvoiceByDocNo)
 	r.GET("/apinvoices", b.SearchApInvoiceByKeyword)
 	r.POST("/apinvoice", b.InsertAndEditApinvoice)
@@ -35,9 +41,13 @@ func main() {
 	r.GET("/debitnote2", b.SearchDebitNote2ByDocNo)
 	r.GET("/debitnote2s", b.SearchDebitNote2ByKeyword)
 
+	//Module Customer ///////////////////////////////////////////////////////////////////
+
 	r.GET("/customer", c.SearchCustomerByCode)
 	r.GET("/customers", c.SearchCustomerByKeyword)
 	r.POST("/customer", c.InsertAndEditCustomer)
+
+	//Module Sale ///////////////////////////////////////////////////////////////////
 
 	r.GET("/arinvoice", s.SearchArInvoiceByDocNo)
 	r.GET("/arinvoices", s.SearchArInvoiceByKeyword)
@@ -63,13 +73,21 @@ func main() {
 	r.GET("/returndepspecials", s.SearchReturnDepSpecialByKeyword)
 	r.POST("/returndepospecial", s.InsertAndEditReturnDepSpecial)
 
+	//Module Inventory ///////////////////////////////////////////////////////////////////
+
 	r.GET("/item", i.SearchItemByCode)
 	r.GET("/items", i.SearchItemByKeyword)
 	r.POST("/item", i.InsertAndEditItem)
+
+	//Module Bank ///////////////////////////////////////////////////////////////////
 
 	r.GET("/banktransfer", n.SearchBankTransferByDocNo)
 	r.GET("/banktransfers", n.SearchBankTransferByKeyword)
 	r.POST("/banktransfer", n.InsertAndEditBankTransfer)
 
-	r.Run(":8002")
+	//Module Chq ///////////////////////////////////////////////////////////////////
+
+
+
+	r.Run(":8001")
 }

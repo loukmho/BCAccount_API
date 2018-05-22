@@ -176,9 +176,6 @@ func (dp *ArDeposit) InsertAndEditArDeposit(db *sqlx.DB) error {
 	} else {
 		dp.DueDate = now.AddDate(0, 0, dp.CreditDay).Format("2006-01-02")
 	}
-	if (dp.ExchangeRate == 0) {
-		dp.ExchangeRate = 1
-	}
 
 	fmt.Println("UserCode = ", dp.UserCode)
 
