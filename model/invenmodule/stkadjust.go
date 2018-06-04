@@ -177,7 +177,7 @@ func (saj *StkAdjust) SearchStkAdjustByDocNo(db *sqlx.DB, docno string) error {
 
 func (saj *StkAdjust) SearchStkAdjustByKeyword(db *sqlx.DB, keyword string) (sajs []*StkAdjust, err error) {
 	sql := `set dateformat dmy     select isnull(cancelcode,'') as cancelcode, isnull(canceldatetime,'') as canceldatetime, DocNo, DocDate, isnull(CreatorCode,'') as CreatorCode, isnull(CreateDateTime,'') as CreateDateTime, isnull(LastEditorCode,'') as LastEditorCode, isnull(LastEditDateT,'') as LastEditDateT, isnull(InspectNo,'') as InspectNo, isnull(MyDescription,'') as MyDescription, isnull(GLFormat,'') as GLFormat, IsConfirm, IsCancel, SumAmount, SumAmount2, IsCompleteSave, TaxAmount, TotalAmount, SumOfExceptTax, OutputTaxStatus, AdjustType, isnull(ConfirmCode,'') as ConfirmCode, isnull(ConfirmDateTime,'') as ConfirmDateTime, SumOfCost, isnull(AllocateCode,'') as AllocateCode, isnull(ProjectCode,'') as ProjectCode, isnull(DepartCode,'') as DepartCode from dbo.BCSTKAdjust with (nolock) where (docno  like '%'+?+'%' or InspectNo like '%'+?+'%' or mydescription like '%'+?+'%' ) order by docno`
-	err = db.Select(saj, sql, keyword, keyword, keyword)
+	err = db.Select(&sajs, sql, keyword, keyword, keyword)
 	if err != nil {
 		return nil, err
 	}

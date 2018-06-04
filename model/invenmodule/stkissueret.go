@@ -2,7 +2,6 @@ package model
 
 import (
 	"github.com/jmoiron/sqlx"
-	"time"
 	"fmt"
 	"errors"
 	m "github.com/loukmho/bcaccount_api/model"
@@ -58,19 +57,17 @@ type IsrItem struct {
 	PackingRate2  float64 `json:"packing_rate_2" db:"PackingRate2"`
 }
 
-func (sir *StkIssueRet) SearchStkIssueRetByDocNo() error {
-	//sql := `DocNo, DocDate,CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, IssueRefNo, DepartCode, IsConfirm, IsCancel, PersonCode, SumOfAmount, MyDescription, GLFormat,IsCompleteSave, AllocateCode, ProjectCode, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime`
-	//sqlsub := `MyType, DocNo, IssueRefNo, ItemCode, DocDate, DepartCode, Personcode, MyDescription, ItemName, WHCode, ShelfCode, Qty, Price, Amount, HomeAmount, SumOfCost,UnitCode,  BarCode, IsCancel, LineNumber,  AVERAGECOST, RefLinenumber, LotNumber,PackingRate1, PackingRate2`
-	return nil
-
-}
+//func (sir *StkIssueRet) SearchStkIssueRetByDocNo() error {
+//	//sql := `DocNo, DocDate,CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, IssueRefNo, DepartCode, IsConfirm, IsCancel, PersonCode, SumOfAmount, MyDescription, GLFormat,IsCompleteSave, AllocateCode, ProjectCode, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime`
+//	//sqlsub := `MyType, DocNo, IssueRefNo, ItemCode, DocDate, DepartCode, Personcode, MyDescription, ItemName, WHCode, ShelfCode, Qty, Price, Amount, HomeAmount, SumOfCost,UnitCode,  BarCode, IsCancel, LineNumber,  AVERAGECOST, RefLinenumber, LotNumber,PackingRate1, PackingRate2`
+//	return nil
+//
+//}
 
 
 func (sir *StkIssueRet) InsertAndEditStkIssueRet(db *sqlx.DB) error {
 	var check_exist int
 	var count_item int
-
-	now := time.Now()
 
 	for _, sub_item := range sir.Subs {
 		if (sub_item.Qty != 0) {
@@ -146,7 +143,7 @@ func (sir *StkIssueRet) InsertAndEditStkIssueRet(db *sqlx.DB) error {
 		}
 
 		sqlsub := `set dateformat dmy     Insert into dbo.BCStkIssRetSub(MyType,DocNo,IssueRefNo,ItemCode,DocDate,DepartCode,Personcode,MyDescription,ItemName,WHCode,ShelfCode,Qty,Price,Amount,HomeAmount,SumOfCost,UnitCode,BarCode,IsCancel,LineNumber,AVERAGECOST,RefLinenumber,LotNumber,PackingRate1,PackingRate2) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		db.Exec(sqlsub, sub.MyType, iss.DocNo, iss.IssueType, sub.ItemCode, iss.DocDate, iss.DepartCode, iss.PersonCode, sub.MyDescription, sub.ItemName, sub.WHCode, sub.ShelfCode, sub.RefNo, sub.Qty, sub.RetQty, sub.SumOfCost, sub.Price, sub.Amount, sub.UnitCode, sub.BarCode, sub.IsCancel, sub.LineNumber, sub.AverageCost, sub.RefLineNumber, sub.LotNumber, sub.PackingRate1, sub.PackingRate2)
+		db.Exec(sqlsub, sub.MyType,sir.DocNo,sir.IssueRefNo,sub.ItemCode,sir.DocDate,sir.DepartCode,sir.PersonCode,sub.MyDescription,sub.ItemName,sub.WHCode,sub.ShelfCode,sub.Qty,sub.Price,sub.Amount,sub.HomeAmount,sub.SumOfCost,sub.UnitCode,sub.BarCode,sub.IsCancel,sub.LineNumber,sub.AverageCost,sub.RefLinenumber,sub.LotNumber,sub.PackingRate1,sub.PackingRate2)
 		vLineNumber = vLineNumber + 1
 
 		sqlprocess := ` insert into dbo.ProcessStock (ItemCode,ProcessFlag,FlowStatus) values(?, 1, 0)`
@@ -161,22 +158,15 @@ func (sir *StkIssueRet) InsertAndEditStkIssueRet(db *sqlx.DB) error {
 	return nil
 }
 
-//func (iss *StkIssue) SearchStkIssueByDocNo() error {
-//	//sql := ` DocNo, DocDate, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, DepartCode, IssueType, DayOfUse, DueDate, MyDescription, PersonCode, ArCode, SumOfAmount, IsConfirm,IsCancel, GLFormat, GLStartPosting, IsPostGL, IsCompleteSave,  BillRetStatus, AllocateCode, ProjectCode, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime `
-//	//sqlsub := `MyType, DocNo,  IssueType, ItemCode, DocDate, DepartCode, Personcode, MyDescription, ItemName, WHCode,ShelfCode, RefNo, Qty, RetQty, SumOfCost, Price, Amount, UnitCode, BarCode,IsCancel, LineNumber,  AVERAGECOST, RefLineNumber, LotNumber, PackingRate1, PackingRate2`
-//	return nil
-//}
-
-
-func (sir *StkIssueRet) SearchStkIssueByDocNo(db *sqlx.DB, docno string) error {
-	sql := `set dateformat dmy     select DocNo, DocDate, isnull(CreatorCode,'') as CreatorCode, isnull(CreateDateTime,'') as CreateDateTime, isnull(LastEditorCode,'') as LastEditorCode, isnull(LastEditDateT,'') as LastEditDateT, isnull(DepartCode,'') as DepartCode, isnull(IssueType,'') as IssueType, DayOfUse, isnull(DueDate,'') as DueDate, isnull(MyDescription,'') as MyDescription, isnull(PersonCode,'') as PersonCode, isnull(ArCode,'') as ArCode, SumOfAmount, IsConfirm,IsCancel, isnull(GLFormat,'') as GLFormat, GLStartPosting, IsPostGL, IsCompleteSave,  BillRetStatus, isnull(AllocateCode,'') as AllocateCode, isnull(ProjectCode,'') as ProjectCode, isnull(RecurName,'') as RecurName, isnull(ConfirmCode,'') as ConfirmCode, isnull(ConfirmDateTime,'') as ConfirmDateTime, isnull(CancelCode,'') as CancelCode, isnull(CancelDateTime,'') as CancelDateTime from dbo.bcstkissue with (nolock) where docno = ?`
-	err := db.Get(saj, sql, docno)
+func (sir *StkIssueRet) SearchStkIssueRetByDocNo(db *sqlx.DB, docno string) error {
+	sql := `set dateformat dmy     select DocNo, DocDate,isnull(CreatorCode,'') as CreatorCode, isnull(CreateDateTime,'') as CreateDateTime, isnull(LastEditorCode,'') as LastEditorCode, isnull(LastEditDateT,'') as LastEditDateT, isnull(IssueRefNo,'') as IssueRefNo, isnull(DepartCode,'') as DepartCode, IsConfirm, IsCancel, isnull(PersonCode,'') as PersonCode, SumOfAmount, isnull(MyDescription,'') as MyDescription, isnull(GLFormat,'') as GLFormat,IsCompleteSave, isnull(AllocateCode,'') as AllocateCode, isnull(ProjectCode,'') as ProjectCode, isnull(RecurName,'') as RecurName, isnull(ConfirmCode,'') as ConfirmCode, isnull(ConfirmDateTime,'') as ConfirmDateTime, isnull(CancelCode,'') as CancelCode, isnull(CancelDateTime,'') as CancelDateTime from dbo.BCStkIssueRet with (nolock) where docno = ?`
+	err := db.Get(sir, sql, docno)
 	if err != nil {
 		return err
 	}
 
-	sqlsub := `set dateformat dmy     select MyType, DocNo, isnull(IssueType,'') as IssueType, isnull(ItemCode,'') as ItemCode, DocDate, isnull(DepartCode,'') as DepartCode, isnull(Personcode,'') as Personcode, isnull(MyDescription,'') as MyDescription, isnull(ItemName,'') as ItemName, isnull(WHCode,'') as WHCode, isnull(ShelfCode,'') as ShelfCode, isnull(RefNo,'') as RefNo, Qty, RetQty, SumOfCost, Price, Amount, isnull(UnitCode,'') as UnitCode, isnull(BarCode,'') as BarCode, IsCancel, LineNumber, AVERAGECOST, RefLineNumber, isnull(LotNumber,'') as LotNumber, PackingRate1, PackingRate2 from dbo.bcstkissuesub with (nolock) where docno = ? order by linenumber`
-	err = db.Select(&saj.Subs, sqlsub, saj.DocNo)
+	sqlsub := `set dateformat dmy     select MyType, DocNo, isnull(IssueRefNo,'') as IssueRefNo, ItemCode, DocDate, isnull(DepartCode,'') as DepartCode, isnull(Personcode,'') as Personcode, isnull(MyDescription,'') as MyDescription, isnull(ItemName,'') as ItemName, isnull(WHCode,'') as WHCode, isnull(ShelfCode,'') as ShelfCode, Qty, Price, Amount, HomeAmount, SumOfCost, isnull(UnitCode,'') as UnitCode, isnull(BarCode,'') as BarCode, IsCancel, LineNumber, AVERAGECOST, RefLinenumber, isnull(LotNumber,'') as LotNumber,isnull(PackingRate1,0) as PackingRate1, isnull(PackingRate2,0) as PackingRate2 from dbo.BCStkIssRetSub with (nolock) where docno = ? order by linenumber`
+	err = db.Select(&sir.Subs, sqlsub, sir.DocNo)
 	if err != nil {
 		return err
 	}
@@ -184,20 +174,20 @@ func (sir *StkIssueRet) SearchStkIssueByDocNo(db *sqlx.DB, docno string) error {
 	return nil
 }
 
-func (sir *StkIssueRet) SearchStkIssueByKeyword(db *sqlx.DB, keyword string) (sajs []*StkAdjust, err error) {
-	sql := `set dateformat dmy     select DocNo, DocDate, isnull(CreatorCode,'') as CreatorCode, isnull(CreateDateTime,'') as CreateDateTime, isnull(LastEditorCode,'') as LastEditorCode, isnull(LastEditDateT,'') as LastEditDateT, isnull(DepartCode,'') as DepartCode, isnull(IssueType,'') as IssueType, DayOfUse, isnull(DueDate,'') as DueDate, isnull(MyDescription,'') as MyDescription, isnull(PersonCode,'') as PersonCode, isnull(ArCode,'') as ArCode, SumOfAmount, IsConfirm,IsCancel, isnull(GLFormat,'') as GLFormat, GLStartPosting, IsPostGL, IsCompleteSave,  BillRetStatus, isnull(AllocateCode,'') as AllocateCode, isnull(ProjectCode,'') as ProjectCode, isnull(RecurName,'') as RecurName, isnull(ConfirmCode,'') as ConfirmCode, isnull(ConfirmDateTime,'') as ConfirmDateTime, isnull(CancelCode,'') as CancelCode, isnull(CancelDateTime,'') as CancelDateTime from dbo.bcstkissue with (nolock) where (docno  like '%'+?+'%' or arcode like '%'+?+'%' or personcode like '%'+?+'%' ) order by docno`
-	err = db.Select(saj, sql, keyword, keyword, keyword)
+func (sir *StkIssueRet) SearchStkIssueRetByKeyword(db *sqlx.DB, keyword string) (sirs []*StkIssueRet, err error) {
+	sql := `set dateformat dmy     select DocNo, DocDate,isnull(CreatorCode,'') as CreatorCode, isnull(CreateDateTime,'') as CreateDateTime, isnull(LastEditorCode,'') as LastEditorCode, isnull(LastEditDateT,'') as LastEditDateT, isnull(IssueRefNo,'') as IssueRefNo, isnull(DepartCode,'') as DepartCode, IsConfirm, IsCancel, isnull(PersonCode,'') as PersonCode, SumOfAmount, isnull(MyDescription,'') as MyDescription, isnull(GLFormat,'') as GLFormat,IsCompleteSave, isnull(AllocateCode,'') as AllocateCode, isnull(ProjectCode,'') as ProjectCode, isnull(RecurName,'') as RecurName, isnull(ConfirmCode,'') as ConfirmCode, isnull(ConfirmDateTime,'') as ConfirmDateTime, isnull(CancelCode,'') as CancelCode, isnull(CancelDateTime,'') as CancelDateTime from dbo.BCStkIssueRet with (nolock) where (docno  like '%'+?+'%' or arcode like '%'+?+'%' or personcode like '%'+?+'%' ) order by docno`
+	err = db.Select(&sirs, sql, keyword, keyword, keyword)
 	if err != nil {
 		return nil, err
 	}
 
-	for _, sub := range sajs {
-		sqlsub := `set dateformat dmy     select MyType, DocNo, isnull(IssueType,'') as IssueType, isnull(ItemCode,'') as ItemCode, DocDate, isnull(DepartCode,'') as DepartCode, isnull(Personcode,'') as Personcode, isnull(MyDescription,'') as MyDescription, isnull(ItemName,'') as ItemName, isnull(WHCode,'') as WHCode, isnull(ShelfCode,'') as ShelfCode, isnull(RefNo,'') as RefNo, Qty, RetQty, SumOfCost, Price, Amount, isnull(UnitCode,'') as UnitCode, isnull(BarCode,'') as BarCode, IsCancel, LineNumber, AVERAGECOST, RefLineNumber, isnull(LotNumber,'') as LotNumber, PackingRate1, PackingRate2 from dbo.bcstkissuesub with (nolock) where docno = ? order by linenumber`
+	for _, sub := range sirs {
+		sqlsub := `set dateformat dmy     select MyType, DocNo, isnull(IssueRefNo,'') as IssueRefNo, ItemCode, DocDate, isnull(DepartCode,'') as DepartCode, isnull(Personcode,'') as Personcode, isnull(MyDescription,'') as MyDescription, isnull(ItemName,'') as ItemName, isnull(WHCode,'') as WHCode, isnull(ShelfCode,'') as ShelfCode, Qty, Price, Amount, HomeAmount, SumOfCost, isnull(UnitCode,'') as UnitCode, isnull(BarCode,'') as BarCode, IsCancel, LineNumber, AVERAGECOST, RefLinenumber, isnull(LotNumber,'') as LotNumber,isnull(PackingRate1,0) as PackingRate1, isnull(PackingRate2,0) as PackingRate2 from dbo.BCStkIssRetSub with (nolock) where docno = ? order by linenumber`
 		err = db.Select(&sub.Subs, sqlsub, sub.DocNo)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	return sajs, nil
+	return sirs, nil
 }
