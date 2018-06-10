@@ -1,6 +1,11 @@
 package model
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/jmoiron/sqlx"
+	"fmt"
+	m "github.com/loukmho/BCAccount_API/model"
+	"errors"
+)
 
 type ChqOutCancel struct {
 	DocNo           string          `json:"doc_no" db:"DocNo"`
@@ -48,23 +53,148 @@ type ChqOutCancelSub struct {
 	RefChqRowOrder int     `json:"ref_chq_row_order" db:"RefChqRowOrder"`
 }
 
-
 func (coc *ChqOutCancel) InsertAndEditChqOutCancel(db *sqlx.DB) error {
-	sql := `set dateformat dmy     insert into dbo.BCChqOutCancel(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel) values(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel)`
+	var check_exist int
+	var count_item int
 
-	db.Exec(sql, coc.DocNo)
+	def := m.Default{}
+	def = m.LoadDefaultData("bcdata.json")
+	coc.GLFormat = def.ChqOutCancelGLFormat
 
+	sqlexist := `select count(docno) as check_exist from dbo.BCChqOutCancel where docno = ?` //เช็คว่ามีเอกสารหรือยัง
+	err := db.Get(&check_exist, sqlexist, coc.DocNo)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
 
-	sqlsub := `set dateformat dmy     insert into dbo.BCChqOutCancelSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder)`
-	db.Exec(sqlsub)
+	for _, sub_item := range coc.Subs {
+		if (sub_item.ChqNumber != "") {
+			count_item = count_item + 1
+		}
+	}
+
+	switch {
+	case coc.DocNo == "":
+		return errors.New("Docno is null")
+	case coc.DocDate == "":
+		return errors.New("Docdate is null")
+	case coc.IsCancel == 1:
+		return errors.New("Docno is cancel")
+	case coc.BookNo == "":
+		return errors.New("BookNo is null")
+	case coc.IsConfirm == 1:
+		return errors.New("Docno is confirm")
+	case count_item == 0:
+		return errors.New("Docno is not have item")
+	case coc.SumChqAmount == 0:
+		return errors.New("SumChqAmount = 0")
+	}
+
+	if (check_exist == 0) {
+		//Insert//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		coc.CreatorCode = coc.UserCode
+
+		sql := `set dateformat dmy     insert into dbo.BCChqOutCancel(DocNo,DocDate,CreatorCode,CreateDateTime,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,IsCancel) values(?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err := db.Exec(sql, coc.DocNo, coc.DocDate, coc.CreatorCode, coc.MyDescription, coc.BookNo, coc.GLFormat, coc.GLStartPosting, coc.IsPostGL, coc.GLTransData, coc.SumChqAmount, coc.SumExpend, coc.NetAmount, coc.IsConfirm, coc.RecurName, coc.IsCancel)
+		if err != nil {
+			fmt.Println("sql insert= ", err.Error())
+			return err
+		}
+
+	} else {
+		coc.LastEditorCode = coc.UserCode
+
+		sql := `set dateformat dmy     update dbo.BCChqOutCancel set DocDate=?,LastEditorCode=?,LastEditDateT=getdate(),MyDescription=?,BookNo=?,GLFormat=?,GLStartPosting=?,IsPostGL=?,GLTransData=?,SumChqAmount=?,SumExpend=?,NetAmount=?,IsConfirm=?,RecurName=?,IsCancel=? where docno = ?`
+		_, err := db.Exec(sql, coc.DocDate, coc.LastEditorCode, coc.MyDescription, coc.BookNo, coc.GLFormat, coc.GLStartPosting, coc.IsPostGL, coc.GLTransData, coc.SumChqAmount, coc.SumExpend, coc.NetAmount, coc.IsConfirm, coc.RecurName, coc.IsCancel, coc.DocNo)
+		if err != nil {
+			fmt.Println("sql insert= ", err.Error())
+			return err
+		}
+	}
+
+	sql_del_sub := `delete dbo.BCChqOutCancelSub where docno = ?`
+	_, err = db.Exec(sql_del_sub, coc.DocNo)
+	if err != nil {
+		return err
+	}
+
+	var vLineNumber int
+
+	for _, sub := range coc.Subs {
+		fmt.Println("ItemSub")
+		sub.LineNumber = vLineNumber
+		sub.IsCancel = 0
+		sub.HomeAmount = sub.NetAmount
+		sub.ExchangeRate = def.ExchangeRateDefault
+
+		sqlsub := `set dateformat dmy     insert into dbo.BCChqOutCancelSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err := db.Exec(sqlsub, coc.DocNo, coc.DocDate, coc.BookNo, sub.ChqRowOrder, sub.LineNumber, sub.TransState, sub.IsCancel, sub.ChqNumber, sub.ChqAmount, sub.Expend, sub.NetAmount, sub.CurrencyCode, sub.ExchangeRate, sub.HomeAmount, sub.Arcode, sub.Bankcode, sub.BankBranchCode, sub.RefChqRowOrder)
+		if err != nil {
+			fmt.Println("sql insert sub = ", err.Error())
+			return err
+		}
+
+		vLineNumber = vLineNumber + 1
+	}
+
 	return nil
 }
 
 func (coc *ChqOutCancel) SearchChqOutCancelByDocNo(db *sqlx.DB, docno string) error {
-	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqOutCancel where docno = ?`
-	db.Get(sql, docno)
+	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqOutCancel with (nolock) where docno = ?`
+	err := db.Get(coc, sql, docno)
+	if err != nil {
+		fmt.Println("sql search = ", err.Error())
+		return err
+	}
 
-	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqOutCancelSub`
-	db.Select(coc.Subs, sqlsub)
+	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqOutCancelSub with (nolock) where  Docno = ? order by LineNumber`
+	err = db.Select(&coc.Subs, sqlsub, docno)
+	if err != nil {
+		fmt.Println("sql search sub = ", err.Error())
+		return err
+	}
 	return nil
 }
+
+
+func (coc *ChqOutCancel) SearchChqOutCancelByKeyword(db *sqlx.DB, keyword string) (cocs []*ChqOutCancel, err error) {
+	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqOutCancel with (nolock) where (docno  like '%'+?+'%' ) order by docno`
+	err = db.Get(&cocs, sql, keyword)
+	if err != nil {
+		fmt.Println("sql search = ", err.Error())
+		return nil, err
+	}
+
+	for _, sub := range cocs{
+		sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqOutCancelSub with (nolock) where  Docno = ? order by LineNumber`
+		err = db.Select(coc.Subs, sqlsub, sub.DocNo)
+		if err != nil {
+			fmt.Println("sql search sub = ", err.Error())
+			return nil, err
+		}
+	}
+
+	return cocs, nil
+}
+
+//func (coc *ChqOutCancel) InsertAndEditChqOutCancel(db *sqlx.DB) error {
+//	sql := `set dateformat dmy     insert into dbo.BCChqOutCancel(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel) values(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel)`
+//
+//	db.Exec(sql, coc.DocNo)
+//
+//
+//	sqlsub := `set dateformat dmy     insert into dbo.BCChqOutCancelSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder)`
+//	db.Exec(sqlsub)
+//	return nil
+//}
+//
+//func (coc *ChqOutCancel) SearchChqOutCancelByDocNo(db *sqlx.DB, docno string) error {
+//	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqOutCancel where docno = ?`
+//	db.Get(sql, docno)
+//
+//	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqOutCancelSub`
+//	db.Select(coc.Subs, sqlsub)
+//	return nil
+//}

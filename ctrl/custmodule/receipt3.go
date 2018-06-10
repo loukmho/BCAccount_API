@@ -1,20 +1,20 @@
 package ctrl
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/loukmho/bcaccount_api/model/custmodule"
 	"fmt"
-	ct "github.com/loukmho/BCAccount_API/ctrl"
-	"github.com/loukmho/BCAccount_API/model/bankmodule"
+	"net/http"
+	ct "github.com/loukmho/bcaccount_api/ctrl"
+	"github.com/gin-gonic/gin"
 )
 
-func SearchBankExpenseByDocNo(c *gin.Context) {
+func SearchReceipt1ByDocNo(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 
 	docno := c.Request.URL.Query().Get("docno")
-	bep := new(model.BankExpense)
-	err := bep.SearchBankExpenseByDocNo(ct.Dbc, docno)
+	rcp := new(model.Receipt1)
+	err := rcp.SearchReceipt1ByDocNo(ct.Dbc, docno)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -23,18 +23,18 @@ func SearchBankExpenseByDocNo(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = bep
+		rs.Data = rcp
 		c.JSON(http.StatusOK, rs)
 	}
 }
 
-func SearchBankExpenseByKeyword(c *gin.Context) {
+func SearchReceipt1ByKeyword(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 	keyword := c.Request.URL.Query().Get("keyword")
 
-	bep := new(model.BankExpense)
-	beps, err := bep.SearchBankExpenseByKeyword(ct.Dbc, keyword)
+	rcp := new(model.Receipt1)
+	rcps, err := rcp.SearchReceipt1ByKeyword(ct.Dbc, keyword)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -43,21 +43,21 @@ func SearchBankExpenseByKeyword(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = beps
+		rs.Data = rcps
 		c.JSON(http.StatusOK, rs)
 	}
 
 }
 
-func InsertAndEditBankExpense(c *gin.Context) {
+func InsertAndEditReceipt1(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
-	bep := &model.BankExpense{}
-	err := c.BindJSON(bep)
+	rcp := &model.Receipt1{}
+	err := c.BindJSON(rcp)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = bep.InsertAndEditBankExpense(ct.Dbc)
+	err = rcp.InsertAndEditReceipt1(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -66,9 +66,8 @@ func InsertAndEditBankExpense(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = bep
+		rs.Data = rcp
 		c.JSON(http.StatusOK, rs)
 	}
 
 }
-

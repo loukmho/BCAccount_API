@@ -84,3 +84,18 @@ func (oti *OtherInCome) SearchOtherInComeByDocNo(db *sqlx.DB, docno string) erro
 	}
 	return nil
 }
+
+
+
+func (oti *OtherInCome) SearchOtherInComeByKeyword(db *sqlx.DB, keyword string) (otis *[]OtherInCome, err error) {
+	//sql := `DocNo, DocDate, GLBookCode,CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, DepartCode, MyDescription, SumofDebit, SumofCredit, NetAmount, AllocateCode,  ProjectCode, ArCode, PettyCashAmount, SumOfWTax, SumCashAmount, SumChqAmount, SumCreditAmount, SumBankAmount, OtherIncome, OtherExpense, ExcessAmount1, ExcessAmount2, BillGroup, IsConfirm, IsCancel, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime from dbo.BCOTHERINCOME WITH (NOLOCK)`
+	sql := `set dateformat dmy     select DocNo,DocDate,isnull(GLBookCode,'') as GLBookCode,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(DepartCode,'') as DepartCode,isnull(MyDescription,'') as MyDescription,SumofDebit,SumofCredit,NetAmount,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(ArCode,'') as ArCode,PettyCashAmount,SumOfWTax,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,isnull(BillGroup,'') as BillGroup,IsConfirm,IsCancel,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT from dbo.BCOtherIncome with (nolock) where (docno  like '%'+?+'%' ) order by docno`
+	err = db.Select(&otis, sql, keyword)
+	if err != nil {
+		return nil, err
+	}
+	return otis, nil
+}
+
+
+

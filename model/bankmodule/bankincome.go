@@ -79,7 +79,7 @@ func (bic *BankInCome) SearchBankInComeByDocNo(db *sqlx.DB, docno string) error 
 
 func (bic *BankInCome) SearchBankInComeByKeyword(db *sqlx.DB, docno string) (bics *[]BankInCome, err error) {
 	sql := `set dateformat dmy     select DocNo,DocDate,isnull(BookNo,'') as BookNo,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(AccountCode,'') as AccountCode,isnull(GLBookCode,'') as GLBookCode,isnull(DepartCode,'') as DepartCode,isnull(MyDescription,'') as MyDescription,Amount,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,IsCancel,IsConfirm,isnull(RecurName,'') as RecurName from dbo.BCBankInCome with (nolock) where (docno  like '%'+?+'%' ) order by docno`
-	err = db.Select(&bic, sql, docno)
+	err = db.Select(&bics, sql, docno)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())
 		return nil, err

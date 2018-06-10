@@ -329,13 +329,6 @@ func (apv *ApInvoice) InsertAndEditApInvoice(db *sqlx.DB) error {
 			return err
 		}
 
-		sqltax := `insert into dbo.BCInputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ApCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,'ซื้อสินค้า',?,1,?,?,?,getdate())`
-		_, err = db.Exec(sqltax, apv.SaveFrom, apv.DocNo, apv.BookCode, apv.Source, apv.DocDate, apv.DocDate, apv.TaxNo, apv.ApCode, apv.TaxRate, apv.BeforeTaxAmount, apv.TaxAmount, apv.CreatorCode)
-		fmt.Println("sqltax = ", sqltax)
-		if err != nil {
-			fmt.Println(err.Error())
-			return err
-		}
 	} else {
 		//Update/////////////////////////////////////////////////////////////////////////////////////////////////////////
 		apv.LastEditorCode = apv.UserCode

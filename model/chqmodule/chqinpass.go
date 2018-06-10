@@ -1,6 +1,11 @@
 package model
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/jmoiron/sqlx"
+	"fmt"
+	m "github.com/loukmho/BCAccount_API/model"
+	"errors"
+)
 
 type ChqInPass struct {
 	DocNo           string          `json:"doc_no" db:"DocNo"`
@@ -49,22 +54,142 @@ type ChqInPassSub struct {
 }
 
 func (cip *ChqInPass) InsertAndEditChqInPass(db *sqlx.DB) error {
-	sql := `set dateformat dmy     insert into dbo.BCChqInPass(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel) values(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel)`
-	db.Exec(sql, cip.DocNo)
+	var check_exist int
+	var count_item int
 
+	def := m.Default{}
+	def = m.LoadDefaultData("bcdata.json")
+	cip.GLFormat = def.ChqInPassGLFormat
 
+	sqlexist := `select count(docno) as check_exist from dbo.BCChqInPass where docno = ?` //เช็คว่ามีเอกสารหรือยัง
+	err := db.Get(&check_exist, sqlexist, cip.DocNo)
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil
+	}
 
+	for _, sub_item := range cip.Subs {
+		if (sub_item.ChqNumber != "") {
+			count_item = count_item + 1
+		}
+	}
 
-	sqlsub := `set dateformat dmy     insert into dbo.BCChqInPassSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder)`
-	db.Exec(sqlsub)
+	switch {
+	case cip.DocNo == "":
+		return errors.New("Docno is null")
+	case cip.DocDate == "":
+		return errors.New("Docdate is null")
+	case cip.IsCancel == 1:
+		return errors.New("Docno is cancel")
+	case cip.BookNo == "":
+		return errors.New("BookNo is null")
+	case cip.IsConfirm == 1:
+		return errors.New("Docno is confirm")
+	case count_item == 0:
+		return errors.New("Docno is not have item")
+	case cip.SumChqAmount == 0:
+		return errors.New("SumChqAmount = 0")
+	}
+
+	if (check_exist == 0) {
+		//Insert//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		cip.CreatorCode = cip.UserCode
+
+		sql := `set dateformat dmy     insert into dbo.BCChqInPass(DocNo,DocDate,CreatorCode,CreateDateTime,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,IsCancel) values(?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err := db.Exec(sql, cip.DocNo, cip.DocDate, cip.CreatorCode, cip.MyDescription, cip.BookNo, cip.GLFormat, cip.GLStartPosting, cip.IsPostGL, cip.GLTransData, cip.SumChqAmount, cip.SumExpend, cip.NetAmount, cip.IsConfirm, cip.RecurName, cip.IsCancel)
+		if err != nil {
+			fmt.Println("sql insert= ", err.Error())
+			return err
+		}
+
+	} else {
+		cip.LastEditorCode = cip.UserCode
+
+		sql := `set dateformat dmy     update dbo.BCChqInPass set DocDate=?,LastEditorCode=?,LastEditDateT=getdate(),MyDescription=?,BookNo=?,GLFormat=?,GLStartPosting=?,IsPostGL=?,GLTransData=?,SumChqAmount=?,SumExpend=?,NetAmount=?,IsConfirm=?,RecurName=?,IsCancel=? where docno = ?`
+		_, err := db.Exec(sql, cip.DocDate, cip.LastEditorCode, cip.MyDescription, cip.BookNo, cip.GLFormat, cip.GLStartPosting, cip.IsPostGL, cip.GLTransData, cip.SumChqAmount, cip.SumExpend, cip.NetAmount, cip.IsConfirm, cip.RecurName, cip.IsCancel, cip.DocNo)
+		if err != nil {
+			fmt.Println("sql insert= ", err.Error())
+			return err
+		}
+	}
+
+	sql_del_sub := `delete dbo.BCChqInPassSub where docno = ?`
+	_, err = db.Exec(sql_del_sub, cip.DocNo)
+	if err != nil {
+		return err
+	}
+
+	var vLineNumber int
+
+	for _, sub := range cip.Subs {
+		fmt.Println("ItemSub")
+		sub.LineNumber = vLineNumber
+		sub.IsCancel = 0
+		sub.HomeAmount = sub.NetAmount
+		sub.ExchangeRate = def.ExchangeRateDefault
+
+		sqlsub := `set dateformat dmy     insert into dbo.BCChqInPassSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err := db.Exec(sqlsub, cip.DocNo, cip.DocDate, cip.BookNo, sub.ChqRowOrder, sub.LineNumber, sub.TransState, sub.IsCancel, sub.ChqNumber, sub.ChqAmount, sub.Expend, sub.NetAmount, sub.CurrencyCode, sub.ExchangeRate, sub.HomeAmount, sub.Arcode, sub.Bankcode, sub.BankBranchCode, sub.RefChqRowOrder)
+		if err != nil {
+			fmt.Println("sql insert sub = ", err.Error())
+			return err
+		}
+
+		vLineNumber = vLineNumber + 1
+	}
+
+	return nil
+	//sql := `set dateformat dmy     insert into dbo.BCChqInPass(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel) values(DocNo,DocDate,CreatorCode,CreateDateTime,LastEditorCode,LastEditDateT,MyDescription,BookNo,GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,RecurName,ConfirmCode,ConfirmDateTime,CancelCode,CancelDateTime,IsCancel)`
+	//db.Exec(sql, cip.DocNo)
+	//
+	//sqlsub := `set dateformat dmy     insert into dbo.BCChqInPassSub(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder) values(DocNo,DocDate,BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,ChqNumber,ChqAmount,Expend,NetAmount,CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,Arcode,Bankcode,BankBranchCode,RefChqRowOrder)`
+	//db.Exec(sqlsub)
+	//return nil
+}
+
+//func (cip *ChqInPass) SearchChqInPassByDocNo(db *sqlx.DB, docno string) error {
+//	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqInPass where docno = ?`
+//	db.Get(sql, docno)
+//
+//	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqInPassSub`
+//	db.Select(cip.Subs, sqlsub)
+//	return nil
+//}
+
+func (cip *ChqInPass) SearchChqInPassByDocNo(db *sqlx.DB, docno string) error {
+	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqInPass with (nolock) where docno = ?`
+	err := db.Get(cip, sql, docno)
+	if err != nil {
+		fmt.Println("sql search = ", err.Error())
+		return err
+	}
+
+	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqInPassSub with (nolock) where  Docno = ? order by LineNumber`
+	err = db.Select(&cip.Subs, sqlsub, docno)
+	if err != nil {
+		fmt.Println("sql search sub = ", err.Error())
+		return err
+	}
 	return nil
 }
 
-func (cip *ChqInPass) SearchChqInPassByDocNo(db *sqlx.DB, docno string) error {
-	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqInPass where docno = ?`
-	db.Get(sql, docno)
 
-	sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,OrgChqStatus,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqInPassSub`
-	db.Select(cip.Subs, sqlsub)
-	return nil
+func (cip *ChqInPass) SearchChqInPassByKeyword(db *sqlx.DB, keyword string) (cips []*ChqInPass, err error) {
+	sql := `set dateformat dmy     SELECT DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(MyDescription,'') as MyDescription,isnull(BookNo,'') as BookNo,isnull(GLFormat,'') as GLFormat,GLStartPosting,IsPostGL,GLTransData,SumChqAmount,SumExpend,NetAmount,IsConfirm,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime,IsCancel  FROM dbo.BCChqInPass with (nolock) where (docno  like '%'+?+'%' ) order by docno`
+	err = db.Get(&cips, sql, keyword)
+	if err != nil {
+		fmt.Println("sql search = ", err.Error())
+		return nil, err
+	}
+
+	for _, sub := range cips{
+		sqlsub := `set dateformat dmy     SELECT DocNo,DocDate,isnull(BookNo,'') as BookNo,ChqRowOrder,LineNumber,TransState,IsCancel,isnull(ChqNumber,'') as ChqNumber,ChqAmount,Expend,NetAmount,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,HomeAmount,isnull(Arcode,'') as Arcode,isnull(Bankcode,'') as Bankcode,isnull(BankBranchCode,'') as BankBranchCode,RefChqRowOrder  FROM dbo.BCChqInPassSub with (nolock) where  Docno = ? order by LineNumber`
+		err = db.Select(cip.Subs, sqlsub, sub.DocNo)
+		if err != nil {
+			fmt.Println("sql search sub = ", err.Error())
+			return nil, err
+		}
+	}
+
+	return cips, nil
 }

@@ -92,7 +92,7 @@ func (ote *OtherExpense) SearchOtherExpenseByDocNo(db *sqlx.DB, docno string) er
 
 func (ote *OtherExpense) SearchOtherExpenseByKeyword(db *sqlx.DB, docno string) (otes *[]OtherExpense, err error) {
 	sql := `set dateformat dmy     select DocNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(RefDocNo,'') as RefDocNo,isnull(GLBookCode,'') as GLBookCode,isnull(DepartCode,'') as DepartCode,isnull(MyDescription,'') as MyDescription,SumofDebit,SumofCredit,NetAmount,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(ApCode,'') as ApCode,PettyCashAmount,SumOfWTax,SumCashAmount,SumChqAmount,SumCreditAmount,SumBankAmount,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,isnull(BillGroup,'') as BillGroup,IsConfirm,IsCancel,isnull(RecurName,'') as RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime from BCOtherExpense with (nolock) where (docno  like '%'+?+'%' ) order by docno`
-	err = db.Select(&ote, sql, docno)
+	err = db.Select(&otes, sql, docno)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())
 		return nil, err

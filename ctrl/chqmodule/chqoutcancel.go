@@ -1,20 +1,20 @@
-package ctrl
+package chqmodule
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"fmt"
 	ct "github.com/loukmho/BCAccount_API/ctrl"
-	"github.com/loukmho/BCAccount_API/model/bankmodule"
+	"github.com/loukmho/BCAccount_API/model/chqmodule"
 )
 
-func SearchBankExpenseByDocNo(c *gin.Context) {
+func SearchChqOutCancelByDocNo(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 
 	docno := c.Request.URL.Query().Get("docno")
-	bep := new(model.BankExpense)
-	err := bep.SearchBankExpenseByDocNo(ct.Dbc, docno)
+	coc := new(model.ChqOutCancel)
+	err := coc.SearchChqOutCancelByDocNo(ct.Dbc, docno)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -23,18 +23,18 @@ func SearchBankExpenseByDocNo(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = bep
+		rs.Data = coc
 		c.JSON(http.StatusOK, rs)
 	}
 }
 
-func SearchBankExpenseByKeyword(c *gin.Context) {
+func SearchChqOutCancelByKeyword(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 	keyword := c.Request.URL.Query().Get("keyword")
 
-	bep := new(model.BankExpense)
-	beps, err := bep.SearchBankExpenseByKeyword(ct.Dbc, keyword)
+	coc := new(model.ChqOutCancel)
+	cocs, err := coc.SearchChqOutCancelByKeyword(ct.Dbc, keyword)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -43,21 +43,21 @@ func SearchBankExpenseByKeyword(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = beps
+		rs.Data = cocs
 		c.JSON(http.StatusOK, rs)
 	}
 
 }
 
-func InsertAndEditBankExpense(c *gin.Context) {
+func InsertAndEditChqOutCancel(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
-	bep := &model.BankExpense{}
-	err := c.BindJSON(bep)
+	coc := &model.ChqOutCancel{}
+	err := c.BindJSON(coc)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	err = bep.InsertAndEditBankExpense(ct.Dbc)
+	err = coc.InsertAndEditChqOutCancel(ct.Dbc)
 
 	rs := ct.Response{}
 	if err != nil {
@@ -66,9 +66,8 @@ func InsertAndEditBankExpense(c *gin.Context) {
 		c.JSON(http.StatusNotFound, rs)
 	} else {
 		rs.Status = "success"
-		rs.Data = bep
+		rs.Data = coc
 		c.JSON(http.StatusOK, rs)
 	}
 
 }
-

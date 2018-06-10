@@ -79,7 +79,7 @@ func (bep *BankExpense) SearchBankExpenseByDocNo(db *sqlx.DB, docno string) erro
 
 func (bep *BankExpense) SearchBankExpenseByKeyword(db *sqlx.DB, docno string) (beps *[]BankExpense, err error) {
 	sql := `set dateformat dmy     select DocNo,DocDate,isnull(BookNo,'') as BookNo,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(AccountCode,'') as AccountCode,isnull(GLBookCode,'') as GLBookCode,isnull(DepartCode,'') as DepartCode,isnull(MyDescription,'') as MyDescription,Amount,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,IsCancel,IsConfirm,isnull(RecurName,'') as RecurName from dbo.BCBankExpense with (nolock) where (docno  like '%'+?+'%' ) order by docno`
-	err = db.Select(&bep, sql, docno)
+	err = db.Select(&beps, sql, docno)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())
 		return nil, err
