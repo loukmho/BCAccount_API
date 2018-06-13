@@ -193,5 +193,5 @@ func (fng *FinishGoods) SearchFinishGoodsByKeyword(db *sqlx.DB, keyword string) 
 		}
 	}
 
-	return sajs, nil
+	return fngs, nil
 }

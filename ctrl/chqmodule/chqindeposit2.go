@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"fmt"
-	ct "github.com/loukmho/BCAccount_API/ctrl"
-	"github.com/loukmho/BCAccount_API/model/chqmodule"
+	ct "github.com/loukmho/bcaccount_api/ctrl"
+	"github.com/loukmho/bcaccount_api/model/chqmodule"
 )
 
 func SearchChqInDeposit2ByDocNo(c *gin.Context) {

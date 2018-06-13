@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SearchReceipt1ByDocNo(c *gin.Context) {
+func SearchReceipt3ByDocNo(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 
@@ -28,7 +28,7 @@ func SearchReceipt1ByDocNo(c *gin.Context) {
 	}
 }
 
-func SearchReceipt1ByKeyword(c *gin.Context) {
+func SearchReceipt3ByKeyword(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 	keyword := c.Request.URL.Query().Get("keyword")
@@ -49,7 +49,7 @@ func SearchReceipt1ByKeyword(c *gin.Context) {
 
 }
 
-func InsertAndEditReceipt1(c *gin.Context) {
+func InsertAndEditReceipt3(c *gin.Context) {
 	c.Keys = ct.HeaderKeys
 
 	rcp := &model.Receipt1{}

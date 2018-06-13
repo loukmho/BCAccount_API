@@ -128,6 +128,7 @@ func (pmt *Payment) InsertAndEditPayment(db *sqlx.DB) error {
 
 	def := m.Default{}
 	def = m.LoadDefaultData("bcdata.json")
+	vTaxRate := def.TaxRateDefault
 
 	fmt.Println("TaxRate = ", def.TaxRateDefault)
 
@@ -139,7 +140,7 @@ func (pmt *Payment) InsertAndEditPayment(db *sqlx.DB) error {
 		}
 	}
 
-	sqlexist := `select count(docno) as check_exist from dbo.bcapinvoice where docno = ?`
+	sqlexist := `select count(docno) as check_exist from dbo.bcpayment where docno = ?`
 	err := db.Get(&check_exist, sqlexist, pmt.DocNo)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -194,13 +195,13 @@ func (pmt *Payment) InsertAndEditPayment(db *sqlx.DB) error {
 	}
 
 	if (pmt.BookCode == "") {
-		pmt.BookCode = def.ArInvoiceBookCode
+		pmt.BookCode = def.PaymentBookCode
 	}
 	if (pmt.Source == 0) {
-		pmt.Source = def.ArInvoiceSource
+		pmt.Source = def.PaymentSource
 	}
 
-	pmt.GLFormat = def.ApInvoiceCreditGLFormat
+	pmt.GLFormat = def.PaymentGLFormat
 
 	if (pmt.TaxNo == "") {
 		pmt.TaxNo = pmt.DocNo
@@ -228,16 +229,12 @@ func (pmt *Payment) InsertAndEditPayment(db *sqlx.DB) error {
 		sql := `Insert into dbo.BCPayment(DocNo,TaxNo,DocDate,ApCode,CreatorCode,CreateDateTime,DepartCode,SumOfInvoice,SumOfDebitNote,SumOfCreditNote,BeforeTaxAmount,TaxAmount,TotalAmount,DiscountAmount,NetAmount,PettyCashAmount,SumCashAmount,SumChqAmount,SumBankAmount,SumOfWTax,GLFormat,IsCancel,MyDescription,AllocateCode,ProjectCode,BillGroup,SumHomeAmount1,SumHomeAmount2,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,CurrencyCode,ExchangeRate,IsCompleteSave,IsConfirm,RecurName,SumOfDeposit1,SumOfDeposit2,HomeAmountInv,HomeAmountDebt,HomeAmountCrd) values(?,?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 		_, err := db.Exec(sql, pmt.DocNo, pmt.TaxNo, pmt.DocDate, pmt.ApCode, pmt.CreatorCode, pmt.DepartCode, pmt.SumOfInvoice, pmt.SumOfDebitNote, pmt.SumOfCreditNote, pmt.BeforeTaxAmount, pmt.TaxAmount, pmt.TotalAmount, pmt.DiscountAmount, pmt.NetAmount, pmt.PettyCashAmount, pmt.SumCashAmount, pmt.SumChqAmount, pmt.SumBankAmount, pmt.SumOfWTax, pmt.GLFormat, pmt.IsCancel, pmt.MyDescription, pmt.AllocateCode, pmt.ProjectCode, pmt.BillGroup, pmt.SumHomeAmount1, pmt.SumHomeAmount2, pmt.OtherIncome, pmt.OtherExpense, pmt.ExcessAmount1, pmt.ExcessAmount2, pmt.CurrencyCode, pmt.ExchangeRate, pmt.IsCompleteSave, pmt.IsConfirm, pmt.RecurName, pmt.SumOfDeposit1, pmt.SumOfDeposit2, pmt.HomeAmountInv, pmt.HomeAmountDebt, pmt.HomeAmountCrd)
 		if err != nil {
-			return err
-		}
-
-		//sql := `Insert into dbo.BCReceipt1(DocNo,TaxNo,DocDate,CreatorCode,CreateDateTime,ArCode,SaleCode,DepartCode,SumOfInvoice,SumOfDebitNote,SumOfCreditNote,BeforeTaxAmount,TaxAmount,TotalAmount,DiscountAmount,NetAmount,SumCashAmount,SumChqAmount,SumCreditAmount,ChargeAmount,ChangeAmount,SumBankAmount,SumOfWTax,GLFormat,IsCancel,MyDescription,AllocateCode,ProjectCode,BillGroup,IsCompleteSave,SumHomeAmount1,SumHomeAmount2,DebtLimitReturn,CurrencyCode,ExchangeRate,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,IsConfirm,RecurName) values(?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-		//_, err := db.Exec(sql, rcp.DocNo, rcp.TaxNo, rcp.DocDate, rcp.CreatorCode, rcp.ArCode, rcp.SaleCode, rcp.DepartCode, rcp.SumOfInvoice, rcp.SumOfDebitNote, rcp.SumOfCreditNote, rcp.BeforeTaxAmount, rcp.TaxAmount, rcp.TotalAmount, rcp.DiscountAmount, rcp.NetAmount, rcp.SumCashAmount, rcp.SumChqAmount, rcp.SumCreditAmount, rcp.ChargeAmount, rcp.ChangeAmount, rcp.SumBankAmount, rcp.SumOfWTax, rcp.GLFormat, rcp.IsCancel, rcp.MyDescription, rcp.AllocateCode, rcp.ProjectCode, rcp.BillGroup, rcp.IsCompleteSave, rcp.SumHomeAmount1, rcp.SumHomeAmount2, rcp.DebtLimitReturn, rcp.CurrencyCode, rcp.ExchangeRate, rcp.OtherIncome, rcp.OtherExpense, rcp.ExcessAmount1, rcp.ExcessAmount2, rcp.IsConfirm, rcp.RecurName)
-		//fmt.Println("sql =", sql, rcp.DocNo, rcp.DocDate, rcp.TaxNo, rcp.ArCode, rcp.SaleCode)
-		if err != nil {
 			fmt.Println("Error = ", err.Error())
 			return err
 		}
+		//sql := `Insert into dbo.BCReceipt1(DocNo,TaxNo,DocDate,CreatorCode,CreateDateTime,ArCode,SaleCode,DepartCode,SumOfInvoice,SumOfDebitNote,SumOfCreditNote,BeforeTaxAmount,TaxAmount,TotalAmount,DiscountAmount,NetAmount,SumCashAmount,SumChqAmount,SumCreditAmount,ChargeAmount,ChangeAmount,SumBankAmount,SumOfWTax,GLFormat,IsCancel,MyDescription,AllocateCode,ProjectCode,BillGroup,IsCompleteSave,SumHomeAmount1,SumHomeAmount2,DebtLimitReturn,CurrencyCode,ExchangeRate,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,IsConfirm,RecurName) values(?,?,?,?,getdate(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		//_, err := db.Exec(sql, rcp.DocNo, rcp.TaxNo, rcp.DocDate, rcp.CreatorCode, rcp.ArCode, rcp.SaleCode, rcp.DepartCode, rcp.SumOfInvoice, rcp.SumOfDebitNote, rcp.SumOfCreditNote, rcp.BeforeTaxAmount, rcp.TaxAmount, rcp.TotalAmount, rcp.DiscountAmount, rcp.NetAmount, rcp.SumCashAmount, rcp.SumChqAmount, rcp.SumCreditAmount, rcp.ChargeAmount, rcp.ChangeAmount, rcp.SumBankAmount, rcp.SumOfWTax, rcp.GLFormat, rcp.IsCancel, rcp.MyDescription, rcp.AllocateCode, rcp.ProjectCode, rcp.BillGroup, rcp.IsCompleteSave, rcp.SumHomeAmount1, rcp.SumHomeAmount2, rcp.DebtLimitReturn, rcp.CurrencyCode, rcp.ExchangeRate, rcp.OtherIncome, rcp.OtherExpense, rcp.ExcessAmount1, rcp.ExcessAmount2, rcp.IsConfirm, rcp.RecurName)
+		//fmt.Println("sql =", sql, rcp.DocNo, rcp.DocDate, rcp.TaxNo, rcp.ArCode, rcp.SaleCode)
 
 	} else {
 
@@ -245,15 +242,15 @@ func (pmt *Payment) InsertAndEditPayment(db *sqlx.DB) error {
 		pmt.LastEditorCode = pmt.UserCode
 		pmt.NetAmount = pmt.TotalAmount
 
-		sql := `Update dbo.BCReceipt1 set TaxNo=?,DocDate=?,LastEditorCode=?,LastEditDateT=getdate(),ArCode=?,SaleCode=?,DepartCode=?,SumOfInvoice=?,SumOfDebitNote=?,SumOfCreditNote=?,BeforeTaxAmount=?,TaxAmount=?,TotalAmount=?,DiscountAmount=?,NetAmount=?,SumCashAmount=?,SumChqAmount=?,SumCreditAmount=?,ChargeAmount=?,ChangeAmount=?,SumBankAmount=?,SumOfWTax=?,GLFormat=?,IsCancel=?,MyDescription=?,AllocateCode=?,ProjectCode=?,BillGroup=?,IsCompleteSave=?,SumHomeAmount1=?,SumHomeAmount2=?,DebtLimitReturn=?,CurrencyCode=?,ExchangeRate=?,OtherIncome=?,OtherExpense=?,ExcessAmount1=?,ExcessAmount2=?,IsConfirm=?,RecurName=? where docno = ?`
-		_, err := db.Exec(sql, rcp.TaxNo, rcp.DocDate, rcp.LastEditorCode, rcp.ArCode, rcp.SaleCode, rcp.DepartCode, rcp.SumOfInvoice, rcp.SumOfDebitNote, rcp.SumOfCreditNote, rcp.BeforeTaxAmount, rcp.TaxAmount, rcp.TotalAmount, rcp.DiscountAmount, rcp.NetAmount, rcp.SumCashAmount, rcp.SumChqAmount, rcp.SumCreditAmount, rcp.ChargeAmount, rcp.ChangeAmount, rcp.SumBankAmount, rcp.SumOfWTax, rcp.GLFormat, rcp.IsCancel, rcp.MyDescription, rcp.AllocateCode, rcp.ProjectCode, rcp.BillGroup, rcp.IsCompleteSave, rcp.SumHomeAmount1, rcp.SumHomeAmount2, rcp.DebtLimitReturn, rcp.CurrencyCode, rcp.ExchangeRate, rcp.OtherIncome, rcp.OtherExpense, rcp.ExcessAmount1, rcp.ExcessAmount2, rcp.IsConfirm, rcp.RecurName, rcp.DocNo)
+		sql := `update dbo.BCPayment set TaxNo=?,DocDate=?,ApCode=?,LastEditorCode=?,LastEditDateT=getdate(),DepartCode=?,SumOfInvoice=?,SumOfDebitNote=?,SumOfCreditNote=?,BeforeTaxAmount=?,TaxAmount=?,TotalAmount=?,DiscountAmount=?,NetAmount=?,PettyCashAmount=?,SumCashAmount=?,SumChqAmount=?,SumBankAmount=?,SumOfWTax=?,GLFormat=?,IsCancel=?,MyDescription=?,AllocateCode=?,ProjectCode=?,BillGroup=?,SumHomeAmount1=?,SumHomeAmount2=?,OtherIncome=?,OtherExpense=?,ExcessAmount1=?,ExcessAmount2=?,CurrencyCode=?,ExchangeRate=?,IsCompleteSave=?,IsConfirm=?,RecurName=?,SumOfDeposit1=?,SumOfDeposit2=?,HomeAmountInv=?,HomeAmountDebt=?,HomeAmountCrd=? where docno = ?`
+		_, err := db.Exec(sql, pmt.TaxNo, pmt.DocDate, pmt.ApCode, pmt.LastEditorCode, pmt.DepartCode, pmt.SumOfInvoice, pmt.SumOfDebitNote, pmt.SumOfCreditNote, pmt.BeforeTaxAmount, pmt.TaxAmount, pmt.TotalAmount, pmt.DiscountAmount, pmt.NetAmount, pmt.PettyCashAmount, pmt.SumCashAmount, pmt.SumChqAmount, pmt.SumBankAmount, pmt.SumOfWTax, pmt.GLFormat, pmt.IsCancel, pmt.MyDescription, pmt.AllocateCode, pmt.ProjectCode, pmt.BillGroup, pmt.SumHomeAmount1, pmt.SumHomeAmount2, pmt.OtherIncome, pmt.OtherExpense, pmt.ExcessAmount1, pmt.ExcessAmount2, pmt.CurrencyCode, pmt.ExchangeRate, pmt.IsCompleteSave, pmt.IsConfirm, pmt.RecurName, pmt.SumOfDeposit1, pmt.SumOfDeposit2, pmt.HomeAmountInv, pmt.HomeAmountDebt, pmt.HomeAmountCrd, pmt.DocNo)
 		if err != nil {
 			fmt.Println("Error = ", err.Error())
 			return err
 		}
 	}
 
-	sql_del_sub := `delete dbo.bcapinvoicesub where docno = ?`
+	sql_del_sub := `delete dbo.bcpaymentsub where docno = ?`
 	_, err = db.Exec(sql_del_sub, pmt.DocNo)
 	if err != nil {
 		return err
@@ -261,11 +258,13 @@ func (pmt *Payment) InsertAndEditPayment(db *sqlx.DB) error {
 
 	var vLineNumber int
 
-	for _, item := range pmt.Subs {
+	for _, sub := range pmt.Subs {
 		fmt.Println("ItemSub")
+		sub.LineNumber = vLineNumber
+		sub.IsCancel = 0
 
-		sqlsub := ` insert into dbo.BCApInvoiceSub(MyType,DocNo,TaxNo,TaxType,ItemCode,DocDate,ApCode,DepartCode,MyDescription,ItemName,WHCode,ShelfCode,CNQty,GRRemainQty,Qty,Price,DiscountWord,DiscountAmount,Amount,NetAmount,HomeAmount,BalanceAmount,SumOfExpCost,UnitCode,PORefNo,IRRefNo,IsCancel,LineNumber,BarCode,PORefLinenum,AVERAGECOST,LotNumber,SumOfCost,TaxRate,PackingRate1,PackingRate2) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-		_, err = db.Exec(sqlsub, item.MyType, apv.DocNo, apv.TaxNo, apv.TaxType, item.ItemCode, apv.DocDate, apv.ApCode, apv.DepartCode, item.MyDescription, item.ItemName, item.WHCode, item.ShelfCode, item.CNQty, item.GRRemainQty, item.Qty, item.Price, item.DiscountWord, item.DiscountAmount, item.Amount, item.NetAmount, item.HomeAmount, item.BalanceAmount, item.SumOfExpCost, item.UnitCode, item.PORefNo, item.IRRefNo, item.IsCancel, item.LineNumber, item.BarCode, item.PORefLinenum, item.AVERAGECOST, item.LotNumber, item.SumOfCost, apv.TaxRate, item.PackingRate1, item.PackingRate2)
+		sqlsub := ` insert into dbo.bcpaymentsub(DocNo,DocDate,ApCode,InvoiceDate,InvoiceNo,InvBalance,PayAmount,MyDescription,BillType,PaybillNo,RefType,IsCancel,LineNumber,HomeAmount1,HomeAmount2) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlsub, pmt.DocNo,pmt.DocDate,pmt.ApCode,sub.InvoiceDate,sub.InvoiceNo,sub.InvBalance,sub.PayAmount,sub.MyDescription,sub.BillType,sub.PaybillNo,sub.RefType,sub.IsCancel,sub.LineNumber,sub.HomeAmount1,sub.HomeAmount2)
 		fmt.Println("sqlsub = ", sqlsub)
 		if err != nil {
 			fmt.Println(err.Error())
@@ -282,7 +281,7 @@ func (pmt *Payment) InsertAndEditPayment(db *sqlx.DB) error {
 	}
 
 	sqltax := `insert into dbo.BCInputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ApCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,'ซื้อสินค้า',?,1,?,?,?,getdate())`
-	_, err = db.Exec(sqltax, pmt.SaveFrom, pmt.DocNo, pmt.BookCode, pmt.Source, pmt.DocDate, pmt.DocDate, pmt.TaxNo, pmt.ApCode, pmt.TaxRate, pmt.BeforeTaxAmount, pmt.TaxAmount, pmt.CreatorCode)
+	_, err = db.Exec(sqltax, pmt.SaveFrom, pmt.DocNo, pmt.BookCode, pmt.Source, pmt.DocDate, pmt.DocDate, pmt.TaxNo, pmt.ApCode, vTaxRate, pmt.BeforeTaxAmount, pmt.TaxAmount, pmt.UserCode)
 	fmt.Println("sqltax = ", sqltax)
 	if err != nil {
 		fmt.Println(err.Error())

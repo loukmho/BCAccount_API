@@ -208,8 +208,6 @@ func (rcp *Receipt1) InsertAndEditReceipt1(db *sqlx.DB) error {
 
 	if (rcp.GLFormat == "") {
 		rcp.GLFormat = def.Receipt1GLFormat
-	} else {
-		rcp.GLFormat = def.ArInvoiceCreditGLFormat
 	}
 
 	if (rcp.BookCode == "") {
@@ -236,36 +234,6 @@ func (rcp *Receipt1) InsertAndEditReceipt1(db *sqlx.DB) error {
 		rcp.IsCompleteSave = 1
 	}
 
-	sum_pay_amount = (rcp.SumCashAmount + rcp.SumCreditAmount + rcp.SumChqAmount + rcp.SumBankAmount + rcp.OtherExpense) - rcp.OtherIncome
-
-	switch {
-	case rcp.DocNo == "":
-		return errors.New("Docno is null")
-	case rcp.ArCode == "":
-		return errors.New("Arcode is null")
-	case rcp.TotalAmount == 0:
-		return errors.New("Totalamount is 0")
-	case rcp.DocDate == "":
-		return errors.New("Docdate is null")
-	case rcp.SumCashAmount == 0 && rcp.SumCreditAmount == 0 && rcp.SumChqAmount == 0 && rcp.SumBankAmount == 0:
-		return errors.New("Docno not set money to another type payment")
-	case sum_pay_amount > rcp.TotalAmount:
-		return errors.New("Rec money is over totalamount")
-	case rcp.IsCancel == 1:
-		return errors.New("Docno is cancel can not edit data")
-	case rcp.IsConfirm == 1:
-		return errors.New("Docno is confirm can not edit data")
-	case rcp.SumCreditAmount != 0 && len(rcp.Cdcs) == 0:
-		return errors.New("Creditcard not have credittype or confirmno or creditrefno")
-	case rcp.SumChqAmount != 0 && len(rcp.Chqs) == 0:
-		return errors.New("Chq not have BankCode or BankBranchCode or creditrefno")
-	case rcp.SumBankAmount != 0 && rcp.BankRefNo == "":
-		return errors.New("Bank transfer not have BankRefNo")
-	}
-
-	if (rcp.TaxNo == "") {
-		rcp.TaxNo = rcp.DocNo
-	}
 
 	if (check_exist == 0) {
 		//Insert//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,6 +262,32 @@ func (rcp *Receipt1) InsertAndEditReceipt1(db *sqlx.DB) error {
 		}
 	}
 
+	sql_del_sub := `delete dbo.BCReceiptSub1 where docno = ?`
+	_, err = db.Exec(sql_del_sub, rcp.DocNo)
+	if err != nil {
+		fmt.Println("Error = ", err.Error())
+		return err
+	}
+
+	var vLineNumber int
+
+	for _, sub := range rcp.Subs {
+		fmt.Println("ItemSub")
+		sub.LineNumber = vLineNumber
+		sub.IsCancel = 0
+		sub.HomeAmount2 = sub.HomeAmount2
+
+		sqlsub := ` insert into dbo.BCReceiptSub1(DocNo,DocDate,ArCode,SaleCode,InvoiceDate,InvoiceNo,InvBalance,PayAmount,DebtLimitReturn,MyDescription,IsCancel,LineNumber,BillType,RefNo,RefType,HomeAmount1,HomeAmount2) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+		_, err = db.Exec(sqlsub, rcp.DocNo,rcp.DocDate,rcp.ArCode,rcp.SaleCode,sub.InvoiceDate,sub.InvoiceNo,sub.InvBalance,sub.PayAmount,sub.DebtLimitReturn,sub.MyDescription,sub.IsCancel,sub.LineNumber,sub.BillType,sub.RefNo,sub.RefType,sub.HomeAmount1,sub.HomeAmount2)
+		fmt.Println("sqltax = ", sqlsub)
+		if err != nil {
+			fmt.Println("Error = ", err.Error())
+			return err
+		}
+
+		vLineNumber = vLineNumber + 1
+	}
+
 	sqldel := `delete dbo.BCOutputTax where docno = ?`
 	_, err = db.Exec(sqldel, rcp.DocNo)
 	if err != nil {
@@ -302,7 +296,7 @@ func (rcp *Receipt1) InsertAndEditReceipt1(db *sqlx.DB) error {
 	}
 
 	sqltax := "insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,'รับชำระ',?,1,?,?,?,getdate())"
-	_, err = db.Exec(sqltax, rcp.SaveFrom, rcp.DocNo, rcp.BookCode, rcp.Source, rcp.DocDate, rcp.TaxDate, rcp.TaxNo, rcp.ArCode, rcp.TaxRate, rcp.BeforeTaxAmount, rcp.TaxAmount, rcp.CreatorCode)
+	_, err = db.Exec(sqltax, rcp.SaveFrom, rcp.DocNo, rcp.BookCode, rcp.Source, rcp.DocDate, rcp.TaxDate, rcp.TaxNo, rcp.ArCode, rcp.TaxRate, rcp.BeforeTaxAmount, rcp.TaxAmount, rcp.UserCode)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())
 		return err
@@ -448,6 +442,14 @@ func (rcp *Receipt1) SearchReceipt1ByDocNo(db *sqlx.DB, docno string) error {
 	sql := `set dateformat dmy     select DocNo,isnull(TaxNo,'') as TaxNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(ArCode,'') as ArCode,isnull(SaleCode,'') as SaleCode,isnull(DepartCode,'') as DepartCode,SumOfInvoice,SumOfDebitNote,SumOfCreditNote,BeforeTaxAmount,TaxAmount,TotalAmount,DiscountAmount,NetAmount,SumCashAmount,SumChqAmount,SumCreditAmount,ChargeAmount,ChangeAmount,SumBankAmount,SumOfWTax,isnull(GLFormat,'') as GLFormat,IsCancel,isnull(MyDescription,'') as MyDescription,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,IsCompleteSave,SumHomeAmount1,SumHomeAmount2,DebtLimitReturn,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,IsConfirm,RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime from dbo.bcreceipt1 with (nolock) with (nolock) where docno = ?`
 	err := db.Get(rcp, sql,docno)
 	if err != nil {
+		fmt.Println("Search ", err.Error())
+		return err
+	}
+
+	sqlsub := `set dateformat dmy     select isnull(InvoiceDate,'') as InvoiceDate, isnull(InvoiceNo,'') as InvoiceNo, InvBalance, PayAmount, DebtLimitReturn, isnull(MyDescription,'') as MyDescription, IsCancel, LineNumber, BillType, isnull(RefNo,'') as RefNo, RefType,  HomeAmount1, HomeAmount2 from dbo.BCReceiptSub1 with (nolock) where docno = ? order by linenumber`
+	err = db.Select(rcp.Subs, sqlsub, docno)
+	if err != nil {
+		fmt.Println("Search Sub ", err.Error())
 		return err
 	}
 	//sql := `DocNo, TaxNo, DocDate, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, ArCode, SaleCode, DepartCode, SumOfInvoice, SumOfDebitNote, SumOfCreditNote, BeforeTaxAmount,TaxAmount, TotalAmount, DiscountAmount, NetAmount, SumCashAmount, SumChqAmount, SumCreditAmount, ChargeAmount, ChangeAmount, SumBankAmount, SumOfWTax, GLFormat, IsCancel,MyDescription, AllocateCode, ProjectCode, BillGroup, IsCompleteSave, SumHomeAmount1, SumHomeAmount2, DebtLimitReturn, CurrencyCode, ExchangeRate, OtherIncome,OtherExpense, ExcessAmount1, ExcessAmount2, IsConfirm, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime`
@@ -460,7 +462,17 @@ func (rcp *Receipt1) SearchReceipt1ByKeyword(db *sqlx.DB, keyword string) (rcps 
 	sql := `set dateformat dmy     select DocNo,isnull(TaxNo,'') as TaxNo,DocDate,isnull(CreatorCode,'') as CreatorCode,isnull(CreateDateTime,'') as CreateDateTime,isnull(LastEditorCode,'') as LastEditorCode,isnull(LastEditDateT,'') as LastEditDateT,isnull(ArCode,'') as ArCode,isnull(SaleCode,'') as SaleCode,isnull(DepartCode,'') as DepartCode,SumOfInvoice,SumOfDebitNote,SumOfCreditNote,BeforeTaxAmount,TaxAmount,TotalAmount,DiscountAmount,NetAmount,SumCashAmount,SumChqAmount,SumCreditAmount,ChargeAmount,ChangeAmount,SumBankAmount,SumOfWTax,isnull(GLFormat,'') as GLFormat,IsCancel,isnull(MyDescription,'') as MyDescription,isnull(AllocateCode,'') as AllocateCode,isnull(ProjectCode,'') as ProjectCode,isnull(BillGroup,'') as BillGroup,IsCompleteSave,SumHomeAmount1,SumHomeAmount2,DebtLimitReturn,isnull(CurrencyCode,'') as CurrencyCode,ExchangeRate,OtherIncome,OtherExpense,ExcessAmount1,ExcessAmount2,IsConfirm,RecurName,isnull(ConfirmCode,'') as ConfirmCode,isnull(ConfirmDateTime,'') as ConfirmDateTime,isnull(CancelCode,'') as CancelCode,isnull(CancelDateTime,'') as CancelDateTime from dbo.bcreceipt1 with (nolock) where (docno  like '%'+?+'%' or arcode like '%'+?+'%' or salecode like '%'+?+'%') order by docno`
 	err = db.Select(&rcps, sql, keyword, keyword, keyword)
 	if err != nil {
+		fmt.Println("Search ", err.Error())
 		return nil, err
+	}
+
+	for _, sub := range rcps {
+		sqlsub := `set dateformat dmy     select isnull(InvoiceDate,'') as InvoiceDate, isnull(InvoiceNo,'') as InvoiceNo, InvBalance, PayAmount, DebtLimitReturn, isnull(MyDescription,'') as MyDescription, IsCancel, LineNumber, BillType, isnull(RefNo,'') as RefNo, RefType,  HomeAmount1, HomeAmount2 from dbo.BCReceiptSub1 with (nolock) where docno = ? order by linenumber`
+		err = db.Select(&rcp.Subs, sqlsub, sub.DocNo)
+		if err != nil {
+			fmt.Println("Search Sub ", err.Error())
+			return nil, err
+		}
 	}
 	//sql := `DocNo, TaxNo, DocDate, CreatorCode, CreateDateTime, LastEditorCode, LastEditDateT, ArCode, SaleCode, DepartCode, SumOfInvoice, SumOfDebitNote, SumOfCreditNote, BeforeTaxAmount,TaxAmount, TotalAmount, DiscountAmount, NetAmount, SumCashAmount, SumChqAmount, SumCreditAmount, ChargeAmount, ChangeAmount, SumBankAmount, SumOfWTax, GLFormat, IsCancel,MyDescription, AllocateCode, ProjectCode, BillGroup, IsCompleteSave, SumHomeAmount1, SumHomeAmount2, DebtLimitReturn, CurrencyCode, ExchangeRate, OtherIncome,OtherExpense, ExcessAmount1, ExcessAmount2, IsConfirm, RecurName, ConfirmCode, ConfirmDateTime, CancelCode, CancelDateTime`
 	//sqlsub:= `DocNo, DocDate, ArCode, SaleCode,  InvoiceDate, InvoiceNo, InvBalance, PayAmount, DebtLimitReturn,MyDescription,  IsCancel, LineNumber, BillType, RefNo, RefType,  HomeAmount1, HomeAmount2,`

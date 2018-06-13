@@ -255,7 +255,7 @@ func (dp *ArDeposit) InsertAndEditArDeposit(db *sqlx.DB) error {
 	}
 
 	sqltax := "insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())"
-	_, err = db.Exec(sqltax, dp.SaveFrom, dp.DocNo, dp.BookCode, dp.Source, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.CreatorCode)
+	_, err = db.Exec(sqltax, dp.SaveFrom, dp.DocNo, dp.BookCode, dp.Source, dp.DocDate, dp.TaxDate, dp.TaxNo, dp.ArCode, dp.TaxRate, dp.BeforeTaxAmount, dp.TaxAmount, dp.UserCode)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())
 		return err

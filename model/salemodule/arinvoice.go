@@ -469,7 +469,7 @@ func (inv *ArInvoice) InsertAndEditArInvoice(db *sqlx.DB) error {
 	}
 
 	sqltax := `insert into dbo.BCOutputTax(SaveFrom,DocNo,BookCode,Source,DocDate,TaxDate,TaxNo,ArCode,ShortTaxDesc,TaxRate,Process,BeforeTaxAmount,TaxAmount,CreatorCode,CreateDateTime) values(?,?,?,?,?,?,?,?,'ขายสินค้า',?,1,?,?,?,getdate())`
-	_, err = db.Exec(sqltax, inv.SaveFrom, inv.DocNo, inv.BookCode, inv.Source, inv.DocDate, inv.TaxDate, inv.TaxNo, inv.ArCode, inv.TaxRate, inv.BeforeTaxAmount, inv.TaxAmount, inv.CreatorCode)
+	_, err = db.Exec(sqltax, inv.SaveFrom, inv.DocNo, inv.BookCode, inv.Source, inv.DocDate, inv.TaxDate, inv.TaxNo, inv.ArCode, inv.TaxRate, inv.BeforeTaxAmount, inv.TaxAmount, inv.UserCode)
 	fmt.Println("sqltax = ", sqltax)
 	if err != nil {
 		fmt.Println("Error = ", err.Error())

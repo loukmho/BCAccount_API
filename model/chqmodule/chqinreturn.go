@@ -3,7 +3,7 @@ package model
 import (
 	"github.com/jmoiron/sqlx"
 	"fmt"
-	m "github.com/loukmho/BCAccount_API/model"
+	m "github.com/loukmho/bcaccount_api/model"
 	"errors"
 )
 
