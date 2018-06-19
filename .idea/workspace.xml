@@ -3,35 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="04fb81d0-cba6-4721-a376-cc3403a2134e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/chqmodule/chqincancel.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/chqmodule/chqincancel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/chqmodule/chqindeposit2.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/chqmodule/chqindeposit2.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/chqmodule/chqinpass.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/chqmodule/chqinpass.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/chqmodule/chqinreturn.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/chqmodule/chqinreturn.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/chqmodule/chqinsale.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/chqmodule/chqinsale.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/chqmodule/chqoutcancel.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/chqmodule/chqoutcancel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/chqmodule/chqoutpass.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/chqmodule/chqoutpass.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/custmodule/receipt3.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/custmodule/receipt3.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/invenmodule/finishgoods.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/invenmodule/finishgoods.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/invenmodule/stkadjust.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/invenmodule/stkadjust.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/invenmodule/stkissue.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/invenmodule/stkissue.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctrl/invenmodule/stkissueret.go" beforeDir="false" afterPath="$PROJECT_DIR$/ctrl/invenmodule/stkissueret.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/buymodule/apinvoice.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/buymodule/apinvoice.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/chqmodule/chqindeposit2.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqindeposit2.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/chqmodule/chqinpass.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqinpass.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/chqmodule/chqinreturn.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqinreturn.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/chqmodule/chqinsale.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqinsale.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/chqmodule/chqoutcancel.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqoutcancel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/chqmodule/chqoutpass.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/chqmodule/chqoutpass.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/custmodule/receipt1.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/custmodule/receipt1.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/custmodule/receipt3.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/custmodule/receipt3.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/invenmodule/finishgoods.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/invenmodule/finishgoods.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/invenmodule/stkissue.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/invenmodule/stkissue.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/salemodule/ardeposit.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/salemodule/ardeposit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/salemodule/arinvoice.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/salemodule/arinvoice.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/vendormodule/apotherdebt.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/vendormodule/apotherdebt.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/vendormodule/payment.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/vendormodule/payment.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/vendormodule/payment2.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/vendormodule/payment2.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/vendormodule/statement.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/vendormodule/statement.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -69,8 +40,8 @@
       <file leaf-file-name="statement.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/vendormodule/statement.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="561">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
         </entry>
@@ -270,7 +241,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -298,6 +268,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -349,7 +320,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23499268" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -776,8 +746,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/vendormodule/statement.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="561">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
         </state>
       </provider>
     </entry>
